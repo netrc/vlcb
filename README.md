@@ -15,7 +15,8 @@ Arch
 - pics on flickr/picasa
 - node.js and client javascript
 - infinite scroll for lists
-- 
+- Rubbings, Brasses, Churches, Notes - Map, Quality
+
 Tasks
 - banner
 - tabs
