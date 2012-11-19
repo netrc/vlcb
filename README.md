@@ -23,6 +23,8 @@ Tasks
 - Church list
 - Church add
 
+view-source:http://twitter.github.com/bootstrap/examples/carousel.html#
+
 == Notes on c9.io
 - npm install jade
 - npm install mongolian
@@ -48,3 +50,8 @@ express
 
 mongodb
 * http://www.mongodb.org/display/DOCS/node.JS;jsessionid=6DCF010D05B06229511682DD673568FA
+
+
+OtherCDNs
+* http://www.bootstrapcdn.com/
+* http://cdnjs.com/index.html
