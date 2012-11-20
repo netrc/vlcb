@@ -1,4 +1,8 @@
-h1.vlc {
+body {
+    background-color: #000000;
+}
+
+.vlc {
     color:sienna;
     font-family: 'Monsieur La Doulaise', cursive;
     }

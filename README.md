@@ -39,6 +39,7 @@ view-source:http://twitter.github.com/bootstrap/examples/carousel.html#
 
 node.js
 * http://nodemanual.org/latest/
+* http://nodeguide.com/style.html
 
 jade
 
