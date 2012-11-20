@@ -2,9 +2,60 @@ doctype 5
 html
   head
     title= title
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
     link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Monsieur+La+Doulaise', type='text/css')
     link(rel='stylesheet', href='vstyle.css', type='text/css')
+    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css')
 
 body
+  div.container.navbar-wrapper
+    div.navbar.navbar-inverse
+      div.navbar-inner
+        a.btn.btn-navbar(data-toggle='collapse',data-target='.nav-collapse')
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.brand(href='/') VLC
+        div.nav-collapse.collapse
+          ul.nav
+            li
+              a(href='rubbings') Rubbings
+            li
+              a(href='brasses') Brasses
+            li
+              a(href='churches') Churches
+            li
+              a(href='map') Map
+            li.dropdown
+              a.dropdown-toggle(href="#", data-toggle="dropdown") About
+                b.caret
+              ul.dropdown-menu
+                li
+                  a(href="about") About VLC
+                li
+                  a(href="updates") Updates
+                li
+                  a(href="book") Purchase Book...
+                li.divider
+                li
+                  a(href="pictures") Pictures
+                li
+                  a(href="notes") Notes
+                li
+                  a(href="qa") Data Check
+
+
+
+
+
   block maincontent
-  a(href='/') home
+
+  footer
+    p.pull-right
+      a(href='/')
+        Home
+    p
+      &copy; 2012 Richard Campbell
+
+  script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js")
+  script(src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js")
