@@ -6,3 +6,52 @@ body {
     color:sienna;
     font-family: 'Monsieur La Doulaise', cursive;
     }
+    
+ .carousel {
+      margin-bottom: 60px;
+    }
+
+.carousel .container {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+.carousel-control {
+      background-color: transparent;
+      border: 0;
+      font-size: 120px;
+      margin-top: 0;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+    }
+
+.carousel .item {
+      height: 500px;
+    }
+
+.carousel img {   
+    display: block;   
+    margin-left: auto;   
+    margin-right: auto;
+    }
+    
+
+.carousel-caption {
+      background-color: transparent;
+      position: static;
+      padding: 0 20px;
+      margin-bottom: 100px;
+    }
+
+.carousel-caption h1,
+    .carousel-caption .lead {
+      margin: 0;
+      line-height: 1.25;
+      color: #fff;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+    }
+
+.carousel-caption .btn {
+      margin-top: 10px;
+    }
