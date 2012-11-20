@@ -45,6 +45,8 @@ jade
 * http://www.devthought.com/code/use-jade-blocks-not-layouts/
 * https://github.com/visionmedia/jade#a18
 * http://shapeshed.com/creating-a-basic-site-with-node-and-express/
+* http://scalate.fusesource.org/documentation/jade-syntax.html
+
 
 express
 
@@ -55,3 +57,5 @@ mongodb
 OtherCDNs
 * http://www.bootstrapcdn.com/
 * http://cdnjs.com/index.html
+
+bootstrap carousel - http://twitter.github.com/bootstrap/examples/carousel.html#
