@@ -3,10 +3,4 @@ extends layout
 block pagecontent
   div.container
     div.span12
-      textarea#aboutNote(rows='60')  bb aa
-
-block pagescript
-  script
-    $(document).ready(function(){
-      $('#aboutNote').val('.val: In 1968, the Campbell family - Tom, Ginny, Robert, and Richard - moved to England.');
-    });
+      div.about!= mdtext

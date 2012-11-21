@@ -11,6 +11,10 @@ textarea {
     width: 100%
 }
 
+.about {
+    background: #EEE;
+}
+
  .carousel {
       margin-bottom: 60px;
     }
