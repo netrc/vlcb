@@ -6,7 +6,11 @@ body {
     color:sienna;
     font-family: 'Monsieur La Doulaise', cursive;
     }
-    
+
+textarea {
+    width: 100%
+}
+
  .carousel {
       margin-bottom: 60px;
     }

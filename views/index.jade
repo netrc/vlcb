@@ -1,6 +1,6 @@
 extends layout
 
-block maincontent
+block pagecontent
   div#myCarousel(class='carousel slide')
     div.carousel-inner
       div.item.active
@@ -15,3 +15,7 @@ block maincontent
         img(src="https://lh6.googleusercontent.com/-1OrXGU5bFPw/UFZzVXr2FEI/AAAAAAAAMwk/GtwnRnUrwvg/s800/VLC-66-b.JPG")
   a.left.carousel-control(href="#myCarousel",data-slide="prev") &lsaquo;
   a.right.carousel-control(href="#myCarousel",data-slide="next") &rsaquo;
+
+block pagescript
+  script
+    !function ($) { $(function(){ $('#myCarousel').carousel() }) }(window.jQuery)

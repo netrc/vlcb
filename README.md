@@ -2,7 +2,6 @@ vlcb
 ====
 
 Todo
-- add node.js
 - add mongodb
 - set up mongolab host
 - test scripts for mongolab
@@ -29,12 +28,7 @@ view-source:http://twitter.github.com/bootstrap/examples/carousel.html#
 - npm install jade
 - npm install mongolian
 - npm install express
-
-
-== Notes on myhost
-* added git
-	# rpm -Uvh http://repo.webtatic.com/yum/centos/5/latest.rpm
-	# yum install --enablerepo=webtatic git-all
+- git remote add origin git@github.com:C9Support/testPush.git 
 
 
 node.js
@@ -60,3 +54,8 @@ OtherCDNs
 * http://cdnjs.com/index.html
 
 bootstrap carousel - http://twitter.github.com/bootstrap/examples/carousel.html#
+
+old notes on myhost
+* added git
+    # rpm -Uvh http://repo.webtatic.com/yum/centos/5/latest.rpm
+	# yum install --enablerepo=webtatic git-all
