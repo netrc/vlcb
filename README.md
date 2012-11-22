@@ -52,6 +52,7 @@ mongodb
 OtherCDNs
 * http://www.bootstrapcdn.com/
 * http://cdnjs.com/index.html
+* http://cachedcommons.org/
 
 bootstrap carousel - http://twitter.github.com/bootstrap/examples/carousel.html#
 

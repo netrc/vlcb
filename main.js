@@ -21,6 +21,7 @@ app.set('views', __dirname + '/views');
 
 app.get('/', vroutes.vindex);
 app.get('/about', vroutes.about);
+app.get('/rest/Note/about', vroutes.restGetAboutMD);
 
 console.log('initConn');
 DbMgr.initConn( "vlc", "vlcmdb!", "ds033307.mongolab.com", "33307", "vlcbtest");

@@ -28,7 +28,8 @@ exports.about = function(doIt) {
     noteColl.findOne( {category:'aboutNote'}, function(err,docData){
         if (err) {
             docData = { mdtext: "error finding 'about' note: " + err };
-         }
+        }
+        docData._id = "";   
         console.log("about: "+docData.mdtext);
         doIt(docData);
     } );
