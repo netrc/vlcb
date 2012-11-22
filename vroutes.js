@@ -21,6 +21,15 @@ exports.restGetAboutMD = function(req,res) {
         res.send(data.mdtext);
     });
 };
+// store the raw markdown *and* return html
+exports.restPutAboutMD = function(req,res) {
+    var newText = req.body.value;
+    console.log("put new text:"+newText);
+    DbMgr.aboutStore( newText, function(){
+        res.send(Md.toHTML(newText));
+    });
+};
+
 // puts the markdown text back to the database, then returns the rendered text (the page or the text?)
 // exports.restAboutPut = function(req,res) {
 //    DbMgr.aboutPut(function(req=.data){

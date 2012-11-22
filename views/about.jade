@@ -12,12 +12,13 @@ block pagecontent
 block pagescript
   script
     $(document).ready(function() {
-      $('.about').editable('http://www.example.com/save.php', { 
+      $('.about').editable('http://vlcb.netrc.c9.io/rest/Note/about', { 
          type      : 'textarea',
+         method    : 'PUT',
          loadurl : 'http://vlcb.netrc.c9.io/rest/Note/about',
          cancel    : 'Cancel',
          submit    : 'OK',
-         indicator : '<img src="img/indicator.gif">',
+         indicator : '<img src="favicon.ico">',
          tooltip   : 'Click to edit...'
     });
     alert("before rest get");

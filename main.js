@@ -14,6 +14,7 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.cookieParser('foobar'));
 app.use(express.session());
+app.use(express.bodyParser());
 app.use(app.router);
 app.use(express.static('views'));   // will check this for pages...
 
@@ -22,6 +23,8 @@ app.set('views', __dirname + '/views');
 app.get('/', vroutes.vindex);
 app.get('/about', vroutes.about);
 app.get('/rest/Note/about', vroutes.restGetAboutMD);
+app.post('/rest/Note/about', vroutes.restPutAboutMD);
+
 
 console.log('initConn');
 DbMgr.initConn( "vlc", "vlcmdb!", "ds033307.mongolab.com", "33307", "vlcbtest");
