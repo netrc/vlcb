@@ -41,10 +41,8 @@ exports.aboutStore = function(newText, doIt) {
     var newAboutNote = { category: 'aboutNote', date: 'foo', mdtext: newText };
     noteColl.update( {category:'aboutNote'}, newAboutNote, function(err,docData){
         if (err) {
-            docData = { mdtext: "error updating 'about' note: " + err };
+            console.error("error updating 'about' note: " + err);
         }
-        docData._id = "";   
-        console.log("about store: "+docData.mdtext);
         doIt();
     } );
 };

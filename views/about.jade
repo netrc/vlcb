@@ -4,27 +4,19 @@ block pagecontent
   div.container
     div.span12
       div.about!= mdtext
-      hr
-      p separationsalble
-      hr
-      div#testabout ...edit me
 
 block pagescript
   script
     $(document).ready(function() {
       $('.about').editable('http://vlcb.netrc.c9.io/rest/Note/about', { 
          type      : 'textarea',
-         method    : 'PUT',
          loadurl : 'http://vlcb.netrc.c9.io/rest/Note/about',
          cancel    : 'Cancel',
          submit    : 'OK',
          indicator : '<img src="favicon.ico">',
          tooltip   : 'Click to edit...'
-    });
-    alert("before rest get");
+      });
     $.get("http://vlcb.netrc.c9.io/rest/Note/about","",function(d,tstatus,jxhr) {
-        alert("rest get");
-        $("#testabout").html(d);
-        }
-    );
+        $("#about").html(d);
+        } );
     });

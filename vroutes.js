@@ -22,7 +22,7 @@ exports.restGetAboutMD = function(req,res) {
     });
 };
 // store the raw markdown *and* return html
-exports.restPutAboutMD = function(req,res) {
+exports.restPostAboutMD = function(req,res) {
     var newText = req.body.value;
     console.log("put new text:"+newText);
     DbMgr.aboutStore( newText, function(){

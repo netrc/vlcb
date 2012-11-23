@@ -23,7 +23,7 @@ app.set('views', __dirname + '/views');
 app.get('/', vroutes.vindex);
 app.get('/about', vroutes.about);
 app.get('/rest/Note/about', vroutes.restGetAboutMD);
-app.post('/rest/Note/about', vroutes.restPutAboutMD);
+app.post('/rest/Note/about', vroutes.restPostAboutMD);
 
 
 console.log('initConn');
