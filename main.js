@@ -16,14 +16,17 @@ app.use(express.cookieParser('foobar'));
 app.use(express.session());
 app.use(express.bodyParser());
 app.use(app.router);
-app.use(express.static('views'));   // will check this for pages...
+app.use(express.static('views'));   // will check this dir for undefined pages...
 
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/views');  // sets render dir
 
 app.get('/', vroutes.vindex);
 app.get('/about', vroutes.about);
+app.get('/church', vroutes.church);
 app.get('/rest/Note/about', vroutes.restGetAboutMD);
 app.post('/rest/Note/about', vroutes.restPostAboutMD);
+app.get('/rest/Pic',vroutes.restGetPic);
+app.get('/rest/Church',vroutes.restGetChurch);
 
 
 console.log('initConn');

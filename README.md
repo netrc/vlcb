@@ -1,28 +1,30 @@
 vlcb
 ====
 
-Todo
-- add mongodb
-- set up mongolab host
+== Todo
+- package.json
+- banner
+- Church list
+- Church add
 - test scripts for mongolab
-- knockout.js
-- bootstrap ?
-- content flow - http://www.jacksasylum.eu/ContentFlow/
+- powered by vim, c9.io, node.js, bootstrap, mondodb, mongolab, jeditable, express
+- fixup CDNs
+- not used? knockout.js
+- not needed? content flow - http://www.jacksasylum.eu/ContentFlow/
 
-Arch
+== Arch
 - json on mongolab
-- pics on flickr/picasa
+- pics on picasa
 - node.js and client javascript
 - infinite scroll for lists
 - Rubbings, Brasses, Churches, Notes - Map, Quality
 
-Tasks
-- banner
-- tabs
-- Church list
-- Church add
-
-view-source:http://twitter.github.com/bootstrap/examples/carousel.html#
+== Done
+- add mongodb
+- set up mongolab host
+- tabs (nope - using bootstrap)
+- bootstrap carousel - http://twitter.github.com/bootstrap/examples/carousel.html#
+- bootstrap ?
 
 == Notes on c9.io
 - npm install jade
@@ -30,31 +32,43 @@ view-source:http://twitter.github.com/bootstrap/examples/carousel.html#
 - npm install express
 - git remote add origin git@github.com:C9Support/testPush.git 
 
-
 node.js
 * http://nodemanual.org/latest/
 * http://nodeguide.com/style.html
 
-jade
+Hosting
+* https://github.com/joyent/node/wiki/Node-Hosting
+* http://webbynode.com - 384MB/18GBdisk/256GBbandwidth - $15/month
+* http://nodejitsu.com/paas/pricing.html - free dev ; $3/month 1drone
+* http://www.cloudfoundry.com/ ??
+* http://www.webfaction.com/services/hosting  - $6-$9/month
+* http://aws.amazon.com/ec2/pricing/
+* * small $0.065/hour == $46/month   - reserved small $69/year == $6/month
+* * micro $0.02 = $15/month
+* * spot instance small - $5/m
+* http://www.rackspace.com/cloud/public/sites/pricing/ - $150/m !!
 
+jade
 * http://www.devthought.com/code/use-jade-blocks-not-layouts/
 * https://github.com/visionmedia/jade#a18
 * http://shapeshed.com/creating-a-basic-site-with-node-and-express/
 * http://scalate.fusesource.org/documentation/jade-syntax.html
 
-
 express
 
-mongodb
-* http://www.mongodb.org/display/DOCS/node.JS;jsessionid=6DCF010D05B06229511682DD673568FA
+mongo
+* https://mongolab.com/databases/vlcbtest/collections/
+* mongodb - http://www.mongodb.org/display/DOCS/node.JS;jsessionid=6DCF010D05B06229511682DD673568FA
+* mongolian - https://github.com/marcello3d/node-mongolian
 
+bootstrap and html
+* http://www.appelsiini.net/projects/jeditable
 
 OtherCDNs
 * http://www.bootstrapcdn.com/
 * http://cdnjs.com/index.html
 * http://cachedcommons.org/
 
-bootstrap carousel - http://twitter.github.com/bootstrap/examples/carousel.html#
 
 old notes on myhost
 * added git

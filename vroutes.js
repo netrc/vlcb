@@ -15,6 +15,10 @@ exports.about = function(req, res) {
     });
 };
 
+exports.church = function(req, res) {
+    res.render('church.jade', { thisAction: 'Church'});
+};
+
 // needs to return just the raw markdown text
 exports.restGetAboutMD = function(req,res) {
     DbMgr.about( function(data){
@@ -29,14 +33,22 @@ exports.restPostAboutMD = function(req,res) {
         res.send(Md.toHTML(newText));
     });
 };
+exports.restGetAboutMD = function(req,res) {
+    DbMgr.about( function(data){
+        res.send(data.mdtext);
+    });
+};
 
-// puts the markdown text back to the database, then returns the rendered text (the page or the text?)
-// exports.restAboutPut = function(req,res) {
-//    DbMgr.aboutPut(function(req=.data){
-//        res.render('about.jade', { thisAction: 'About', mdtext: Md.toHTML(req.data)});
-//      or res.send( Md.toHTML(req.data) );
-//    });
-//};
+exports.restGetPic = function(req,res) {
+    DbMgr.picAll( function(pa){
+       res.send(pa); 
+    });
+}
+exports.restGetChurch = function(req,res) {
+    DbMgr.churchAll( function(pa){
+       res.send(pa); 
+    });
+}
 //
 // OR.... about.html could have the html template, and then read() calls the restGet AJAX/REST to put in the html'd data
 //  but that just simplifies exports.about by 1 line (in other words, gets rid of DbMgr in .about; DbMgr calls then just in two rest functions)
