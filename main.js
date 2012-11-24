@@ -20,13 +20,19 @@ app.use(express.static('views'));   // will check this dir for undefined pages..
 
 app.set('views', __dirname + '/views');  // sets render dir
 
+// html views
 app.get('/', vroutes.vindex);
 app.get('/about', vroutes.about);
 app.get('/church', vroutes.church);
+app.get('/brass', vroutes.brass);
+app.get('/rubbing', vroutes.rubbing);
+// rest interfaces
 app.get('/rest/Note/about', vroutes.restGetAboutMD);
 app.post('/rest/Note/about', vroutes.restPostAboutMD);
 app.get('/rest/Pic',vroutes.restGetPic);
 app.get('/rest/Church',vroutes.restGetChurch);
+app.get('/rest/Brass',vroutes.restGetBrass);
+app.get('/rest/Rubbing',vroutes.restGetRubbing);
 
 
 console.log('initConn');

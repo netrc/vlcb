@@ -1,0 +1,35 @@
+extends layout
+
+
+block pagecontent
+  h1 Rubbing
+    form.well.form-inline(method="post")
+      input.input-small(type="text",name="vn",placeholder="VLC#")
+      input.input-small(type="text",name="rn",placeholder="Rubbing Name")
+      button.btn(type="submit"): i.icon-plus-sign
+
+  div.accordion
+    div.accordion-group
+      div#rubbingList.accordion-heading             
+
+
+block pagescript
+  script
+    $(document).ready(function() {
+    $.get("http://vlcb.netrc.c9.io/rest/Rubbing/","",function(d,tstatus,jxhr) {
+        //alert("got rubbing "+d.length);
+        for (var i=0;i<d.length;i++) { 
+            r = d[i];
+            newDiv  = "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" href=\"#collapse"+i+"\">\n";
+            newDiv += "      <b> "+r.desc+"</b>\n";
+            newDiv += "      <button type=\"button\" href=\"editBrassModal\" data-toggle=\"modal\"> <i class=\"icon-pencil\"></i></button>\n";
+            newDiv += "    </span>\n";
+            newDiv += "    <div class=\"accordion-body collapse\" id=\"collapse"+i+"\">\n";
+            newDiv += "      <div class=\"accordion-inner\">\n";
+            newDiv += "        rubbing text for this\n";   
+            newDiv += "      </div>\n";
+            newDiv += "    </div>\n";
+            $("#rubbingList").append(newDiv);
+        }
+        } );
+    });

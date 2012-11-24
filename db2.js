@@ -67,6 +67,14 @@ exports.churchAll = function(doIt) {
     dbFindAll(churchColl, doIt);
 };
 
+exports.brassAll = function(doIt) {
+    dbFindAll(brassColl, doIt);
+};
+
+exports.rubbingAll = function(doIt) {
+    dbFindAll(rubbingColl, doIt);
+};
+
 
 exports.picAll = function(doIt) {
     dbFindAll(picColl, doIt);

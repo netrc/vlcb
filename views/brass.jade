@@ -1,0 +1,34 @@
+extends layout
+
+
+block pagecontent
+  h1 Brass
+    form.well.form-inline(method="post")
+      input.input-small(type="text",name="bn",placeholder="Brass Name")
+      button.btn(type="submit"): i.icon-plus-sign
+
+  div.accordion
+    div.accordion-group
+      div#brassList.accordion-heading             
+
+
+block pagescript
+  script
+    $(document).ready(function() {
+    $.get("http://vlcb.netrc.c9.io/rest/Brass/","",function(d,tstatus,jxhr) {
+        //alert("got brasses "+d.length);
+        for (var i=0;i<d.length;i++) { 
+            b = d[i];
+            newDiv  = "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" href=\"#collapse"+i+"\">\n";
+            newDiv += "      <b> "+b.name+"</b>\n";
+            newDiv += "      <button type=\"button\" href=\"editBrassModal\" data-toggle=\"modal\"> <i class=\"icon-pencil\"></i></button>\n";
+            newDiv += "    </span>\n";
+            newDiv += "    <div class=\"accordion-body collapse\" id=\"collapse"+i+"\">\n";
+            newDiv += "      <div class=\"accordion-inner\">\n";
+            newDiv += "        brass the intner text for this brass\n";   
+            newDiv += "      </div>\n";
+            newDiv += "    </div>\n";
+            $("#brassList").append(newDiv);
+        }
+        } );
+    });
