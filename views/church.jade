@@ -1,0 +1,35 @@
+extends layout
+
+
+block pagecontent
+  h1 Church
+    form.well.form-inline(method="post")
+      input.input-small(type="text",name="cn",placeholder="Church Name")
+      input.input-small(type="text",name="ca",placeholder="Address")
+      button.btn(type="submit"): i.icon-plus-sign
+
+  div.accordion
+    div.accordion-group
+      div#churchList.accordion-heading             
+
+
+block pagescript
+  script
+    $(document).ready(function() {
+    $.get("http://vlcb.netrc.c9.io/rest/Church/","",function(d,tstatus,jxhr) {
+        //alert("got churches"+d.length);
+        for (var i=0;i<d.length;i++) { 
+            c = d[i];
+            newDiv  = "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" href=\"#collapse"+i+"\">\n";
+            newDiv += "      <b> "+c.name+" - "+c.address+"</b>\n";
+            newDiv += "      <button type=\"button\" href=\"editChurchModal\" data-toggle=\"modal\"> <i class=\"icon-pencil\"></i></button>\n";
+            newDiv += "    </span>\n";
+            newDiv += "    <div class=\"accordion-body collapse\" id=\"collapse"+i+"\">\n";
+            newDiv += "      <div class=\"accordion-inner\">\n";
+            newDiv += "        the intner text for this church\n";   
+            newDiv += "      </div>\n";
+            newDiv += "    </div>\n";
+            $("#churchList").append(newDiv);
+        }
+        } );
+    });
