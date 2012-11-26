@@ -7,6 +7,7 @@ vlcb
 - Church list
 - Church add
 - test scripts for mongolab
+- google analytics
 - powered by vim, c9.io, node.js, bootstrap, mondodb, mongolab, jeditable, express
 - fixup CDNs
 - not used? knockout.js
@@ -40,7 +41,8 @@ Hosting
 * https://github.com/joyent/node/wiki/Node-Hosting
 * http://webbynode.com - 384MB/18GBdisk/256GBbandwidth - $15/month
 * http://nodejitsu.com/paas/pricing.html - free dev ; $3/month 1drone
-* http://www.cloudfoundry.com/ ??
+* http://www.cloudfoundry.com/ from VMware; free for now??
+* http://www.heroku.com/ - 1 dyno free; 1 worker $35/month
 * http://www.webfaction.com/services/hosting  - $6-$9/month
 * http://aws.amazon.com/ec2/pricing/
 * * small $0.065/hour == $46/month   - reserved small $69/year == $6/month

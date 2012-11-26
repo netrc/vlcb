@@ -35,7 +35,7 @@ exports.about = function(doIt) {
             docData = { mdtext: "error finding 'about' note: " + err };
         }
         docData._id = "";    // this val is very long and involved, so I clear it  
-        console.log("about: "+docData.mdtext);
+        //console.log("about: "+docData.mdtext);
         doIt(docData);
     } );
 };
