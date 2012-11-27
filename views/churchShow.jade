@@ -1,0 +1,23 @@
+extends layout
+
+
+block pagecontent
+  h2#ctitle #{cname}
+  hr
+  p pictures carousel
+  p#clatlon latlon
+  p#cyear year
+  p brasses
+  p rubbings
+  p note
+  hr
+
+block pagescript
+  script
+    $(document).ready(function() {
+      $.get("http://vlcb.netrc.c9.io/rest/Church/#{cname}","",function(d,tstatus,jxhr) {
+        $("#ctitle").html(d.name + "&nbsp; &nbsp; &ndash; &nbsp; &nbsp; " + d.address);
+        $("#clatlon").html(d.latlon);
+        $("#cyear").html(d.year);
+      } );
+    });

@@ -24,6 +24,7 @@ app.set('views', __dirname + '/views');  // sets render dir
 app.get('/', vroutes.vindex);
 app.get('/about', vroutes.about);
 app.get('/church', vroutes.church);
+app.get('/church/:cname', vroutes.churchShow);
 app.get('/brass', vroutes.brass);
 app.get('/rubbing', vroutes.rubbing);
 // rest interfaces
@@ -31,6 +32,7 @@ app.get('/rest/Note/about', vroutes.restGetAboutMD);
 app.post('/rest/Note/about', vroutes.restPostAboutMD);
 app.get('/rest/Pic',vroutes.restGetPic);
 app.get('/rest/Church',vroutes.restGetChurch);
+app.get('/rest/Church/:cname',vroutes.restGetChurchShow);
 app.get('/rest/Brass',vroutes.restGetBrass);
 app.get('/rest/Rubbing',vroutes.restGetRubbing);
 

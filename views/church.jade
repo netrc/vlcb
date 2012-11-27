@@ -2,16 +2,27 @@ extends layout
 
 
 block pagecontent
-  h1 Church
-    form.well.form-inline(method="post")
-      input.input-small(type="text",name="cn",placeholder="Church Name")
-      input.input-small(type="text",name="ca",placeholder="Address")
-      button.btn(type="submit"): i.icon-plus-sign
+  b.pageHead Church
+  form.form-inline(method="post")
+    input.input-small(type="text",name="cn",placeholder="Church Name")
+    input.input-small(type="text",name="ca",placeholder="Address")
+    button.btn(type="submit"): i.icon-plus-sign
 
   div.accordion
     div.accordion-group
       div#churchList.accordion-heading             
 
+  div#editChurchModal.modal.fade
+    div.modal-header
+      a.close(data-dismiss="modal") &times;
+      h3 Edit church...
+    div.modal-body
+      p address
+      p latlon
+      p year
+      p brief note...??
+      p pic thumbnail
+      p list of brasses
 
 block pagescript
   script
@@ -22,8 +33,9 @@ block pagescript
             c = d[i];
             newDiv  = "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" href=\"#collapse"+i+"\">\n";
             newDiv += "      <b> "+c.name+" - "+c.address+"</b>\n";
-            newDiv += "      <button type=\"button\" href=\"editChurchModal\" data-toggle=\"modal\"> <i class=\"icon-pencil\"></i></button>\n";
+            //newDiv += "      <button type=\"button\" href=\"#editChurchModal\" data-toggle=\"modal\"> <i class=\"icon-pencil\"></i></button>\n";
             newDiv += "    </span>\n";
+            newDiv += "    <a href=\"church/" + c.name + "\" target=\"_blank\"> <i class=\"icon-share-alt\"></i></a>\n";
             newDiv += "    <div class=\"accordion-body collapse\" id=\"collapse"+i+"\">\n";
             newDiv += "      <div class=\"accordion-inner\">\n";
             newDiv += "        the intner text for this church\n";   

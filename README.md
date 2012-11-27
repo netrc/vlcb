@@ -19,6 +19,7 @@ vlcb
 - node.js and client javascript
 - infinite scroll for lists
 - Rubbings, Brasses, Churches, Notes - Map, Quality
+- host somewhere - heroku
 
 == Done
 - add mongodb
@@ -26,6 +27,28 @@ vlcb
 - tabs (nope - using bootstrap)
 - bootstrap carousel - http://twitter.github.com/bootstrap/examples/carousel.html#
 - bootstrap ?
+
+== Data Model
+* General
+* * 1-to-N relationship is held solely by "backrefs" from each N to 1
+* * 1-to-1 is held solely by "forward ref" (meaning e.g. from Brass to mainpic)
+* Church -  name, address, latlon, mainpic, note
+* * note includes pamphlet link; other pics are from pic item 'index' value back to church name
+* Brass - name, church, location, year, tags, mainpic, note
+* * n.b. back link from brass to church name; location is place inside the church
+* Rubbing - vlcnum, brass, name, location, date, mainpic, note
+* * things like inscription, framed, condition, foil are in the text of the note
+* Note - name, tag, date, [versionNum]
+* * tag is a category, e.g. About, blog, brass; (n.b. don't need an index here)
+* * could be immutable and just add new versions....
+* Pic - name, tag, index, thumburl, fullurl
+* * tag is a category, index is the key back to the item (brass, church)
+
+Seems like the right thing to do is put values like "note" and "pics", which
+are really related to just one thing (a church or brass) into their enclosing doc
+(the church doc or brass doc). But that makes updating cumbersome - when changing
+a picture's owner, e.g. a church, you need to update the old owner and the new owner
+doc. By separting into a quasi-"normal" form, you can update in just one place.
 
 == Notes on c9.io
 - npm install jade
@@ -43,6 +66,8 @@ Hosting
 * http://nodejitsu.com/paas/pricing.html - free dev ; $3/month 1drone
 * http://www.cloudfoundry.com/ from VMware; free for now??
 * http://www.heroku.com/ - 1 dyno free; 1 worker $35/month
+* * - http://support.cloud9ide.com/entries/20710298-deploy-your-application-to-heroku
+* * - https://devcenter.heroku.com/articles/nodejs
 * http://www.webfaction.com/services/hosting  - $6-$9/month
 * http://aws.amazon.com/ec2/pricing/
 * * small $0.065/hour == $46/month   - reserved small $69/year == $6/month

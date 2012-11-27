@@ -61,10 +61,20 @@ var dbFindAll = function( mColl, doIt) {
         valArray.forEach(function(p){p._id="";});  // don't pass _id; big uninteresting string
         doIt(valArray);
     });    
-}
+};
 
 exports.churchAll = function(doIt) {
     dbFindAll(churchColl, doIt);
+};
+exports.churchFind = function(n, doIt) {
+    churchColl.findOne( {name: n}, function(err, d) {
+        if (err) {
+            console.error("db church Find ("+n+") error:"+err);
+            d = {};
+        }
+        console.log("db church find("+n+"): "+d);
+        doIt(d);
+        } );
 };
 
 exports.brassAll = function(doIt) {

@@ -11,6 +11,9 @@ textarea {
     width: 100%
 }
 
+.pageHead {
+    font-size: 14pt;
+}
 .about {
     background: #EEE;
 }

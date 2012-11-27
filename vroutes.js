@@ -19,6 +19,10 @@ exports.church = function(req, res) {
     res.render('church.jade', { thisAction: 'Church'});
 };
 
+exports.churchShow = function(req, res) {
+    res.render('churchShow.jade', { thisAction: 'Church', cname: req.params.cname});
+};
+
 exports.brass = function(req, res) {
     res.render('brass.jade', { thisAction: 'Brass'});
 };
@@ -56,6 +60,12 @@ exports.restGetPic = function(req,res) {
 
 exports.restGetChurch = function(req,res) {
     DbMgr.churchAll( function(pa){
+       res.send(pa); 
+    });
+};
+
+exports.restGetChurchShow = function(req,res) {
+    DbMgr.churchFind( req.params.cname, function(pa){
        res.send(pa); 
     });
 };
