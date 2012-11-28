@@ -8,6 +8,7 @@ vlcb
 - Church add
 - Church full show
 - Church full show edit
+- make sure *all* updates use $set functionality
 - test scripts for mongolab
 - data import for mongolab
 - global search

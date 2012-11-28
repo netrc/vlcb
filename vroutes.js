@@ -99,6 +99,13 @@ exports.restGetPicByChurch = function(req,res) {
        res.send(pa); 
     });
 };
+exports.restPostChurch_latlon = function(req,res) {
+    var newVal = req.body.value;
+    console.log("vr postcl:" + newVal);
+    DbMgr.postChurch_latlon( req.params.cname, newVal, function() {
+        res.send(newVal);
+    });
+};
 
 exports.restGetRubbing = function(req,res) {
     DbMgr.rubbingAll( function(pa){

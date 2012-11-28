@@ -52,6 +52,17 @@ exports.aboutStore = function(newText, doIt) {
     } );
 };
 
+exports.postChurch_latlon = function( cn, val, doIt ) {
+    console.log("pcll: "+cn + " - " + val);
+    churchColl.update( {name:cn}, { $set: { latlon: val } }, function(err,docData){
+        if (err) {
+            console.error("error updating latlon: " + err);
+        }
+        doIt();
+    } );
+    
+};
+
 // expecting just one specific note, e.g. for Church, Brass
 exports.note = function(c, t, doIt) {
     var sObj = { category: c, title: t };
