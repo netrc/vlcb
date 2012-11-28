@@ -4,9 +4,16 @@ vlcb
 == Todo
 - package.json
 - banner
-- Church list
+- Church list - which details?
 - Church add
+- Church full show
+- Church full show edit
 - test scripts for mongolab
+- data import for mongolab
+- global search
+- Rubbing search, brass search, church search, notes search
+- Rubbing page - filter/sort by none, year, brass, church, shire
+- VLC Diary - one note or multi?
 - google analytics
 - powered by vim, c9.io, node.js, bootstrap, mondodb, mongolab, jeditable, express
 - fixup CDNs
@@ -37,7 +44,7 @@ vlcb
 * Brass - name, church, location, year, tags, mainpic, note
 * * n.b. back link from brass to church name; location is place inside the church
 * Rubbing - vlcnum, brass, name, location, date, mainpic, note
-* * things like inscription, framed, condition, foil are in the text of the note
+* * things like style, inscription, framed, condition, foil are in the text of the note
 * Note - name, tag, date, [versionNum]
 * * tag is a category, e.g. About, blog, brass; (n.b. don't need an index here)
 * * could be immutable and just add new versions....

@@ -34,10 +34,11 @@ app.get('/rest/Pic',vroutes.restGetPic);
 app.get('/rest/Church',vroutes.restGetChurch);
 app.get('/rest/Church/:cname',vroutes.restGetChurchShow);
 app.get('/rest/Brass',vroutes.restGetBrass);
+app.get('/rest/Church/:cname/Brass',vroutes.restGetBrassByChurch);
+app.get('/rest/Church/:cname/Pic',vroutes.restGetPicByChurch);
 app.get('/rest/Rubbing',vroutes.restGetRubbing);
 
 
-console.log('initConn');
 DbMgr.initConn( "vlc", "vlcmdb!", "ds033307.mongolab.com", "33307", "vlcbtest");
 console.log('initConn - done');
 

@@ -41,13 +41,13 @@ exports.restGetAboutMD = function(req,res) {
 // store the raw markdown *and* return html
 exports.restPostAboutMD = function(req,res) {
     var newText = req.body.value;
-    console.log("put new text:"+newText);
+    //console.log("put new text:"+newText);
     DbMgr.aboutStore( newText, function(){
         res.send(Md.toHTML(newText));
     });
 };
-exports.restGetAboutMD = function(req,res) {
-    DbMgr.about( function(data){
+exports.restGetNoteMD = function(req,res) {
+    DbMgr.note(req.params.category, req.params.title, function(data){
         res.send(data.mdtext);
     });
 };
@@ -72,6 +72,16 @@ exports.restGetChurchShow = function(req,res) {
 
 exports.restGetBrass = function(req,res) {
     DbMgr.brassAll( function(pa){
+       res.send(pa); 
+    });
+};
+exports.restGetBrassByChurch = function(req,res) {
+    DbMgr.brassByChurch( req.params.cname, function(pa){
+       res.send(pa); 
+    });
+};
+exports.restGetPicByChurch = function(req,res) {
+    DbMgr.picByChurch( req.params.cname, function(pa){
        res.send(pa); 
     });
 };

@@ -52,8 +52,23 @@ exports.aboutStore = function(newText, doIt) {
     } );
 };
 
-var dbFindAll = function( mColl, doIt) {
-    mColl.find({}).toArray(function(err, valArray) {
+// expecting just one specific note, e.g. for Church, Brass
+exports.note = function(c, t, doIt) {
+    var sObj = { category: c, title: t };
+    // need to check if t is blank
+    noteColl.findOne( sObj, function(err,docData){
+        if (err) {
+            docData = { mdtext: "no note: " + err };
+        }
+        docData._id = "";    // this val is very long and involved, so I clear it  
+        //console.log("about: "+docData.mdtext);
+        doIt(docData);
+    } );
+};
+
+
+var dbFindAll = function( mColl, sObj, doIt) {
+    mColl.find(sObj).toArray(function(err, valArray) {
         if (err) {
             console.error("dbFindAll error:" + err);
             valArray = [];
@@ -64,7 +79,7 @@ var dbFindAll = function( mColl, doIt) {
 };
 
 exports.churchAll = function(doIt) {
-    dbFindAll(churchColl, doIt);
+    dbFindAll(churchColl, {}, doIt);
 };
 exports.churchFind = function(n, doIt) {
     churchColl.findOne( {name: n}, function(err, d) {
@@ -78,18 +93,26 @@ exports.churchFind = function(n, doIt) {
 };
 
 exports.brassAll = function(doIt) {
-    dbFindAll(brassColl, doIt);
+    dbFindAll(brassColl, {}, doIt);
+};
+exports.brassByChurch = function(n,doIt) {
+    dbFindAll(brassColl, {church:n}, doIt);
+};
+exports.picByChurch = function(n,doIt) {
+    console.log("db2 get pic by curch: ",n)
+    dbFindAll(picColl, {category:"Church", name:n}, doIt);
 };
 
 exports.rubbingAll = function(doIt) {
-    dbFindAll(rubbingColl, doIt);
+    dbFindAll(rubbingColl, {}, doIt);
 };
 
 
 exports.picAll = function(doIt) {
-    dbFindAll(picColl, doIt);
+    dbFindAll(picColl, {}, doIt);
 };
 
+/// these are not developed yet. trying to get a class set up
 exports.pic = {
     coll : picColl,
     findAll : function(doIt) {

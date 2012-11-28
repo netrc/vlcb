@@ -1,23 +1,66 @@
 extends layout
 
-
 block pagecontent
   h2#ctitle #{cname}
   hr
-  p pictures carousel
-  p#clatlon latlon
-  p#cyear year
-  p brasses
-  p rubbings
-  p note
-  hr
+  div#pic No pictures
+  p#clatlon <i> no latlon </i>
+  p#cyear <i> no year </i>
+  p#cbrasses No brasses listed.
+  div#cnote <i> add a note... </i>
+
 
 block pagescript
   script
     $(document).ready(function() {
-      $.get("http://vlcb.netrc.c9.io/rest/Church/#{cname}","",function(d,tstatus,jxhr) {
-        $("#ctitle").html(d.name + "&nbsp; &nbsp; &ndash; &nbsp; &nbsp; " + d.address);
-        $("#clatlon").html(d.latlon);
-        $("#cyear").html(d.year);
+      $.get("http://vlcb.netrc.c9.io/rest/Church/#{cname}","",function(c,tstatus,jxhr) {
+        $("#ctitle").html(c.name + "&nbsp; &nbsp; &ndash; &nbsp; &nbsp; " + c.address);
+        if (c.latlon) $("#clatlon").html(c.latlon);
+        if (c.year) $("#cyear").html(c.year);
       } );
+      $.get("http://vlcb.netrc.c9.io/rest/Church/#{cname}/Pic","",function(d,tstatus,jxhr) {
+        alert("got pics for #{cname}:"+d.length);
+        if (d.length==0) return; //
+        pstr="";
+        for (var i=0;i<d.length;i++) { 
+            p = d[i];
+            pstr = pstr + "#" + i + ": <img src=\"" + p.thumb + "\"> <p>";
+        };
+        $("#pic").html(pstr);
+      } );
+      $.get("http://vlcb.netrc.c9.io/rest/Church/#{cname}/Brass","",function(d,tstatus,jxhr) {
+        //alert("got brasses for #{cname}:"+d.length);
+        if (d.length==0) return; //
+        bstr="";
+        for (var i=0;i<d.length;i++) { 
+            b = d[i];
+            bstr = bstr + "#" + i + ": <a href=\"//brass/\">" + b.name + "</a>";
+            if ((i+1)<d.length) { bstr = bstr + ", "; };
+        };
+        $("#cbrasses").html(bstr);
+      } );
+      $("#clatlon").editable('http://vlcb.netrc.c9.io/Church/${cname}/latlon', { 
+         type      : 'text',
+         loadurl : 'http://vlcb.netrc.c9.io/rest/Church/${cname}/latlon',
+         cancel    : 'Cancel',
+         submit    : 'OK',
+         indicator : '<img src="favicon.ico">',
+         tooltip   : 'Click to edit...'
+      });
+      $("#cyear").editable('http://vlcb.netrc.c9.io/rest/Church/${cname}/year', { 
+         type      : 'text',
+         loadurl : 'http://vlcb.netrc.c9.io/rest/Church/${cname}/year',
+         cancel    : 'Cancel',
+         submit    : 'OK',
+         indicator : '<img src="favicon.ico">',
+         tooltip   : 'Click to edit...'
+      });
+      $("#cnote").editable('http://vlcb.netrc.c9.io/rest/Church/${cname}/note', { 
+         type      : 'textarea',
+         loadurl : 'http://vlcb.netrc.c9.io/rest/Church/${cname}/note',
+         cancel    : 'Cancel',
+         submit    : 'OK',
+         indicator : '<img src="favicon.ico">',
+         tooltip   : 'Click to edit...'
+      });
     });
