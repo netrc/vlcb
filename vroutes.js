@@ -31,6 +31,10 @@ exports.rubbing = function(req, res) {
     res.render('rubbing.jade', { thisAction: 'Rubbing'});
 };
 
+exports.pic = function(req, res) {
+    res.render('pic.jade', { thisAction: 'Pic'});
+};
+
 
 // needs to return just the raw markdown text
 exports.restGetAboutMD = function(req,res) {
@@ -55,6 +59,16 @@ exports.restGetNoteMD = function(req,res) {
 exports.restGetPic = function(req,res) {
     DbMgr.picAll( function(pa){
        res.send(pa); 
+    });
+};
+exports.restPostPic = function(req,res) {
+    var pn = req.param('pn');
+    var pc = req.param('pc');
+    var pt = req.param('pt');
+    var pf = req.param('pf');
+    console.log("vr post new text:"+pn);
+    DbMgr.picStore( pn, pc, pt, pf, function(d){
+        res.send("");
     });
 };
 

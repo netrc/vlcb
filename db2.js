@@ -99,7 +99,7 @@ exports.brassByChurch = function(n,doIt) {
     dbFindAll(brassColl, {church:n}, doIt);
 };
 exports.picByChurch = function(n,doIt) {
-    console.log("db2 get pic by curch: ",n)
+    //console.log("db2 get pic by curch: ",n);
     dbFindAll(picColl, {category:"Church", name:n}, doIt);
 };
 
@@ -111,16 +111,27 @@ exports.rubbingAll = function(doIt) {
 exports.picAll = function(doIt) {
     dbFindAll(picColl, {}, doIt);
 };
+exports.picStore = function(pn, pc, pt, pf, doIt) {
+    var newPic = { category: pc, name: pn, thumb: pt, full: pf };
+    console.log("db2 store pic: ",pn);
+    picColl.insert( newPic, function(err,docData){
+        if (err) {
+            console.error("error updating 'pict': " + err);
+        }
+        doIt();
+    } );
+    console.log("db2 store pic done");
+};
 
 /// these are not developed yet. trying to get a class set up
-exports.pic = {
+exports.xxxpic = {
     coll : picColl,
     findAll : function(doIt) {
         dbFindAll(this.coll, doIt);
     }
 };
 
-exports.picFindOne = function (name, doIt) {
+exports.xxxpicFindOne = function (name, doIt) {
     picColl.findOne( {name:name}, function(err,picData){
         if (err) {
             picData = { mdtext: "error finding '"+name+"' pic: " + err };
@@ -130,7 +141,7 @@ exports.picFindOne = function (name, doIt) {
         doIt(picData);
     } );
 };
-exports.picStore = function(picObj, doIt) {
+exports.xxxpicStore = function(picObj, doIt) {
     // mongodb  db.people.update( { name:"Joe" }, { $inc: { n : 1 } } );
     //noteColl.findOne( {category:'aboutNote'}, function(err,docData){
     picColl.update( {name:picObj.name}, picObj, function(err,picObj){

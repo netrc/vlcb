@@ -2,16 +2,16 @@ extends layout
 
 block pagecontent
   h2#ctitle #{cname}
-  hr
+
   div#pic No pictures
-  p#clatlon <i> no latlon </i>
-  p#cyear <i> no year </i>
+  p#clatlon <i> Add latlon... </i>
+  p#cyear <i> Add year... </i>
   p#cbrasses No brasses listed.
   div#cnote <i> add a note... </i>
 
-
 block pagescript
   script
+    alert("cs ps");
     $(document).ready(function() {
       $.get("http://vlcb.netrc.c9.io/rest/Church/#{cname}","",function(c,tstatus,jxhr) {
         $("#ctitle").html(c.name + "&nbsp; &nbsp; &ndash; &nbsp; &nbsp; " + c.address);
@@ -24,9 +24,10 @@ block pagescript
         pstr="";
         for (var i=0;i<d.length;i++) { 
             p = d[i];
-            pstr = pstr + "#" + i + ": <img src=\"" + p.thumb + "\"> <p>";
+            pstr = pstr + <img src=\"" + p.thumb + "\"> <p>";
         };
         $("#pic").html(pstr);
+        // then run the cloud carousel feature...
       } );
       $.get("http://vlcb.netrc.c9.io/rest/Church/#{cname}/Brass","",function(d,tstatus,jxhr) {
         //alert("got brasses for #{cname}:"+d.length);

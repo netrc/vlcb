@@ -11,6 +11,7 @@ vlcb
 - test scripts for mongolab
 - data import for mongolab
 - global search
+- session login for editing - https://coldie.net/?p=88
 - Rubbing search, brass search, church search, notes search
 - Rubbing page - filter/sort by none, year, brass, church, shire
 - VLC Diary - one note or multi?
