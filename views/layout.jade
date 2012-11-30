@@ -9,7 +9,7 @@ html
 
   body
     div.container.navbar-wrapper
-      div.navbar.navbar-inverse
+      div.navbar
         div.navbar-inner
           a.btn.btn-navbar(data-toggle='collapse',data-target='.nav-collapse')
             span.icon-bar
@@ -55,11 +55,11 @@ html
     block pagecontent
 
     footer
-      p.pull-right
-        a(href='/')
-          Home
       p
         &copy; 2012 Richard Campbell
+      div.pull-right
+        a(href='/')
+          Home
 
     script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js")
     script(src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js")

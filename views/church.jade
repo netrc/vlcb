@@ -1,16 +1,24 @@
 extends layout
 
-
 block pagecontent
-  b.pageHead Church
-  form.form-inline(method="post")
-    input.input-small(type="text",name="cn",placeholder="Church Name")
-    input.input-small(type="text",name="ca",placeholder="Address")
-    button.btn(type="submit"): i.icon-plus-sign
+  div.row
+    div.span2
+      b.pageHead Churches
+    div.span3
+      form.form-inline(method="post")
+        input.input-small(type="text",name="rn",placeholder="search")
+        button.btn(type="submit") Search
+    div.span3
+      form.form-inline(method="post")
+        input.input-small(type="text",name="rn",placeholder="sort")
+        button.btn(type="submit") Sort
+    div.span4
+      form.form-inline(method="post")
+        input.input-small(type="text",name="cn",placeholder="Church Name")
+        input.input-small(type="text",name="ca",placeholder="Address")
+        button.btn(type="submit"): i.icon-plus-sign
 
-  div.accordion
-    div.accordion-group
-      div#churchList.accordion-heading             
+  div#churchAccordion.accordion           
 
   div#editChurchModal.modal.fade
     div.modal-header
@@ -31,17 +39,19 @@ block pagescript
         //alert("got churches"+d.length);
         for (var i=0;i<d.length;i++) { 
             c = d[i];
-            newDiv  = "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" href=\"#collapse"+i+"\">\n";
-            newDiv += "      <b> "+c.name+" - "+c.address+"</b>\n";
-            //newDiv += "      <button type=\"button\" href=\"#editChurchModal\" data-toggle=\"modal\"> <i class=\"icon-pencil\"></i></button>\n";
+            newDiv  = "<div class=accordion-group>\n";
+            newDiv += "  <div class=accordion-heading>\n";
+            newDiv += "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#churchAccordion\" href=\"#collapse"+i+"\">\n";
+            newDiv += "      <b> "+c.name+" - "+c.address+"</b> <i class=\"icon-share-alt\"></i>\n";
             newDiv += "    </span>\n";
-            newDiv += "    <a href=\"church/" + c.name + "\" target=\"_blank\"> <i class=\"icon-share-alt\"></i></a>\n";
-            newDiv += "    <div class=\"accordion-body collapse\" id=\"collapse"+i+"\">\n";
-            newDiv += "      <div class=\"accordion-inner\">\n";
+            newDiv += "  </div>\n";
+            newDiv += "  <div class=\"accordion-body collapse\" id=\"collapse"+i+"\">\n";
+            newDiv += "    <div class=\"accordion-inner\">\n";
             newDiv += "        the intner text for this church\n";   
-            newDiv += "      </div>\n";
             newDiv += "    </div>\n";
-            $("#churchList").append(newDiv);
+            newDiv += "  </div>\n";
+            newDiv += "</div>\n";
+            $("#churchAccordion").append(newDiv);
         }
         } );
     });

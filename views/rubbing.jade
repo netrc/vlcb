@@ -1,17 +1,24 @@
 extends layout
 
-
 block pagecontent
-  h1 Rubbing
-    form.well.form-inline(method="post")
-      input.input-small(type="text",name="vn",placeholder="VLC#")
-      input.input-small(type="text",name="rn",placeholder="Rubbing Name")
-      button.btn(type="submit"): i.icon-plus-sign
+  div.row
+    div.span2
+      b.pageHead Rubbings
+    div.span3
+      form.form-inline(method="post")
+        input.input-small(type="text",name="rn",placeholder="search")
+        button.btn(type="submit") Search
+    div.span3
+      form.form-inline(method="post")
+        input.input-small(type="text",name="rn",placeholder="sort")
+        button.btn(type="submit") Sort
+    div.span4
+      form.form-inline(method="post")
+        input.input-small(type="text",name="vn",placeholder="VLC#")
+        input.input-large(type="text",name="rn",placeholder="Rubbing Name")
+        button.btn(type="submit"): i.icon-plus-sign
 
-  div.accordion
-    div.accordion-group
-      div#rubbingList.accordion-heading             
-
+  div#rubbingAccordion.accordion
 
 block pagescript
   script
@@ -20,16 +27,21 @@ block pagescript
         //alert("got rubbing "+d.length);
         for (var i=0;i<d.length;i++) { 
             r = d[i];
-            newDiv  = "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" href=\"#collapse"+i+"\">\n";
+            newDiv  = "<div class=accordion-group>\n";
+            newDiv += "  <div class=accordion-heading>\n";
+            newDiv += "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#rubbingAccordion\" href=\"#collapse"+i+"\">\n";
             newDiv += "      <b> "+r.vlcn + " - " + r.name+"</b>\n";
-            newDiv += "      <button type=\"button\" href=\"editBrassModal\" data-toggle=\"modal\"> <i class=\"icon-pencil\"></i></button>\n";
             newDiv += "    </span>\n";
-            newDiv += "    <div class=\"accordion-body collapse\" id=\"collapse"+i+"\">\n";
+            newDiv += "  </div>\n";
+            newDiv += "  <div class=\"accordion-body collapse\" id=\"collapse"+i+"\">\n";
             newDiv += "      <div class=\"accordion-inner\">\n";
-            newDiv += "        rubbing text for this\n";   
+            newDiv += "        " + r.desc + "\n";
+            newDiv += "        <p> Location: " + r.location + "</p>\n";
+            newDiv += "        <p> Status: " + r.status + "</p>\n";
             newDiv += "      </div>\n";
-            newDiv += "    </div>\n";
-            $("#rubbingList").append(newDiv);
+            newDiv += "  </div>\n";
+            newDiv += "</div>\n";
+            $("#rubbingAccordion").append(newDiv);
         }
         } );
     });

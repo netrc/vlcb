@@ -1,22 +1,23 @@
 extends layout
 
 block pagecontent
-  b.pageHead Pictures
-  form.form-inline(method="post", action="/rest/Pic")
-    input.input-small(type="text",name="pn",placeholder="index name")
-    select(name="pc")
-      option(value="Rubbing") Rubbing
-      option(value="Brass") Brass
-      option(value="Church") Church
-      option(value="HomePage") Home Page
-      option(value="Other") Other
-    input.input-small(type="text",name="pt",placeholder="thumbnail url")
-    input.input-small(type="text",name="pf",placeholder="fullsize url")
-    button.btn(type="submit"): i.icon-plus-sign
+  div.row
+    div.span3
+      b.pageHead Pictures
+    div.span9
+      form.form-inline(method="post", action="/rest/Pic")
+        input.input-small(type="text",name="pn",placeholder="index name")
+        select(name="pc")
+          option(value="Rubbing") Rubbing
+          option(value="Brass") Brass
+          option(value="Church") Church
+          option(value="HomePage") Home Page
+          option(value="Other") Other
+        input.input-large(type="text",name="pt",placeholder="thumbnail url")
+        input.input-large(type="text",name="pf",placeholder="fullsize url")
+        button.btn(type="submit"): i.icon-plus-sign
 
-  div.accordion
-    div.accordion-group
-      div#picList.accordion-heading             
+  div#picAccordion.accordion
 
   div#editPicModal.modal.fade
     div.modal-header
@@ -35,17 +36,20 @@ block pagescript
         //alert("got pictures "+d.length);
         for (var i=0;i<d.length;i++) { 
             p = d[i];
-            newDiv  = "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" href=\"#collapse"+i+"\">\n";
+            newDiv  = "<div class=accordion-group>\n";
+            newDiv += "  <div class=accordion-heading>\n";
+            newDiv += "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#picAccordion\" href=\"#collapse"+i+"\">\n";
             newDiv += "      <b> "+p.name+" - "+p.category+"</b>\n";
-            //newDiv += "      <button type=\"button\" href=\"#editChurchModal\" data-toggle=\"modal\"> <i class=\"icon-pencil\"></i></button>\n";
             newDiv += "    </span>\n";
-            newDiv += "    <div class=\"accordion-body collapse\" id=\"collapse"+i+"\">\n";
-            newDiv += "      <div class=\"accordion-inner\">\n";
+            newDiv += "  </div>\n";
+            newDiv += "  <div class=\"accordion-body collapse\" id=\"collapse"+i+"\">\n";
+            newDiv += "    <div class=\"accordion-inner\">\n";
             newDiv += "        thumbnail: " + p.thumb + "<p>\n";   
             newDiv += "        fullsize: " + p.full + "<p>\n";   
-            newDiv += "      </div>\n";
             newDiv += "    </div>\n";
-            $("#picList").append(newDiv);
+            newDiv += "  </div>\n";
+            newDiv += "</div>\n";
+            $("#picAccordion").append(newDiv);
         }
         } );
     });
