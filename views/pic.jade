@@ -1,0 +1,51 @@
+extends layout
+
+block pagecontent
+  b.pageHead Pictures
+  form.form-inline(method="post", action="/rest/Pic")
+    input.input-small(type="text",name="pn",placeholder="index name")
+    select(name="pc")
+      option(value="Rubbing") Rubbing
+      option(value="Brass") Brass
+      option(value="Church") Church
+      option(value="HomePage") Home Page
+      option(value="Other") Other
+    input.input-small(type="text",name="pt",placeholder="thumbnail url")
+    input.input-small(type="text",name="pf",placeholder="fullsize url")
+    button.btn(type="submit"): i.icon-plus-sign
+
+  div.accordion
+    div.accordion-group
+      div#picList.accordion-heading             
+
+  div#editPicModal.modal.fade
+    div.modal-header
+      a.close(data-dismiss="modal") &times;
+      h3 Edit picture...
+    div.modal-body
+      p category
+      p name
+      p thumbnail url
+      p fullsize url
+
+block pagescript
+  script
+    $(document).ready(function() {
+    $.get("http://vlcb.netrc.c9.io/rest/Pic/","",function(d,tstatus,jxhr) {
+        //alert("got pictures "+d.length);
+        for (var i=0;i<d.length;i++) { 
+            p = d[i];
+            newDiv  = "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" href=\"#collapse"+i+"\">\n";
+            newDiv += "      <b> "+p.name+" - "+p.category+"</b>\n";
+            //newDiv += "      <button type=\"button\" href=\"#editChurchModal\" data-toggle=\"modal\"> <i class=\"icon-pencil\"></i></button>\n";
+            newDiv += "    </span>\n";
+            newDiv += "    <div class=\"accordion-body collapse\" id=\"collapse"+i+"\">\n";
+            newDiv += "      <div class=\"accordion-inner\">\n";
+            newDiv += "        thumbnail: " + p.thumb + "<p>\n";   
+            newDiv += "        fullsize: " + p.full + "<p>\n";   
+            newDiv += "      </div>\n";
+            newDiv += "    </div>\n";
+            $("#picList").append(newDiv);
+        }
+        } );
+    });

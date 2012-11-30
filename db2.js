@@ -162,3 +162,19 @@ exports.xxxpicStore = function(picObj, doIt) {
         doIt();
     } );
 };
+
+var Br = require("./views/batch-nNames");
+exports.doBatch = function(doIt) {
+    console.log("db dobatch");
+    Br.rArray5.map( function(r) {
+        rubbingColl.update( {vlcn:r.vlcn}, {$set: r.$set}, function(err,r){
+            if (err) {
+                 console.error("error updating r:"+r.vlcn+" err: " + err);
+            };
+        } );
+        } );
+    doIt();
+};
+// old batch
+//    Br.rArray1.map( function(r) { rubbingColl.insert(r); } );
+//    Br.rArray2.map( function(r) { rubbingColl.insert(r); } );

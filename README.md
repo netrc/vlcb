@@ -1,6 +1,9 @@
 vlcb
 ====
 
+== Bugs
+- jeditable? calls latlon Get - GET /rest/Church/St.%20Laurence/latlon?id=clatlon 404 1ms
+
 == Todo
 - package.json
 - banner
@@ -11,6 +14,7 @@ vlcb
 - make sure *all* updates use $set functionality
 - test scripts for mongolab
 - data import for mongolab
+- pic picture in About text
 - global search
 - session login for editing - https://coldie.net/?p=88
 - Rubbing search, brass search, church search, notes search
@@ -38,26 +42,12 @@ vlcb
 - bootstrap ?
 
 == Data Model
-* General
-* * 1-to-N relationship is held solely by "backrefs" from each N to 1
-* * 1-to-1 is held solely by "forward ref" (meaning e.g. from Brass to mainpic)
+* General - See https://github.com/netrc/vlcb/wiki/DataArchitecture
 * Church -  name, address, latlon, mainpic, note
-* * note includes pamphlet link; other pics are from pic item 'index' value back to church name
 * Brass - name, church, location, year, tags, mainpic, note
-* * n.b. back link from brass to church name; location is place inside the church
-* Rubbing - vlcnum, brass, name, location, date, mainpic, note
-* * things like style, inscription, framed, condition, foil are in the text of the note
+* Rubbing - vlcnum, status, brass, name, location, date, mainpic, note
 * Note - name, tag, date, [versionNum]
-* * tag is a category, e.g. About, blog, brass; (n.b. don't need an index here)
-* * could be immutable and just add new versions....
 * Pic - name, tag, index, thumburl, fullurl
-* * tag is a category, index is the key back to the item (brass, church)
-
-Seems like the right thing to do is put values like "note" and "pics", which
-are really related to just one thing (a church or brass) into their enclosing doc
-(the church doc or brass doc). But that makes updating cumbersome - when changing
-a picture's owner, e.g. a church, you need to update the old owner and the new owner
-doc. By separting into a quasi-"normal" form, you can update in just one place.
 
 == Notes on c9.io
 - npm install jade
@@ -104,7 +94,6 @@ OtherCDNs
 * http://www.bootstrapcdn.com/
 * http://cdnjs.com/index.html
 * http://cachedcommons.org/
-
 
 old notes on myhost
 * added git

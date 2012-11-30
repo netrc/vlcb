@@ -118,3 +118,10 @@ exports.restGetRubbing = function(req,res) {
 //  but that just simplifies exports.about by 1 line (in other words, gets rid of DbMgr in .about; DbMgr calls then just in two rest functions)
 //
 // This restXXXGet called from javascript in the html page may be the paradigm for other pages....
+
+//////////////////
+exports.doBatch = function(req,res) {
+    DbMgr.doBatch( function() {
+        res.send("OK");
+    } );
+};

@@ -21,7 +21,7 @@ block pagescript
         for (var i=0;i<d.length;i++) { 
             r = d[i];
             newDiv  = "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" href=\"#collapse"+i+"\">\n";
-            newDiv += "      <b> "+r.desc+"</b>\n";
+            newDiv += "      <b> "+r.vlcn + " - " + r.name+"</b>\n";
             newDiv += "      <button type=\"button\" href=\"editBrassModal\" data-toggle=\"modal\"> <i class=\"icon-pencil\"></i></button>\n";
             newDiv += "    </span>\n";
             newDiv += "    <div class=\"accordion-body collapse\" id=\"collapse"+i+"\">\n";
