@@ -42,7 +42,7 @@ block pagescript
             newDiv  = "<div class=accordion-group>\n";
             newDiv += "  <div class=accordion-heading>\n";
             newDiv += "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#churchAccordion\" href=\"#collapse"+i+"\">\n";
-            newDiv += "      <b> "+c.name+" - "+c.address+"</b> <i class=\"icon-share-alt\"></i>\n";
+            newDiv += "      <b> "+c.name+" - "+c.address+"</b> <a href=\"/church/" + c.name + "\" target=\"_blank\"><i class=\"icon-share-alt\"></i></a>\n";
             newDiv += "    </span>\n";
             newDiv += "  </div>\n";
             newDiv += "  <div class=\"accordion-body collapse\" id=\"collapse"+i+"\">\n";
