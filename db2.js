@@ -10,15 +10,7 @@ exports.initConn = function (mdbUser, mdbPwd, mdbHost, mdbPort, mdbDbName) {
 
 		console.log("initConn: "+mdbConnStr);
 		mdb = new Mongolian(mdbConnStr);
-       
-        noteColl = mdb.collection("Note");
-        churchColl = mdb.collection("Church");
-        picColl = mdb.collection("Pic");
-        rubbingColl = mdb.collection("Rubbing");
-        brassColl = mdb.collection("Brass");
-};
 
-exports.collectionNames = function() {
        mdb.collectionNames( function( err, val ) {
             if (err) {
                 console.warn("Error getting collection names: "+err);
@@ -26,6 +18,12 @@ exports.collectionNames = function() {
                 console.log("cnames: " + val);
             }
         });
+
+        noteColl = mdb.collection("Note");
+        churchColl = mdb.collection("Church");
+        picColl = mdb.collection("Pic");
+        rubbingColl = mdb.collection("Rubbing");
+        brassColl = mdb.collection("Brass");        
 };
 
 // 'about' is one specific note
@@ -34,7 +32,7 @@ exports.about = function(doIt) {
         if (err) {
             docData = { mdtext: "error finding 'about' note: " + err };
         }
-        docData._id = "";    // this val is very long and involved, so I clear it  
+        delete(docData._id);    // this val is very long and involved, so I clear it  
         //console.log("about: "+docData.mdtext);
         doIt(docData);
     } );
@@ -71,7 +69,7 @@ exports.note = function(c, t, doIt) {
         if (err) {
             docData = { mdtext: "no note: " + err };
         }
-        docData._id = "";    // this val is very long and involved, so I clear it  
+        delete(docData._id);    // this val is very long and involved, so I clear it  
         //console.log("about: "+docData.mdtext);
         doIt(docData);
     } );
@@ -84,7 +82,7 @@ var dbFindAll = function( mColl, sObj, doIt) {
             console.error("dbFindAll error:" + err);
             valArray = [];
         }
-        valArray.forEach(function(p){p._id="";});  // don't pass _id; big uninteresting string
+        valArray.forEach(function(p){delete(p._id);});  // don't pass _id; big uninteresting string
         doIt(valArray);
     });    
 };
@@ -99,6 +97,7 @@ exports.churchFind = function(n, doIt) {
             d = {};
         }
         console.log("db church find("+n+"): "+d);
+        delete(d._id);
         doIt(d);
         } );
 };
@@ -165,6 +164,7 @@ exports.xxxpicStore = function(picObj, doIt) {
 
 var Br = require("./views/batch-nNames");
 exports.doBatch = function(doIt) {
+/*
     console.log("db dobatch");
     Br.rArray5.map( function(r) {
         rubbingColl.update( {vlcn:r.vlcn}, {$set: r.$set}, function(err,r){
@@ -173,6 +173,7 @@ exports.doBatch = function(doIt) {
             };
         } );
         } );
+*/
     doIt();
 };
 // old batch
