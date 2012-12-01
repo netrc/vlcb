@@ -35,7 +35,7 @@ block pagecontent
 block pagescript
   script
     $(document).ready(function() {
-    $.get("http://vlcb.netrc.c9.io/rest/Church/","",function(d,tstatus,jxhr) {
+      $.get("http://vlcb.netrc.c9.io/rest/Church/","",function(d,tstatus,jxhr) {
         //alert("got churches"+d.length);
         for (var i=0;i<d.length;i++) { 
             c = d[i];
@@ -59,9 +59,14 @@ block pagescript
             $(cShowIdRef).on("show",(function(zc,zi) { return function(){churchAccordionShow( zc, zi ); } })(c,cShowInnerIdRef) );
         };
         } );
-    var churchAccordionShow = function ( c, id ) {
-        alert("now show: "+c.name + " id: "  +id);
-        newHTML = "year: " + c.year + " latlon: " + c.latlon +"<p>";
-        $(id).html(newHTML);
-        };
     });
+    var churchAccordionShow = function ( c, cid ) {
+        //alert("now show: "+c.name + " cid: "  +cid);
+        if ( window.hasOwnProperty(c.name) ) {
+            return;
+        }
+        alert("cas: " + c.name);
+        newHTML = "year: " + c.year + " latlon: " + c.latlon +"<p>";
+        $(cid).html(newHTML);
+        window[c.name] = 1;
+    };
