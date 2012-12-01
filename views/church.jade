@@ -39,19 +39,29 @@ block pagescript
         //alert("got churches"+d.length);
         for (var i=0;i<d.length;i++) { 
             c = d[i];
+            cShowId = "cShowId"+i;
+            cShowIdRef = "#"+cShowId;
+            cShowInnerId = "cShowInnerId"+i;
+            cShowInnerIdRef = "#"+cShowInnerId;
             newDiv  = "<div class=accordion-group>\n";
             newDiv += "  <div class=accordion-heading>\n";
-            newDiv += "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#churchAccordion\" href=\"#collapse"+i+"\">\n";
+            newDiv += "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#churchAccordion\" href=\""+cShowIdRef+"\">\n";
             newDiv += "      <b> "+c.name+" - "+c.address+"</b> <a href=\"/church/" + c.name + "\" target=\"_blank\"><i class=\"icon-share-alt\"></i></a>\n";
             newDiv += "    </span>\n";
             newDiv += "  </div>\n";
-            newDiv += "  <div class=\"accordion-body collapse\" id=\"collapse"+i+"\">\n";
-            newDiv += "    <div class=\"accordion-inner\">\n";
-            newDiv += "        the intner text for this church\n";   
+            newDiv += "  <div class=\"accordion-body collapse\" id=\""+cShowId+"\">\n";
+            newDiv += "    <div class=\"accordion-inner\" id=\""+cShowInnerId+"\">\n";
+            newDiv += "        ...getting inner data\n";   
             newDiv += "    </div>\n";
             newDiv += "  </div>\n";
             newDiv += "</div>\n";
             $("#churchAccordion").append(newDiv);
-        }
+            $(cShowIdRef).on("show",(function(zc,zi) { return function(){churchAccordionShow( zc, zi ); } })(c,cShowInnerIdRef) );
+        };
         } );
+    var churchAccordionShow = function ( c, id ) {
+        alert("now show: "+c.name + " id: "  +id);
+        newHTML = "year: " + c.year + " latlon: " + c.latlon +"<p>";
+        $(id).html(newHTML);
+        };
     });
