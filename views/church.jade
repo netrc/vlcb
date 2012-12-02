@@ -65,8 +65,21 @@ block pagescript
         if ( window.hasOwnProperty(c.name) ) {
             return;
         }
-        alert("cas: " + c.name);
+        //alert("cas: " + c.name);
         newHTML = "year: " + c.year + " latlon: " + c.latlon +"<p>";
         $(cid).html(newHTML);
+        $.get("/rest/Church/"+c.name+"/Brass","",function(d,tstatus,jxhr) {
+            var bstr="";
+            if (d.length==0) {
+                bstr = "<i> no brasses found </i>";
+            };
+            for (var i=0;i<d.length;i++) { 
+                var b = d[i];
+                bstr = bstr + " <a href=\"//brass/\">" + b.name + "</a>";
+                if ((i+1)<d.length) { bstr = bstr + ", "; };
+            };
+            var prevH = $(cid).html();
+            $(cid).html( prevH + bstr );
+        });
         window[c.name] = 1;
     };

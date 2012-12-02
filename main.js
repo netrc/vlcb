@@ -28,6 +28,7 @@ app.get('/church/:cname', vroutes.churchShow);
 app.get('/brass', vroutes.brass);
 app.get('/rubbing', vroutes.rubbing);
 app.get('/pic', vroutes.pic);
+app.get('/software', vroutes.software);
 app.get('/dobatch', vroutes.doBatch);
 // rest interfaces
 app.get('/rest/Note/about', vroutes.restGetAboutMD);

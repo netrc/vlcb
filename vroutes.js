@@ -119,6 +119,10 @@ exports.restGetRubbing = function(req,res) {
 //
 // This restXXXGet called from javascript in the html page may be the paradigm for other pages....
 
+exports.software = function(req, res) {
+    res.render('software.jade');
+};
+
 //////////////////
 exports.doBatch = function(req,res) {
     DbMgr.doBatch( function() {
