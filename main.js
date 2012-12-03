@@ -5,7 +5,6 @@
 
 var express = require('express');
 require('jade');
-require('coffee-script');
 var DbMgr = require('./db2');
 var vroutes = require('./vroutes');
 
