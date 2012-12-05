@@ -63,7 +63,7 @@ block pagescript
     var churchAccordionShow = function ( c, cid ) {
         //alert("now show: "+c.name + " cid: "  +cid);
         if ( window.hasOwnProperty(c.name) ) {
-            return;
+            return; // already shown
         }
         //alert("cas: " + c.name);
         newHTML = "year: " + c.year + " latlon: " + c.latlon +"<p>";

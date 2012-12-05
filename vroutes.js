@@ -112,6 +112,11 @@ exports.restGetRubbing = function(req,res) {
        res.send(pa); 
     });
 };
+exports.restGetPicsByRubbing = function(req,res) {
+    DbMgr.picsByRubbing( req.params.vlcn, function(pa){
+       res.send(pa); 
+    });
+};
 
 //
 // OR.... about.html could have the html template, and then read() calls the restGet AJAX/REST to put in the html'd data

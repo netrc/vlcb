@@ -41,6 +41,7 @@ app.get('/rest/Church/:cname/Brass',vroutes.restGetBrassByChurch);
 app.get('/rest/Church/:cname/Pic',vroutes.restGetPicByChurch);
 app.post('/rest/Church/:cname/latlon',vroutes.restPostChurch_latlon);
 app.get('/rest/Rubbing',vroutes.restGetRubbing);
+app.get('/rest/Rubbing/:vlcn/Pics',vroutes.restGetPicsByRubbing);
 
 
 DbMgr.initConn( "vlc", "vlcmdb!", "ds033307.mongolab.com", "33307", "vlcbtest");

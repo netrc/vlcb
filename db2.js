@@ -117,6 +117,11 @@ exports.rubbingAll = function(doIt) {
     dbFindAll(rubbingColl, {}, doIt);
 };
 
+exports.picsByRubbing = function(vlcn,doIt) {
+    //console.log("db2 get pic by curch: ",n);
+    dbFindAll(picColl, {category:"Rubbing", name:vlcn}, doIt);
+};
+
 
 exports.picAll = function(doIt) {
     dbFindAll(picColl, {}, doIt);
@@ -174,15 +179,43 @@ exports.doBatch = function(doIt) {
         } );
         } );
 */
+/*
     console.log("db dobatch pic");
-    var t, ufull, pn;
+    var t, ufull, tn,pn,newPic;
     Br.pArray1.map( function( uthumb ) {
         t = uthumb.split("/");
-        pn = t[8].split(".")[0];
+        tn = t[8].split(".")[0];
+        pn = tn.replace(/%2520/g,"");
         t[7] = "s800";
         ufull = t.join("/");
         console.log ("pn:"+pn + "  uf:"+ufull);
+        newPic = { category: "Rubbing", name: pn, thumb: uthumb, full: ufull };
+        picColl.insert( newPic, function(err,docData){
+            if (err) {
+                console.error("error updating 'pict': " + err);
+            }
+        } );
     });
+*/
+/* Fix up pic names!!
+   var newp, newpn;
+    picColl.find({ name: /-/ }).toArray(function(err, valArray) {
+        if (err) {
+            console.error("dbFindAll error:" + err);
+            valArray = [];
+        }
+        valArray.forEach(function(p){
+            newpn = p.name.replace("VLC-","").replace(/-[a-z12]/,"").replace(/[a-z]$/,"");
+            console.log("pcname:"+p.name+ " newp:",newpn);
+            newp = { name: newpn, category: p.category, thumb : p.thumb, full: p.full };
+            picColl.update( {name:p.name}, newp, function(err,docData){
+                if (err) {
+                console.error("error updating pic: " + err);
+                }
+           });
+        });
+    });
+*/
     doIt();
 };
 // old batch
