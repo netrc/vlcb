@@ -5,7 +5,7 @@
       "start":"node main.js"
   },
   "dependencies": {
-    "express": "2.x",
+    "express": "3.x",
     "mongolian": "0.1.x",
     "markdown": "0.4.x",
     "coffee-script": "1.4.x",

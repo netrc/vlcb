@@ -174,6 +174,15 @@ exports.doBatch = function(doIt) {
         } );
         } );
 */
+    console.log("db dobatch pic");
+    var t, ufull, pn;
+    Br.pArray1.map( function( uthumb ) {
+        t = uthumb.split("/");
+        pn = t[8].split(".")[0];
+        t[7] = "s800";
+        ufull = t.join("/");
+        console.log ("pn:"+pn + "  uf:"+ufull);
+    });
     doIt();
 };
 // old batch
