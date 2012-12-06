@@ -62,11 +62,14 @@ block pagescript
           if (d.length==0) {
             bstr = "<i> no pics found </i>";
           };
+          var groupName = "group" + r.vlcn;
+          var groupNameClass = "." + groupName;
           for (var i=0;i<d.length;i++) { 
             var b = d[i];
-            bstr = bstr + " <img src=\""+b.thumb+"\">";
+            bstr = bstr + "<a class=\""+groupName+"\" href=\""+b.full+"\" title=\""+r.name+"\">  <img src=\""+b.thumb+"\">  </a>";
           };
           $(rid).html( bstr );
+          $(groupNameClass).colorbox( { rel:groupName, transition:"fade" } );
           window["R"+r.name] = 1;
         });
     };
