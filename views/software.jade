@@ -1,20 +1,43 @@
 extends layout
 
 block pagecontent
-  h2 Software
-  h3 Powered by
-    ul
-      li vim
-      li Cloud9 IDE
-      li Node.js
-      li Express
-      li Bootstrap
-      li Mongolian
-      li MongoDB
-      li GitHub
-      li Heroku?
+  h2 Powered by...
+  table.cd
+    tr
+      td.cd
+        a(href="//heroku.com")
+          img(src="http://logos.heroku.com/images/heroku-logo-light-88x31.png")
+      td.cd
+        a(href="//c9.io") Cloud9 IDE
+      td.cd
+        a(href="//nodejs.org")
+          img(src="http://upload.wikimedia.org/wikipedia/en/thumb/a/a7/Nodejs_logo_light.png/150px-Nodejs_logo_light.png")
+      td.cd
+        a(href="//expressjs.com") Express
+    tr
+      td.cd
+        a(href="//twitter.github.com/bootstrap/") Bootstrap
+      td.cd
+        a(href="//github.com/marcello3d/node-mongolian") Mongolian
+      td.cd
+        a(href="//www.mongodb.org/") MongoDB
+      td.cd
+        a(href="//github.com/netrc")
+          img(src="https://raw.github.com/github/media/master/logos/github_logo_social_coding_outlined.png")
+    tr
+      td.cd
+        a(href="//jsfiddle.net")
+         img(src="//jsfiddle.net/img/logo.png")
+      td.cd
+        a(href="//www.jslint.com/") jslint
+      td.cd
+        a(href="//myhosting.com/virtual-private-server/") myhosting VPS
+      td.cd
+        a(href="//vim.org") vim
+  hr
   h3 Data Check
   hr
   button dump data
+  hr
   form(method="get", action="/dobatch")
     input(type="submit", value="Do Batch")

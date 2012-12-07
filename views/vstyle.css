@@ -10,6 +10,14 @@ body {
 .fixMe {position:fixed;}
 * html .fixMe {position:absolute;}
 
+.cd table {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+.cd td {
+    text-align: center;
+}
 textarea {
     width: 100%
 }
