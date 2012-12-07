@@ -23,7 +23,7 @@ block pagecontent
 block pagescript
   script
     $(document).ready(function() {
-    $.get("http://vlcb.netrc.c9.io/rest/Rubbing/","",function(d,tstatus,jxhr) {
+    $.get("/rest/Rubbing/","",function(d,tstatus,jxhr) {
         //alert("got rubbing "+d.length);
         for (var i=0;i<d.length;i++) { 
             r = d[i];

@@ -22,7 +22,7 @@ block pagecontent
 block pagescript
   script
     $(document).ready(function() {
-    $.get("http://vlcb.netrc.c9.io/rest/Brass/","",function(d,tstatus,jxhr) {
+    $.get("/rest/Brass/","",function(d,tstatus,jxhr) {
         //alert("got brasses "+d.length);
         for (var i=0;i<d.length;i++) { 
             b = d[i];

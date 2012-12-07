@@ -28,7 +28,7 @@ block pagecontent
 block pagescript
   script
     $(document).ready(function() {
-      $.get("http://vlcb.netrc.c9.io/rest/Church/","",function(d,tstatus,jxhr) {
+      $.get("/rest/Church/","",function(d,tstatus,jxhr) {
         //alert("c2b: got churches: "+d.length);
         for (var i=0;i<d.length;i++) { 
             c = d[i];
@@ -45,7 +45,7 @@ block pagescript
     var churchShow = function ( c ) {
         //alert("now new cshow: "+c.name);
 
-        $.get("http://vlcb.netrc.c9.io/rest/Church/"+c.name+"/Pic","",function(d,tstatus,jxhr) {
+        $.get("/rest/Church/"+c.name+"/Pic","",function(d,tstatus,jxhr) {
             var newHTML = "year: " + c.year + " latlon: " + c.latlon +"<p>";
             var bStr = "<i> no brasses found </i>";
             var pStr = "<i> no pics yet </i><p>";
