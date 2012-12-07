@@ -18,68 +18,58 @@ block pagecontent
         input.input-small(type="text",name="ca",placeholder="Address")
         button.btn(type="submit"): i.icon-plus-sign
 
-  div#churchAccordion.accordion           
-
-  div#editChurchModal.modal.fade
-    div.modal-header
-      a.close(data-dismiss="modal") &times;
-      h3 Edit church...
-    div.modal-body
-      p address
-      p latlon
-      p year
-      p brief note...??
-      p pic thumbnail
-      p list of brasses
+  div.row
+    div.span5
+      ul#churchList.nav.nav-pills.nav-stacked
+    div.span7
+      div#churchShow.well
+        i select a church...
 
 block pagescript
   script
     $(document).ready(function() {
       $.get("http://vlcb.netrc.c9.io/rest/Church/","",function(d,tstatus,jxhr) {
-        //alert("got churches"+d.length);
+        //alert("c2b: got churches: "+d.length);
         for (var i=0;i<d.length;i++) { 
             c = d[i];
-            cShowId = "cShowId"+i;
-            cShowIdRef = "#"+cShowId;
+            cButtId = "cButtId"+i;
+            cButtIdRef = "#"+cButtId;
             cShowInnerId = "cShowInnerId"+i;
             cShowInnerIdRef = "#"+cShowInnerId;
-            newDiv  = "<div class=accordion-group>\n";
-            newDiv += "  <div class=accordion-heading>\n";
-            newDiv += "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#churchAccordion\" href=\""+cShowIdRef+"\">\n";
-            newDiv += "      <b> "+c.name+" - "+c.address+"</b> <a href=\"/church/" + c.name + "\" target=\"_blank\"><i class=\"icon-share-alt\"></i></a>\n";
-            newDiv += "    </span>\n";
-            newDiv += "  </div>\n";
-            newDiv += "  <div class=\"accordion-body collapse\" id=\""+cShowId+"\">\n";
-            newDiv += "    <div class=\"accordion-inner\" id=\""+cShowInnerId+"\">\n";
-            newDiv += "        ...getting inner data\n";   
-            newDiv += "    </div>\n";
-            newDiv += "  </div>\n";
-            newDiv += "</div>\n";
-            $("#churchAccordion").append(newDiv);
-            $(cShowIdRef).on("show",(function(zc,zi) { return function(){churchAccordionShow( zc, zi ); } })(c,cShowInnerIdRef) );
+            newLi  = "<li> <button id=\""+cButtId+"\"> "+c.name+"<i> - "+c.address+"</i></button></li>\n";
+            $("#churchList").append(newLi);
+            $(cButtIdRef).on( 'click', (function(zc) { return function(){churchShow(zc); } })(c) );
         };
-        } );
+      } );
     });
-    var churchAccordionShow = function ( c, cid ) {
-        //alert("now show: "+c.name + " cid: "  +cid);
-        if ( window.hasOwnProperty(c.name) ) {
-            return; // already shown
-        }
-        //alert("cas: " + c.name);
-        newHTML = "year: " + c.year + " latlon: " + c.latlon +"<p>";
-        $(cid).html(newHTML);
-        $.get("/rest/Church/"+c.name+"/Brass","",function(d,tstatus,jxhr) {
-            var bstr="";
-            if (d.length==0) {
-                bstr = "<i> no brasses found </i>";
+    var churchShow = function ( c ) {
+        alert("now new cshow: "+c.name);
+
+        $.get("http://vlcb.netrc.c9.io/rest/Church/"+c.name+"/Pic","",function(d,tstatus,jxhr) {
+            var newHTML = "year: " + c.year + " latlon: " + c.latlon +"<p>";
+            var bStr = "<i> no brasses found </i>";
+            var pStr = "<i> no pics yet </i><p>";
+
+            if (d.length>0) {
+                pStr="";
             };
             for (var i=0;i<d.length;i++) { 
-                var b = d[i];
-                bstr = bstr + " <a href=\"//brass/\">" + b.name + "</a>";
-                if ((i+1)<d.length) { bstr = bstr + ", "; };
+                p = d[i];
+                pStr = pStr + "<img src=\"" + p.thumb + "\"> <p>";
             };
-            var prevH = $(cid).html();
-            $(cid).html( prevH + bstr );
-        });
-        window[c.name] = 1;
-    };
+
+            $.get("/rest/Church/"+c.name+"/Brass","",function(d,tstatus,jxhr) {
+                if (d.length>0) {
+                    bStr="";
+                };
+                for (var i=0;i<d.length;i++) { 
+                    var b = d[i];
+                    bStr = bStr + " <a href=\"//brass/\">" + b.name + "</a>" + ((i+1)<d.length) ? ", " : "";
+                };
+            });
+
+            $("#churchShow").html( pStr + newHTML + bStr );
+        } );
+
+
+    }
