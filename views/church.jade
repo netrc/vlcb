@@ -27,6 +27,7 @@ block pagecontent
         div#churchShowPics
         div#churchShowInfo
         div#churchShowBrasses
+        div#churchShowNote
 
 block pagescript
   script
@@ -54,6 +55,7 @@ block pagescript
         $("#churchShowPics").html("<i> no pics yet </i> <p>");
         $("#churchShowInfo").html("year: " + c.year + " latlon: " + c.latlon +"<p>");
         $("#churchShowBrasses").html("<i> no brasses found </i> <p>");
+        $("#churchShowNote").html( ((c.mainNote) ? c.mainNote : "<i> no note yet </i>") );
 
         $.get("/rest/Church/"+c.name+"/Pic","",function(d,tstatus,jxhr) {
             if (d.length==0) {

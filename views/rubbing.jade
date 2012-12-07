@@ -19,7 +19,7 @@ block pagecontent
         button.btn(type="submit"): i.icon-plus-sign
 
   div.row
-    div.span5(overflow-y="scroll")
+    div.span5
       ul#rubbingList.nav.nav-pills.nav-stacked
     div.span7
       div#rubbingShow.well.fixMe
@@ -27,7 +27,7 @@ block pagecontent
         div#rubbingShowPics
         div#rubbingShowDesc
         div#rubbingShowLocation
-        div#rubbingShowStatus
+        div#rubbingShowBrass
         div#rubbingShowLinks
 
 block pagescript
@@ -51,9 +51,9 @@ block pagescript
         //alert("now show: "+r.vlcn + " name: "  + r.name);
         $("#rubbingShowTitle").html("<b> " + r.vlcn + " - " + r.name + "</b>");
         $("#rubbingShowPics").html( "<i> no pics yet </i>" );
-        $("#rubbingShowDesc").html( r.desc );
-        $("#rubbingShowLocation").html( r.location );
-        $("#rubbingShowStatus").html( r.status  );
+        $("#rubbingShowDesc").html( ((r.desc) ? r.desc : "<i> no description </i>") );
+        $("#rubbingShowLocation").html( ((r.location) ? r.location : "<i> no location </i>") );
+        $("#rubbingShowBrass").html( ((r.brass) ? "<a href=\"/brass/" + r.brass + "\">" + r.brass + "</a>" : "<i> Unknown </i>") );
 
         $.get("/rest/Rubbing/"+r.vlcn+"/Pics","",function(d,tstatus,jxhr) {
           //alert("found " + d.length + "pics for " + r.vlcn);

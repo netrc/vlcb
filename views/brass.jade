@@ -17,28 +17,41 @@ block pagecontent
         input.input-small(type="text",name="bn",placeholder="Brass Name")
         button.btn(type="submit"): i.icon-plus-sign
 
-  div#brassAccordion.accordion
+  div.row
+    div.span5
+      ul#brassList.nav.nav-pills.nav-stacked
+    div.span7
+      div#brassShow.well.fixMe
+        div#brassShowTitle ...select a brass
+        div#brassShowPics
+        div#brassShowChurch
+        div#brassShowLocation
+        div#brassShowNote
 
 block pagescript
   script
     $(document).ready(function() {
-    $.get("/rest/Brass/","",function(d,tstatus,jxhr) {
+      $.get("/rest/Brass/","",function(d,tstatus,jxhr) {
         //alert("got brasses "+d.length);
         for (var i=0;i<d.length;i++) { 
             b = d[i];
-            newDiv  = "<div class=accordion-group>\n";
-            newDiv += "  <div class=accordion-heading>\n";
-            newDiv += "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#brassAccordion\" href=\"#collapse"+i+"\">\n";
-            newDiv += "      <b> "+b.name+"</b>\n";
-            newDiv += "    </span>\n";
-            newDiv += "  </div>\n";
-            newDiv += "  <div class=\"accordion-body collapse\" id=\"collapse"+i+"\">\n";
-            newDiv += "    <div class=\"accordion-inner\">\n";
-            newDiv += "        brass the intner text for this brass\n";   
-            newDiv += "    </div>\n";
-            newDiv += "  </div>\n";
-            newDiv += "</div>\n";
-            $("#brassAccordion").append(newDiv);
+            bButtId = "bButtId"+i;
+            bButtIdRef = "#"+bButtId;
+            $("#brassList").append("<li> <button id=\"" + bButtId + "\"> " + b.name + " - " + b.church + "</button> </li>");
+            $(bButtIdRef).on('click',(function(zb) { return function(){ brassShow( zb ); } })(b) );
         }
-        } );
+        if (d.length>0) {
+            brassShow( d[0] );
+        };
+      } );
     });
+    var brassShow = function ( b ) {
+        //alert("now show: " + b.name );
+        $("#brassShowTitle").html("<b> " + b.name + " - " + b.church + "</b>");
+        $("#brassShowPics").html( "<i> no pics yet </i>" );
+        $("#brassShowChurch").html( ((b.church) ? "<a href=\"/church/"+b.church + "\">" +b.church + "</a>" : "<i> church? </i>") );
+        $("#brassShowLocation").html( ((b.location) ? b.location : "<i> location? </i>") );
+        $("#brassShowNote").html( ((b.mainNote) ? b.mainNote : "<i> no note yet </i>") );
+
+        // no db2 to get brass pics
+    };
