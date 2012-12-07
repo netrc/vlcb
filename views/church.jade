@@ -9,9 +9,10 @@ block pagecontent
         input.input-small(type="text",name="rn",placeholder="search")
         button.btn(type="submit") Search
     div.span3
-      form.form-inline(method="post")
-        input.input-small(type="text",name="rn",placeholder="sort")
-        button.btn(type="submit") Sort
+      div.btn-group(data-toggle="buttons-radio")
+        button#cSortAlpha.btn.sorter(type="button") A-Z
+        button#cSortShire.btn.sorter(type="button") Shire
+        button#cSortYear.btn.sorter(type="button") Year
     div.span4
       form.form-inline(method="post")
         input.input-small(type="text",name="cn",placeholder="Church Name")
@@ -19,9 +20,9 @@ block pagecontent
         button.btn(type="submit"): i.icon-plus-sign
 
   div.row
-    div.span5
+    div.span6
       ul#churchList.nav.nav-pills.nav-stacked
-    div.span7
+    div.span6
       div#churchShow.well.fixMe
         div#churchShowTitle ...select a church
         div#churchShowPics

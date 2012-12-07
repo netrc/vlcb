@@ -9,9 +9,10 @@ block pagecontent
         input.input-small(type="text",name="rn",placeholder="search")
         button.btn(type="submit") Search
     div.span3
-      form.form-inline(method="post")
-        input.input-small(type="text",name="rn",placeholder="sort")
-        button.btn(type="submit") Sort
+      div.btn-group(data-toggle="buttons-radio")
+        button#bSortAlpha.btn.sorter(type="button") A-Z
+        button#bSortShire.btn.sorter(type="button") Church
+        button#bSortYear.btn.sorter(type="button") Year
     div.span4
       form.form-inline(method="post")
         input.input-small(type="text",name="bn",placeholder="Brass Name")

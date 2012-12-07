@@ -9,9 +9,10 @@ block pagecontent
         input.input-small(type="text",name="rn",placeholder="search")
         button.btn(type="submit") Search
     div.span3
-      form.form-inline(method="post")
-        input.input-small(type="text",name="rn",placeholder="sort")
-        button.btn(type="submit") Sort
+      div.btn-group(data-toggle="buttons-radio")
+        button#rSortVLCN.btn.sorter(type="button") VLCN
+        button#rSortAlpha.btn.sorter(type="button") A-Z
+        button#rSortDate.btn.sorter(type="button") Date
     div.span4
       form.form-inline(method="post")
         input.input-small(type="text",name="vn",placeholder="VLC#")

@@ -77,7 +77,7 @@ exports.note = function(c, t, doIt) {
 
 
 var dbFindAll = function( mColl, sObj, doIt) {
-    mColl.find(sObj).toArray(function(err, valArray) {
+    mColl.find(sObj).sort({name:1}).toArray(function(err, valArray) {
         if (err) {
             console.error("dbFindAll error:" + err);
             valArray = [];
