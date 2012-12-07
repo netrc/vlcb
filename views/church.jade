@@ -43,7 +43,7 @@ block pagescript
       } );
     });
     var churchShow = function ( c ) {
-        alert("now new cshow: "+c.name);
+        //alert("now new cshow: "+c.name);
 
         $.get("http://vlcb.netrc.c9.io/rest/Church/"+c.name+"/Pic","",function(d,tstatus,jxhr) {
             var newHTML = "year: " + c.year + " latlon: " + c.latlon +"<p>";

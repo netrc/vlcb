@@ -8,12 +8,25 @@ require('jade');
 var DbMgr = require('./db2');
 var vroutes = require('./vroutes');
 
+//CORS middleware
+//http://stackoverflow.com/questions/7067966/how-to-allow-cors-in-express-nodejs
+//http://cuppster.com/2012/04/10/cors-middleware-for-node-js-and-express/
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+}
+
+
 var app = express();
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.cookieParser('foobar'));
 app.use(express.session());
 app.use(express.bodyParser());
+app.use(allowCrossDomain);
 app.use(app.router);
 app.use(express.static('views'));   // will check this dir for undefined pages...
 
