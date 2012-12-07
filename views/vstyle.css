@@ -7,6 +7,9 @@ body {
     font-family: 'Monsieur La Doulaise', cursive;
     }
 
+.fixMe {position:fixed;}
+* html .fixMe {position:absolute;}
+
 textarea {
     width: 100%
 }

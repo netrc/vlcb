@@ -18,70 +18,56 @@ block pagecontent
         input.input-large(type="text",name="rn",placeholder="Rubbing Name")
         button.btn(type="submit"): i.icon-plus-sign
 
-  div#rubbingAccordion.accordion
-
   div.row
-    div.span5
+    div.span5(overflow-y="scroll")
       ul#rubbingList.nav.nav-pills.nav-stacked
     div.span7
-      div#rubbingShow.well
+      div#rubbingShow.well.fixMe
         div#rubbingShowTitle ...select a rubbing
         div#rubbingShowPics
-        div#RubbingShowDesc
-        div#RubbingShowStatus
+        div#rubbingShowDesc
+        div#rubbingShowLocation
+        div#rubbingShowStatus
         div#rubbingShowLinks
-
 
 block pagescript
   script
     $(document).ready(function() {
-    $.get("/rest/Rubbing/","",function(d,tstatus,jxhr) {
+      $.get("/rest/Rubbing/","",function(d,tstatus,jxhr) {
         //alert("got rubbing "+d.length);
         for (var i=0;i<d.length;i++) { 
             r = d[i];
-            rShowId = "rShowId"+i;
-            rShowIdRef = "#"+rShowId;
-            rShowPicId = "rShowPicId"+i;
-            rShowPicIdRef = "#"+rShowPicId;
-            newDiv  = "<div class=accordion-group>\n";
-            newDiv += "  <div class=accordion-heading>\n";
-            newDiv += "    <span class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#rubbingAccordion\" href=\""+rShowIdRef+"\">\n";
-            newDiv += "      <b> "+r.vlcn + " - " + r.name+"</b>\n";
-            newDiv += "    </span>\n";
-            newDiv += "  </div>\n";
-            newDiv += "  <div class=\"accordion-body collapse\" id=\""+rShowId+"\">\n";
-            newDiv += "      <div class=\"accordion-inner\" >\n";
-            newDiv += "        <div id=\""+rShowPicId+"\"> ...getting pics... </div>\n";
-            newDiv += "        " + r.desc + "\n";
-            newDiv += "        <p> Location: " + r.location + "</p>\n";
-            newDiv += "        <p> Status: " + r.status + "</p>\n";
-            newDiv += "      </div>\n";
-            newDiv += "  </div>\n";
-            newDiv += "</div>\n";
-            $("#rubbingAccordion").append(newDiv);
-            $(rShowIdRef).on("show",(function(zc,zi) { return function(){rubAccordionShow( zc, zi ); } })(r,rShowPicIdRef) );
+            rButtId = "rButtId"+i;
+            rButtIdRef = "#"+rButtId;
+            $("#rubbingList").append("<li> <button id=\"" + rButtId + "\"> " + r.vlcn + " - " + r.name + "</button> </li>");
+            $(rButtIdRef).on('click',(function(zr) { return function(){rubbingShow( zr ); } })(r) );
         };
-        } );
+        if (d.length>0) {
+            rubbingShow( d[0] );
+        };
+      } );
     });
-    var rubAccordionShow = function ( r, rid ) {
-        //alert("now show: "+r.vlcn + " cid: "  +rid);
-        if ( window.hasOwnProperty("R"+r.name) ) {
-            return; // already shown
-        }
+    var rubbingShow = function ( r ) {
+        //alert("now show: "+r.vlcn + " name: "  + r.name);
+        $("#rubbingShowTitle").html("<b> " + r.vlcn + " - " + r.name + "</b>");
+        $("#rubbingShowPics").html( "<i> no pics yet </i>" );
+        $("#rubbingShowDesc").html( r.desc );
+        $("#rubbingShowLocation").html( r.location );
+        $("#rubbingShowStatus").html( r.status  );
+
         $.get("/rest/Rubbing/"+r.vlcn+"/Pics","",function(d,tstatus,jxhr) {
-          var bstr="";
           //alert("found " + d.length + "pics for " + r.vlcn);
           if (d.length==0) {
-            bstr = "<i> no pics found </i>";
+            return;
           };
-          var groupName = "group" + r.vlcn;
-          var groupNameClass = "." + groupName;
+          pStr="";
+          groupName = "group" + r.vlcn;
+          groupNameClass = "." + groupName;
           for (var i=0;i<d.length;i++) { 
-            var b = d[i];
-            bstr = bstr + "<a class=\""+groupName+"\" href=\""+b.full+"\" title=\""+r.name+"\">  <img src=\""+b.thumb+"\">  </a>";
+            p = d[i];
+            pStr = pStr + "<a class=\""+groupName+"\" href=\""+p.full+"\" title=\""+r.name+"\">  <img src=\""+p.thumb+"\">  </a>";
           };
-          $(rid).html( bstr );
+          $(rubbingShowPics).html( pStr );
           $(groupNameClass).colorbox( { rel:groupName, transition:"fade" } );
-          window["R"+r.name] = 1;
         });
     };
