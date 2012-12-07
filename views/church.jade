@@ -23,7 +23,10 @@ block pagecontent
       ul#churchList.nav.nav-pills.nav-stacked
     div.span7
       div#churchShow.well
-        i select a church...
+        div#churchShowTitle ...select a church
+        div#churchShowPics
+        div#churchShowInfo
+        div#churchShowBrasses
 
 block pagescript
   script
@@ -34,42 +37,46 @@ block pagescript
             c = d[i];
             cButtId = "cButtId"+i;
             cButtIdRef = "#"+cButtId;
-            cShowInnerId = "cShowInnerId"+i;
-            cShowInnerIdRef = "#"+cShowInnerId;
             newLi  = "<li> <button id=\""+cButtId+"\"> "+c.name+"<i> - "+c.address+"</i></button></li>\n";
             $("#churchList").append(newLi);
             $(cButtIdRef).on( 'click', (function(zc) { return function(){churchShow(zc); } })(c) );
         };
+        if (d.length>0) {
+            churchShow( d[0] );
+        };
       } );
     });
+
     var churchShow = function ( c ) {
-        //alert("now new cshow: "+c.name);
+        //alert("new cshow: "+c.name);
+
+        $("#churchShowTitle").html("<b>" + c.name + "</b> <i> - " + c.address + "</i>");
+        $("#churchShowPics").html("<i> no pics yet </i> <p>");
+        $("#churchShowInfo").html("year: " + c.year + " latlon: " + c.latlon +"<p>");
+        $("#churchShowBrasses").html("<i> no brasses found </i> <p>");
 
         $.get("/rest/Church/"+c.name+"/Pic","",function(d,tstatus,jxhr) {
-            var newHTML = "year: " + c.year + " latlon: " + c.latlon +"<p>";
-            var bStr = "<i> no brasses found </i>";
-            var pStr = "<i> no pics yet </i><p>";
-
-            if (d.length>0) {
-                pStr="";
+            if (d.length==0) {
+                return;
             };
+            pStr = "";
             for (var i=0;i<d.length;i++) { 
                 p = d[i];
                 pStr = pStr + "<img src=\"" + p.thumb + "\"> <p>";
             };
-
-            $.get("/rest/Church/"+c.name+"/Brass","",function(d,tstatus,jxhr) {
-                if (d.length>0) {
-                    bStr="";
-                };
-                for (var i=0;i<d.length;i++) { 
-                    var b = d[i];
-                    bStr = bStr + " <a href=\"//brass/\">" + b.name + "</a>" + ((i+1)<d.length) ? ", " : "";
-                };
-            });
-
-            $("#churchShow").html( pStr + newHTML + bStr );
+            $("#churchShowPics").html( pStr  );
         } );
 
-
+        $.get("/rest/Church/"+c.name+"/Brass","",function(d,tstatus,jxhr) {
+            //alert("cbr length: " + d.length);
+            if (d.length==0) {
+                return;
+            };
+            bStr = "";
+            for (var i=0;i<d.length;i++) { 
+                b = d[i];
+                bStr = bStr + " <a href=\"//brass/\">" + b.name + "</a>" + (((i+1)<d.length) ? ", " : "");
+            };
+            $("#churchShowBrasses").html( bStr );
+        } );
     }
