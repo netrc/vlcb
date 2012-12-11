@@ -9,10 +9,12 @@ exports.vindex = function(req, res) {
 };
 
 exports.about = function(req, res) {
-    DbMgr.about(function(data){
-        //console.log('back in about, md:'+Md.toHTML(data.mdtext));
-        res.render('about.jade', { thisAction: 'About', mdtext: Md.toHTML(data.mdtext)});
-    });
+//    DbMgr.about(function(data){
+//        console.log('about route, md:'+Md.toHTML(data.mdtext));
+//        res.render('about.jade', { thisAction: 'About', mdtext: Md.toHTML(data.mdtext)});
+//    });
+    console.log('about route2');
+    res.render('about.jade', { thisAction: 'About'});
 };
 
 exports.church = function(req, res) {
@@ -38,8 +40,11 @@ exports.pic = function(req, res) {
 
 // needs to return just the raw markdown text
 exports.restGetAboutMD = function(req,res) {
-    DbMgr.about( function(data){
-        res.send(data.mdtext);
+    console.log("rgam: tf:", req.query.tFormat);
+    var currFormat = (req.query.tFormat === "HTML") ? "HTML" : "markdown";
+    console.log("rgam: cf:", currFormat);
+    DbMgr.about( currFormat, function(data){
+        res.send((currFormat==="HTML") ? data.htmltext : data.mdtext);
     });
 };
 // store the raw markdown *and* return html
@@ -49,6 +54,22 @@ exports.restPostAboutMD = function(req,res) {
     DbMgr.aboutStore( newText, function(){
         res.send(Md.toHTML(newText));
     });
+};
+
+exports.restGetChurch_mainNote = function(req, res) {
+    console.log("get cmn: tf:", req.query.tFormat);
+    var currFormat = (req.query.tFormat === "HTML") ? "HTML" : "markdown";
+    console.log("get cmn: cf:", currFormat);
+    DbMgr.note( "Church", req.params.cname, currFormat, function(data){
+        res.send((currFormat==="HTML") ? data.htmltext : data.mdtext);
+    });    
+};
+exports.restPostChurch_mainNote = function( req, res ) {
+    var newText = req.body.value;
+    //console.log("put new text:"+newText);
+    DbMgr.noteStore( "Church", req.params.cname, newText, function(){
+        res.send(Md.toHTML(newText));
+    });    
 };
 exports.restGetNoteMD = function(req,res) {
     DbMgr.note(req.params.category, req.params.title, function(data){

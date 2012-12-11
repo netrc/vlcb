@@ -1,5 +1,6 @@
 
 var Mongolian = require("mongolian");
+var Md = require('markdown').markdown;
 
 var mdbConnStr;
 var mdb;
@@ -27,13 +28,17 @@ exports.initConn = function (mdbUser, mdbPwd, mdbHost, mdbPort, mdbDbName) {
 };
 
 // 'about' is one specific note
-exports.about = function(doIt) {
+exports.about = function( tformat, doIt) {
     noteColl.findOne( {category:'aboutNote'}, function(err,docData){
         if (err) {
             docData = { mdtext: "error finding 'about' note: " + err };
         }
         delete(docData._id);    // this val is very long and involved, so I clear it  
-        //console.log("about: "+docData.mdtext);
+        console.log("db get about cf: ", tformat);
+        //console.log("db get about: "+docData.mdtext);
+        if (tformat === "HTML") {
+            docData.htmltext = Md.toHTML(docData.mdtext);
+        }
         doIt(docData);
     } );
 };
@@ -62,19 +67,34 @@ exports.postChurch_latlon = function( cn, val, doIt ) {
 };
 
 // expecting just one specific note, e.g. for Church, Brass
-exports.note = function(c, t, doIt) {
+exports.note = function(c, t, f, doIt) {
+    console.log("db note: c:"+c+" t:"+t+" f:"+f);
     var sObj = { category: c, title: t };
     // need to check if t is blank
     noteColl.findOne( sObj, function(err,docData){
+        if (! docData) {
+            docData = { mdtext: "*no note found*" };
+        }
         if (err) {
-            docData = { mdtext: "no note: " + err };
+            docData = { mdtext: "error getting note: " + err };
         }
         delete(docData._id);    // this val is very long and involved, so I clear it  
         //console.log("about: "+docData.mdtext);
+        if (f === "HTML") {
+            docData.htmltext = Md.toHTML(docData.mdtext);
+        }
         doIt(docData);
     } );
 };
-
+exports.noteStore = function(c, t, newText, doIt) {
+    var newNote = { category: c, title: t, date: 'foo', mdtext: newText };
+    noteColl.update( {category:c, title: t}, newNote, function(err,docData){
+        if (err) {
+            console.error("error updating 'about' note: " + err);
+        }
+        doIt();
+    } );
+};
 
 var dbFindAll = function( mColl, sObj, doIt) {
     mColl.find(sObj).sort({name:1}).toArray(function(err, valArray) {

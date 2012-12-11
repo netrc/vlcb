@@ -24,11 +24,17 @@ block pagecontent
       ul#churchList.nav.nav-pills.nav-stacked
     div.span6
       div#churchShow.well.fixMe
-        div#churchShowTitle ...select a church
+        div#churchShowTitle
+          span#churchShowName
+          span#churchShowAddress
         div#churchShowPics
         div#churchShowInfo
+          <i> year: </i>
+          span#churchShowYear
+          <i> latlon: </i>
+          span#churchShowLatlon
         div#churchShowBrasses
-        div#churchShowNote
+        div#churchShowMainNote
 
 block pagescript
   script
@@ -49,16 +55,22 @@ block pagescript
       } );
     });
 
+    var churchUrl = function ( c, s ) {
+        return("/rest/Church/" + c.name + "/" + s);
+    }
     var churchShow = function ( c ) {
         //alert("new cshow: "+c.name);
 
-        $("#churchShowTitle").html("<b>" + c.name + "</b> <i> - " + c.address + "</i>");
+        //$("#churchShowTitle").html("<b>" + c.name + "</b> <i> - " + c.address + "</i>");
+        $("#churchShowName").html("<b>" + c.name + "</b>");
+        $("#churchShowAddress").html("<i> - " + c.address + "</i>");
         $("#churchShowPics").html("<i> no pics yet </i> <p>");
-        $("#churchShowInfo").html("year: " + c.year + " latlon: " + c.latlon +"<p>");
+        $("#churchShowYear").html(c.year);
+        $("#churchShowLatlon").html(c.latlon);
         $("#churchShowBrasses").html("<i> no brasses found </i> <p>");
-        $("#churchShowNote").html( ((c.mainNote) ? c.mainNote : "<i> no note yet </i>") );
+        $("#churchShowMainNote").html( "<i> no note yet </i>" );
 
-        $.get("/rest/Church/"+c.name+"/Pic","",function(d,tstatus,jxhr) {
+        $.get(churchUrl(c,"Pic"),"",function(d,tstatus,jxhr) {
             if (d.length==0) {
                 return;
             };
@@ -69,8 +81,11 @@ block pagescript
             };
             $("#churchShowPics").html( pStr  );
         } );
-
-        $.get("/rest/Church/"+c.name+"/Brass","",function(d,tstatus,jxhr) {
+        $.get(churchUrl(c,"mainNote"),{tFormat:'HTML'},function(d,tstatus,jxhr) {
+            alert(" c mn get html");
+            $('#churchShowMainNote').html(d);
+        } );
+        $.get(churchUrl(c,"Brass"),"",function(d,tstatus,jxhr) {
             //alert("cbr length: " + d.length);
             if (d.length==0) {
                 return;
@@ -82,4 +97,29 @@ block pagescript
             };
             $("#churchShowBrasses").html( bStr );
         } );
+
+        $("#churchShowLatlon").editable(churchUrl(c,"latlon"), {
+         type      : 'text',
+         cancel    : 'Cancel',
+         submit    : 'OK',
+         indicator : '<img src="favicon.ico">',
+         style   : 'display: inline',
+         tooltip   : 'Click to edit...'
+        });
+        $("#churchShowYear").editable(churchUrl(c,"year"), { 
+         type      : 'text',
+         cancel    : 'Cancel',
+         submit    : 'OK',
+         indicator : '<img src="favicon.ico">',
+         style   : 'display: inline',
+         tooltip   : 'Click to edit...'
+        });
+        $("#churchShowMainNote").editable(churchUrl(c,"mainNote"), { 
+         type      : 'textarea',
+         loadurl : churchUrl(c,"mainNote"),
+         cancel    : 'Cancel',
+         submit    : 'OK',
+         indicator : '<img src="favicon.ico">',
+         tooltip   : 'Click to edit...'
+        });
     }

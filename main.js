@@ -42,6 +42,8 @@ app.get('/rest/Brass',vroutes.restGetBrass);
 app.get('/rest/Church/:cname/Brass',vroutes.restGetBrassByChurch);
 app.get('/rest/Church/:cname/Pic',vroutes.restGetPicByChurch);
 app.post('/rest/Church/:cname/latlon',vroutes.restPostChurch_latlon);
+app.get('/rest/Church/:cname/mainNote',vroutes.restGetChurch_mainNote);
+app.post('/rest/Church/:cname/mainNote',vroutes.restPostChurch_mainNote);
 app.get('/rest/Rubbing',vroutes.restGetRubbing);
 app.get('/rest/Rubbing/:vlcn/Pics',vroutes.restGetPicsByRubbing);
 
