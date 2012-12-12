@@ -26,20 +26,28 @@ block pagecontent
         div#brassShowTitle ...select a brass
         div#brassShowPics
         div#brassShowChurch
-        div#brassShowLocation
+        div#brassShowInfo
+          <i> year: </i>
+          span#brassShowYear
+          <i> location: </i>
+          span#brassShowLocation
+        p
         div#brassShowNote
 
 block pagescript
   script
+    var brassUrl = function ( x, s ) {
+        return("/rest/Brass/" + x.name + "/" + s);
+    }
     $(document).ready(function() {
       $.get("/rest/Brass/","",function(d,tstatus,jxhr) {
         //alert("got brasses "+d.length);
         for (var i=0;i<d.length;i++) { 
-            b = d[i];
+            br = d[i];
             bButtId = "bButtId"+i;
             bButtIdRef = "#"+bButtId;
-            $("#brassList").append("<li> <button id=\"" + bButtId + "\"> " + b.name + " - " + b.church + "</button> </li>");
-            $(bButtIdRef).on('click',(function(zb) { return function(){ brassShow( zb ); } })(b) );
+            $("#brassList").append("<li> <button id=\"" + bButtId + "\"> " + br.name + " - " + br.church + "</button> </li>");
+            $(bButtIdRef).on('click',(function(zb) { return function(){ brassShow( zb ); } })(br) );
         }
         if (d.length>0) {
             brassShow( d[0] );
@@ -52,7 +60,40 @@ block pagescript
         $("#brassShowPics").html( "<i> no pics yet </i>" );
         $("#brassShowChurch").html( ((b.church) ? "<a href=\"/church/"+b.church + "\">" +b.church + "</a>" : "<i> church? </i>") );
         $("#brassShowLocation").html( ((b.location) ? b.location : "<i> location? </i>") );
+        $("#brassShowYear").html( ( (b.year) ? b.year : "<i> year? </i>") );
         $("#brassShowNote").html( ((b.mainNote) ? b.mainNote : "<i> no note yet </i>") );
 
         // no db2 to get brass pics
+        $.get("/rest/Brass/"+b.name+"/Pics","",function(d,tstatus,jxhr) {
+          //alert("bp found " + d.length + " pics for " + b.name);
+          if (d.length==0) {
+            return;
+          };
+          pStr="";
+          groupName = "group" + b.name;
+          groupNameClass = "." + groupName;
+          for (var i=0;i<d.length;i++) { 
+            p = d[i];
+            pStr = pStr + "<a class=\""+groupName+"\" href=\""+p.full+"\" title=\""+b.name+"\">  <img src=\""+p.thumb+"\">  </a>";
+          };
+          $(brassShowPics).html( pStr );
+          $(groupNameClass).colorbox( { rel:groupName, transition:"fade" } );
+        });
+        $("#brassShowYear").editable( "/rest/Brass/" + b.name + "/" + "year", {
+         type      : 'text',
+         cancel    : 'Cancel',
+         submit    : 'OK',
+         indicator : '<img src="favicon.ico">',
+         style   : 'display: inline',
+         tooltip   : 'Click to edit...'
+        });
+        $("#brassShowLocation").editable(brassUrl(b,"location"), { 
+         type      : 'text',
+         cancel    : 'Cancel',
+         submit    : 'OK',
+         indicator : '<img src="favicon.ico">',
+         style   : 'display: inline',
+         tooltip   : 'Click to edit...'
+        });
+
     };

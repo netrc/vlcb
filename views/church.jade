@@ -82,7 +82,7 @@ block pagescript
             $("#churchShowPics").html( pStr  );
         } );
         $.get(churchUrl(c,"mainNote"),{tFormat:'HTML'},function(d,tstatus,jxhr) {
-            alert(" c mn get html");
+            //alert(" c mn get html");
             $('#churchShowMainNote').html(d);
         } );
         $.get(churchUrl(c,"Brass"),"",function(d,tstatus,jxhr) {
