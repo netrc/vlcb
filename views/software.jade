@@ -39,11 +39,29 @@ block pagecontent
   div.row
     div.span2
     div.span2  Known Rubbings...
+    div#krtext.span1 ...calculating...
     div.span4
-      div.progress.progress-warning.progress-striped.active
-        div.bar(style="width: 40%;")
+      div.progress.progress-info.progress-striped.active
+        div#krpct.bar(style="width: 0%;")
   hr
   button dump data
   hr
   form(method="get", action="/dobatch")
     input(type="submit", value="Do Batch")
+
+block pagescript
+    script
+      $(document).ready(function() {
+        $.get("/rest/Rubbing/","",function(d,tstatus,jxhr) {
+        var l = d.length;
+        var k = 0.0;
+          for (var i=0;i<d.length;i++) {
+            var r = d[i];
+            if (r.brass && (r.brass !== "") && (r.brass !== "unknown")) {
+              k = k + 1.0;
+            };
+            $("#krpct").css("width",(k/l));
+          };
+        $("#krtext").html("("+k + "/" + l+")");
+        } );
+      });
