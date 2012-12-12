@@ -80,6 +80,16 @@ exports.getGenericField = function ( cat, name, field, doIt ) {
         }
     });
 };
+exports.postGenericField = function ( cat, name, field, val, doIt ) {
+    var thisColl = mdb.collection(cat);
+    thisColl.update( {name: name}, { $set: { field: val } }, function(err, docData) {
+        if (err) {
+            console.error("error updating: " + cat + " name:" + name + " (field: " + field + ")"); 
+        } 
+        // not much else goes on with Post
+        doIt();
+    });
+};
 
 
 // expecting just one specific note, e.g. for Church, Brass
@@ -158,6 +168,9 @@ exports.picsByRubbing = function(vlcn,doIt) {
     dbFindAll(picColl, {category:"Rubbing", name:vlcn}, doIt);
 };
 
+exports.picsByCategoryIndex = function( c, x, doIt ) {
+    dbFindAll( picColl,  { category: c, name: x }, doIt );
+};
 
 exports.picAll = function(doIt) {
     dbFindAll(picColl, {}, doIt);

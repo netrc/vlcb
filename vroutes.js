@@ -126,10 +126,26 @@ exports.restGetPicByChurch = function(req,res) {
        res.send(pa); 
     });
 };
+exports.restGetPicsByCategory = function(req,res) {
+    DbMgr.picsByCategoryIndex( req.params.cat, req.params.name, function(pa){
+       res.send(pa); 
+    });
+};
 exports.restPostChurch_latlon = function(req,res) {
     var newVal = req.body.value;
     console.log("vr postcl:" + newVal);
     DbMgr.postChurch_latlon( req.params.cname, newVal, function() {
+        res.send(newVal);
+    });
+};
+//  and note that this returns the new value -- assumed to be used for jeditable simple fields that want that val back
+exports.restPostGenericField = function(req,res) {
+    var cat = req.params.cat;
+    var name = req.params.name;
+    var field = req.params.field;
+    var newVal = req.body.value;
+    console.log("pgf cat:" + cat + " n:" + name + " f:" + field + " v:" + newVal);
+    DbMgr.postGenericField( cat, name, field, newVal, function() {
         res.send(newVal);
     });
 };
