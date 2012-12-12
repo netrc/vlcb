@@ -37,6 +37,12 @@ exports.pic = function(req, res) {
     res.render('pic.jade', { thisAction: 'Pic'});
 };
 
+exports.restGetGenericField = function(req,res) {
+    console.log("ggf: " + req.params.cat + " name: " + req.params.name + " field: " + req.params.field);
+    DbMgr.getGenericField( req.params.cat, req.params.name, req.params.field, function(data) {
+        res.send( data );
+    });
+};
 
 // needs to return just the raw markdown text
 exports.restGetAboutMD = function(req,res) {

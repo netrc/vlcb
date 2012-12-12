@@ -66,6 +66,22 @@ exports.postChurch_latlon = function( cn, val, doIt ) {
     
 };
 
+exports.getGenericField = function ( cat, name, field, doIt ) {
+    var thisColl = mdb.collection(cat);
+    thisColl.findOne( {name: name}, function(err, docData) {
+        if (err) {
+            console.error("error finding: " + cat + " name:" + name + " (field: " + field + ")"); 
+        } else {
+            if (docData[field]) {
+                doIt(docData[field]);
+            } else {
+                console.error("error finding field: " + cat + " name:" + name + " field: " + field); 
+            }
+        }
+    });
+};
+
+
 // expecting just one specific note, e.g. for Church, Brass
 exports.note = function(c, t, f, doIt) {
     console.log("db note: c:"+c+" t:"+t+" f:"+f);
