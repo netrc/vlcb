@@ -29,7 +29,9 @@ block pagecontent
         div#rubbingShowDesc
         div#rubbingShowLocation
         div#rubbingShowBrass
-        div#rubbingShowLinks
+        div#rubbingShowInfo
+          i Date:
+          span#rubbingEditDate
 
 block pagescript
   script
@@ -41,12 +43,14 @@ block pagescript
             rButtId = "rButtId"+i;
             rButtIdRef = "#"+rButtId;
             $("#rubbingList").append("<li> <button id=\"" + rButtId + "\"> " + r.vlcn + " - " + r.name + "</button> </li>");
-            $(rButtIdRef).on('click',(function(zr) { return function(){rubbingShow( zr ); } })(r) );
+            d[i].dateUrl = "/rest/Rubbing/"+r.vlcn+"/date";
+            $(rButtIdRef).on('click',(function(zr) { return function(){rubbingShow( zr ); } })(d[i]) );
         };
         if (d.length>0) {
             rubbingShow( d[0] );
         };
       } );
+      $('#rubbingEditDate').editable({ type: 'text', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
     });
     var rubbingShow = function ( r ) {
         //alert("now show: "+r.vlcn + " name: "  + r.name);
@@ -71,4 +75,6 @@ block pagescript
           $(rubbingShowPics).html( pStr );
           $(groupNameClass).colorbox( { rel:groupName, transition:"fade" } );
         });
+        //alert("resetting data-url to: " + r.dataUrl);
+        $('#rubbingEditDate').editable('option','url', r.dateUrl);
     };

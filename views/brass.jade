@@ -28,43 +28,49 @@ block pagecontent
         div#brassShowChurch
         div#brassShowInfo
           <i> year: </i>
-          span#brassShowYear
+          span#brassEditYear
           <i> location: </i>
-          span#brassShowLocation
+          span#brassEditLocation
         p
         div#brassShowNote
 
 block pagescript
   script
-    var brassUrl = function ( x, s ) {
-        return("/rest/Brass/" + x.name + "/" + s);
-    }
     $(document).ready(function() {
       $.get("/rest/Brass/","",function(d,tstatus,jxhr) {
         //alert("got brasses "+d.length);
         for (var i=0;i<d.length;i++) { 
-            br = d[i];
+            var br = d[i];
             bButtId = "bButtId"+i;
             bButtIdRef = "#"+bButtId;
+            d[i].yearUrl = "/rest/Brass/" + br.name + "/year";
+            d[i].locationUrl = "/rest/Brass/" + br.name + "/location";
             $("#brassList").append("<li> <button id=\"" + bButtId + "\"> " + br.name + " - " + br.church + "</button> </li>");
-            $(bButtIdRef).on('click',(function(zb) { return function(){ brassShow( zb ); } })(br) );
+            $(bButtIdRef).on('click',(function(zb) { return function(){ brassShow( zb ); } })(d[i]) );
         }
         if (d.length>0) {
             brassShow( d[0] );
         };
       } );
+      $('#brassEditLocation').editable({ type: 'text', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter location' });
+      $('#brassEditYear').editable({ type: 'text', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter year' });
     });
-    var brassShow = function ( b ) {
+
+    function brassUrl( x, s ) {
+        return("/rest/Brass/" + x.name + "/" + s);
+    }
+
+    function brassShow( b ) {
         //alert("now show: " + b.name );
         $("#brassShowTitle").html("<b> " + b.name + " - " + b.church + "</b>");
         $("#brassShowPics").html( "<i> no pics yet </i>" );
         $("#brassShowChurch").html( ((b.church) ? "<a href=\"/church/"+b.church + "\">" +b.church + "</a>" : "<i> church? </i>") );
-        $("#brassShowLocation").html( ((b.location) ? b.location : "<i> location? </i>") );
-        $("#brassShowYear").html( ( (b.year) ? b.year : "<i> year? </i>") );
+        $("#brassEditLocation").editable('option', 'value', ((b.location) ? b.location : "<i> location? </i>") );
+        $("#brassEditYear").editable('option', 'value', ( (b.year) ? b.year : "<i> year? </i>") );
         $("#brassShowNote").html( ((b.mainNote) ? b.mainNote : "<i> no note yet </i>") );
 
         // no db2 to get brass pics
-        $.get("/rest/Brass/"+b.name+"/Pics","",function(d,tstatus,jxhr) {
+        $.get(brassUrl(b,"Pics"),"",function(d,tstatus,jxhr) {
           //alert("bp found " + d.length + " pics for " + b.name);
           if (d.length==0) {
             return;
@@ -79,21 +85,8 @@ block pagescript
           $(brassShowPics).html( pStr );
           $(groupNameClass).colorbox( { rel:groupName, transition:"fade" } );
         });
-        $("#brassShowYear").editable( "/rest/Brass/" + b.name + "/" + "year", {
-         type      : 'text',
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         indicator : '<img src="favicon.ico">',
-         style   : 'display: inline',
-         tooltip   : 'Click to edit...'
-        });
-        $("#brassShowLocation").editable(brassUrl(b,"location"), { 
-         type      : 'text',
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         indicator : '<img src="favicon.ico">',
-         style   : 'display: inline',
-         tooltip   : 'Click to edit...'
-        });
-
+        //alert("edit year: " + b.yearUrl);
+        $('#brassEditYear').editable('option','url', b.yearUrl);
+        $('#brassEditLocation').editable('option','url', b.locationUrl);
+        //alert("place to stop");
     };

@@ -82,7 +82,11 @@ exports.getGenericField = function ( cat, name, field, doIt ) {
 };
 exports.postGenericField = function ( cat, name, field, val, doIt ) {
     var thisColl = mdb.collection(cat);
-    thisColl.update( {name: name}, { $set: { field: val } }, function(err, docData) {
+    var fv = {}; fv[field] = val;
+    var indexFieldName = (cat === "Rubbing") ? "vlcn" : "name";
+    var i = {}; i[indexFieldName] = name;
+    console.log("index "+indexFieldName+": "+i[indexFieldName]+ " field: "+field+" val: "+val);
+    thisColl.update( i, { $set: fv }, function(err, docData) {
         if (err) {
             console.error("error updating: " + cat + " name:" + name + " (field: " + field + ")"); 
         } 

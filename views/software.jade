@@ -42,7 +42,7 @@ block pagecontent
     div#krtext.span1 ...calculating...
     div.span4
       div.progress.progress-info.progress-striped.active
-        div#krpct.bar(style="width: 0%;")
+        div#krpct.bar(style="width: 45.666666%;")
   hr
   button dump data
   hr
@@ -60,7 +60,7 @@ block pagescript
             if (r.brass && (r.brass !== "") && (r.brass !== "unknown")) {
               k = k + 1.0;
             };
-            $("#krpct").css("width",(k/l));
+            $("#krpct").css("width",(k/l*100)+"%");
           };
         $("#krtext").html("("+k + "/" + l+")");
         } );

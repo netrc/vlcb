@@ -28,13 +28,13 @@ block pagecontent
           span#churchShowName
           span#churchShowAddress
         div#churchShowPics
+        div#churchShowBrasses
         div#churchShowInfo
           <i> year: </i>
-          span#churchShowYear
+          span#churchEditYear
           <i> latlon: </i>
-          span#churchShowLatlon
-        div#churchShowBrasses
-        div#churchShowMainNote
+          span#churchEditLatlon
+        div#churchEditMainNote
 
 block pagescript
   script
@@ -47,12 +47,18 @@ block pagescript
             cButtIdRef = "#"+cButtId;
             newLi  = "<li> <button id=\""+cButtId+"\"> "+c.name+"<i> - "+c.address+"</i></button></li>\n";
             $("#churchList").append(newLi);
+            d[i].yearUrl = "/rest/Church/"+c.name+"/year";
+            d[i].latlonUrl = "/rest/Church/"+c.name+"/latlon";
+            d[i].mainNoteUrl = "/rest/Church/"+c.name+"/mainNote";
             $(cButtIdRef).on( 'click', (function(zc) { return function(){churchShow(zc); } })(c) );
         };
         if (d.length>0) {
             churchShow( d[0] );
         };
       } );
+      $('#churchEditYear').editable({ type: 'text', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
+      $('#churchEditLatlon').editable({ type: 'text', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
+      $('#churchEditMainNote').editable({ type: 'textarea', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note' });
     });
 
     var churchUrl = function ( c, s ) {
@@ -65,10 +71,10 @@ block pagescript
         $("#churchShowName").html("<b>" + c.name + "</b>");
         $("#churchShowAddress").html("<i> - " + c.address + "</i>");
         $("#churchShowPics").html("<i> no pics yet </i> <p>");
-        $("#churchShowYear").html(c.year);
-        $("#churchShowLatlon").html(c.latlon);
         $("#churchShowBrasses").html("<i> no brasses found </i> <p>");
-        $("#churchShowMainNote").html( "<i> no note yet </i>" );
+        $("#churchEditYear").editable('option', 'value', (c.year) ? c.year : "year?" );
+        $("#churchEditLatlon").editable('option', 'value', (c.latlon) ? c.latlon : "latlon?");
+        $("#churchEditMainNote").editable('option', 'value', (c.mainNote) ? c.mainNote : "note??" );
 
         $.get(churchUrl(c,"Pic"),"",function(d,tstatus,jxhr) {
             if (d.length==0) {
@@ -80,10 +86,6 @@ block pagescript
                 pStr = pStr + "<img src=\"" + p.thumb + "\"> <p>";
             };
             $("#churchShowPics").html( pStr  );
-        } );
-        $.get(churchUrl(c,"mainNote"),{tFormat:'HTML'},function(d,tstatus,jxhr) {
-            //alert(" c mn get html");
-            $('#churchShowMainNote').html(d);
         } );
         $.get(churchUrl(c,"Brass"),"",function(d,tstatus,jxhr) {
             //alert("cbr length: " + d.length);
@@ -98,28 +100,11 @@ block pagescript
             $("#churchShowBrasses").html( bStr );
         } );
 
-        $("#churchShowLatlon").editable(churchUrl(c,"latlon"), {
-         type      : 'text',
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         indicator : '<img src="favicon.ico">',
-         style   : 'display: inline',
-         tooltip   : 'Click to edit...'
-        });
-        $("#churchShowYear").editable(churchUrl(c,"year"), { 
-         type      : 'text',
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         indicator : '<img src="favicon.ico">',
-         style   : 'display: inline',
-         tooltip   : 'Click to edit...'
-        });
-        $("#churchShowMainNote").editable(churchUrl(c,"mainNote"), { 
-         type      : 'textarea',
-         loadurl : churchUrl(c,"mainNote"),
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         indicator : '<img src="favicon.ico">',
-         tooltip   : 'Click to edit...'
-        });
+        $("#churchEditLatlon").editable('option', 'url', c.latlonUrl );
+        $("#churchEditYear").editable('option', 'url', c.yearUrl );
+        //$.get(churchUrl(c,"mainNote"),{tFormat:'HTML'},function(d,tstatus,jxhr) {
+            //alert(" c mn get html");
+        //    $('#churchShowMainNote').html(d);
+        //} );
+        $("#churchEditMainNote").editable('option', 'url', c.mainNoteUrl);
     }
