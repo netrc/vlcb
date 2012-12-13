@@ -32,7 +32,7 @@ block pagecontent
 block pagescript
   script
     $(document).ready(function() {
-    $.get("http://vlcb.netrc.c9.io/rest/Pic/","",function(d,tstatus,jxhr) {
+    $.get("/rest/Pic/","",function(d,tstatus,jxhr) {
         //alert("got pictures "+d.length);
         for (var i=0;i<d.length;i++) { 
             p = d[i];
