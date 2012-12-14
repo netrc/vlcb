@@ -44,7 +44,8 @@ block pagecontent
       div.progress.progress-info.progress-striped.active
         div#krpct.bar(style="width: 45.666666%;")
   hr
-  button dump data
+  form(method="get", action="/dumpData")
+    input(type="submit", value="Dump data...")
   hr
   form(method="get", action="/dobatch")
     input(type="submit", value="Do Batch")
@@ -52,6 +53,8 @@ block pagecontent
 block pagescript
     script
       $(document).ready(function() {
+        // The set of automatic tests....
+        // ... rubbings with no brass, e.g. unknown
         $.get("/rest/Rubbing/","",function(d,tstatus,jxhr) {
         var l = d.length;
         var k = 0.0;

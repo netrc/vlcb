@@ -177,3 +177,8 @@ exports.doBatch = function(req,res) {
         res.send("OK");
     } );
 };
+exports.dumpData = function(req, res) {
+    DbMgr.dumpData( function(data) {
+        res.send(data)
+    });
+};

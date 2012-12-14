@@ -31,6 +31,7 @@ app.get('/rubbing', vroutes.rubbing);
 app.get('/pic', vroutes.pic);
 app.get('/software', vroutes.software);
 app.get('/dobatch', vroutes.doBatch);
+app.get('/dumpData',vroutes.dumpData);
 // rest interfaces
 app.get('/rest/Note/about', vroutes.restGetAboutMD);
 app.post('/rest/Note/about', vroutes.restPostAboutMD);

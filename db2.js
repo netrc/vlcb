@@ -220,6 +220,28 @@ exports.xxxpicStore = function(picObj, doIt) {
     } );
 };
 
+exports.dumpData = function( doIt ) {
+    console.log("dumpdata...");
+    dbFindAll(brassColl,{}, function(bData){
+        dbFindAll(churchColl, {}, function(cData) {
+            dbFindAll(rubbingColl,{}, function(rData) {
+                dbFindAll(picColl,{}, function(pData) {
+                    dbFindAll(noteColl, {}, function(nData) {
+                        var dumpJSON = JSON.stringify( {
+                                            brassArray : bData,
+                                            churchArray : cData,
+                                            rubbingArray : rData,
+                                            picArray : pData,
+                                            noteArray : nData
+                                            });
+                        doIt(dumpJSON);                                                                    
+                    });
+                });
+            });
+        });
+    });
+};
+
 var Br = require("./views/batch-nNames");
 exports.doBatch = function(doIt) {
 /*
