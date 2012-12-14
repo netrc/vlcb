@@ -18,4 +18,6 @@ block pagecontent
 
 block pagescript
   script
-    !function ($) { $(function(){ $('#myCarousel').carousel() }) }(window.jQuery)
+    $(document).ready(function(){
+      $('#myCarousel').carousel();
+    });
