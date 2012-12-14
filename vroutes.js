@@ -179,7 +179,11 @@ exports.doBatch = function(req,res) {
 };
 exports.restDumpData = function(req, res) {
     DbMgr.dumpData( function(data) {
+        var now = new Date();
+        var nVals = [now.getFullYear(), now.getMonth()+1, now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds() ];
+        var fname = "vlcb."+nVals.join("-")+".json";
         res.set({  'Content-Type': 'application/json' });
+        res.setHeader('Content-disposition', 'attachment; filename='+fname);
         res.send(data);
     });
 };
