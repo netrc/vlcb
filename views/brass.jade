@@ -32,7 +32,7 @@ block pagecontent
           <i> location: </i>
           span#brassEditLocation
         p
-        div#brassShowNote
+        div#brassEditMainNote.well
 
 block pagescript
   script
@@ -45,6 +45,7 @@ block pagescript
             bButtIdRef = "#"+bButtId;
             d[i].yearUrl = "/rest/Brass/" + br.name + "/year";
             d[i].locationUrl = "/rest/Brass/" + br.name + "/location";
+            d[i].mainNoteUrl = "/rest/Brass/"+br.name+"/mainNote";
             $("#brassList").append("<li> <button id=\"" + bButtId + "\"> " + br.name + " - " + br.church + "</button> </li>");
             $(bButtIdRef).on('click',(function(zb) { return function(){ brassShow( zb ); } })(d[i]) );
         }
@@ -54,6 +55,12 @@ block pagescript
       } );
       $('#brassEditLocation').editable({ type: 'text', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter location' });
       $('#brassEditYear').editable({ type: 'text', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter year' });
+      $('#brassEditMainNote').editable({ type: 'textarea', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
+        display: function( val, sd ) {
+            var tmpHtml = markdown.toHTML(val);
+            $(this).html(tmpHtml);
+        }
+        });
     });
 
     function brassUrl( x, s ) {
@@ -67,7 +74,7 @@ block pagescript
         $("#brassShowChurch").html( ((b.church) ? "<a href=\"/church/"+b.church + "\">" +b.church + "</a>" : "<i> church? </i>") );
         $("#brassEditLocation").editable('option', 'value', ((b.location) ? b.location : "<i> location? </i>") );
         $("#brassEditYear").editable('option', 'value', ( (b.year) ? b.year : "<i> year? </i>") );
-        $("#brassShowNote").html( ((b.mainNote) ? b.mainNote : "<i> no note yet </i>") );
+        $("#brassEditMainNote").editable('option', 'value', ((b.mainNote) ? b.mainNote : "note?") );
 
         // no db2 to get brass pics
         $.get(brassUrl(b,"Pics"),"",function(d,tstatus,jxhr) {
@@ -88,5 +95,6 @@ block pagescript
         //alert("edit year: " + b.yearUrl);
         $('#brassEditYear').editable('option','url', b.yearUrl);
         $('#brassEditLocation').editable('option','url', b.locationUrl);
+        $("#brassEditMainNote").editable('option', 'url', b.mainNoteUrl);
         //alert("place to stop");
     };

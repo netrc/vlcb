@@ -34,7 +34,7 @@ block pagecontent
           span#churchEditYear
           <i> latlon: </i>
           span#churchEditLatlon
-        div#churchEditMainNote
+        div#churchEditMainNote.well
 
 block pagescript
   script
@@ -58,7 +58,12 @@ block pagescript
       } );
       $('#churchEditYear').editable({ type: 'text', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
       $('#churchEditLatlon').editable({ type: 'text', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
-      $('#churchEditMainNote').editable({ type: 'textarea', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note' });
+      $('#churchEditMainNote').editable({ type: 'textarea', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
+        display: function( val, sd ) {
+            var tmpHtml = markdown.toHTML(val);
+            $(this).html(tmpHtml);
+        }
+        });
     });
 
     var churchUrl = function ( c, s ) {
@@ -102,9 +107,5 @@ block pagescript
 
         $("#churchEditLatlon").editable('option', 'url', c.latlonUrl );
         $("#churchEditYear").editable('option', 'url', c.yearUrl );
-        //$.get(churchUrl(c,"mainNote"),{tFormat:'HTML'},function(d,tstatus,jxhr) {
-            //alert(" c mn get html");
-        //    $('#churchShowMainNote').html(d);
-        //} );
         $("#churchEditMainNote").editable('option', 'url', c.mainNoteUrl);
     }

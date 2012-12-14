@@ -2,22 +2,22 @@ extends layout
 
 block pagecontent
   div.container
-    div.span12
-      div.about
+    div.row
+      div.span1
+      div.span8
+        div#about.well
 
 block pagescript
   script
     $(document).ready(function() {
-      $('.about').editable('http://vlcb.netrc.c9.io/rest/Note/about', { 
-         type      : 'textarea',
-         loadurl : 'http://vlcb.netrc.c9.io/rest/Note/about',
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         indicator : '<img src="favicon.ico">',
-         tooltip   : 'Click to edit...'
-        } );
-      $.get("http://vlcb.netrc.c9.io/rest/Note/about",{tFormat:'HTML'},function(d,tstatus,jxhr) {
-        alert(" ab get set about html");
-        $('.about').html(d);
+      $('#about').editable({ type: 'textarea', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
+        display: function( val, sd ) {
+            var tmpHtml = markdown.toHTML(val);
+            $(this).html(tmpHtml);
+        },
+        url: "/rest/Note/about"
+        });
+      $.get("/rest/Note/about",{},function(d,tstatus,jxhr) {
+        $("#about").editable('option', 'value', ((d) ? d : "about?") );
         } );
     });
