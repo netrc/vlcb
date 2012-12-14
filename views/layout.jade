@@ -42,15 +42,23 @@ html
                     a(href="/book") Purchase Book...
                   li.divider
                   li
+                    a(href="/software") Software
+                  li
                     a(href="/pic") Pictures
                   li
                     a(href="/notes") Notes
-                  li.divider
                   li
-                    a(href="/software") Software
+                    button#login(type="button",data-toggle="modal",data-target="#loginPopup") Login
 
 
-
+    div#loginPopup.modal.hide.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+      div.modal-header
+        button.close(type="button", data-dismiss="modal", aria-hidden="true")×
+        h3#myModalLabel Login
+      div.modal-body
+        span Editor's Password: &nbsp
+        form(method="get", action="/login")
+          input(type="password", name="pwd")
 
 
     block pagecontent
