@@ -228,6 +228,7 @@ exports.dumpData = function( doIt ) {
                 dbFindAll(picColl,{}, function(pData) {
                     dbFindAll(noteColl, {}, function(nData) {
                         var dumpJSON = JSON.stringify( {
+                                            copyright : "copyright(2012) Richard Campbell",
                                             brassArray : bData,
                                             churchArray : cData,
                                             rubbingArray : rData,
