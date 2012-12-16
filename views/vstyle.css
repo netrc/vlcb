@@ -7,7 +7,12 @@ body {
     font-family: 'Monsieur La Doulaise', cursive;
     }
 
-.fixMe {position:fixed;}
+.fixMe {
+    position:fixed;
+    border-width: 4px;
+    border-style: solid;
+    border-color: #666;
+    }
 * html .fixMe {position:absolute;}
 
 .cd table {
