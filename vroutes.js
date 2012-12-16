@@ -174,6 +174,7 @@ exports.restXeditSelectChurch = function(req,res) {
         ca.forEach( function(c) {
             selArray.push( { value: c.name, text: c.name} );
         });
+        selArray.push( { value: "unknown", text: "unknown" });
        res.send(selArray); 
     });
 };
@@ -184,6 +185,7 @@ exports.restXeditSelectBrass = function(req,res) {
         ba.forEach( function(b) {
             selArray.push( { value: b.name, text: b.name} );
         });
+        selArray.push( { value: "unknown", text: "unknown" });
        res.send(selArray); 
     });
 };

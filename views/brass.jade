@@ -25,7 +25,7 @@ block pagecontent
       div#brassShow.well.fixMe
         div#brassShowTitle ...select a brass
         div#brassShowPics
-        div#brassShowChurch
+        div#brassEditChurch
         div#brassShowInfo
           <i> year: </i>
           span#brassEditYear
@@ -46,6 +46,7 @@ block pagescript
             d[i].yearUrl = "/rest/Brass/" + br.name + "/year";
             d[i].locationUrl = "/rest/Brass/" + br.name + "/location";
             d[i].mainNoteUrl = "/rest/Brass/"+br.name+"/mainNote";
+            d[i].churchUrl = "/rest/Brass/" + br.name + "/church";
             $("#brassList").append("<li> <button id=\"" + bButtId + "\"> " + br.name + " - " + br.church + "</button> </li>");
             $(bButtIdRef).on('click',(function(zb) { return function(){ brassShow( zb ); } })(d[i]) );
         }
@@ -53,6 +54,7 @@ block pagescript
             brassShow( d[0] );
         };
       } );
+      $('#brassEditChurch').editable({ type: 'select', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter brass', source:"/rest/xeditSelect/Church" });
       $('#brassEditLocation').editable({ type: 'text', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter location' });
       $('#brassEditYear').editable({ type: 'text', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter year' });
       $('#brassEditMainNote').editable({ type: 'textarea', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
@@ -72,6 +74,7 @@ block pagescript
         $("#brassShowTitle").html("<b> " + b.name + " - " + b.church + "</b>");
         $("#brassShowPics").html( "<i> no pics yet </i>" );
         $("#brassShowChurch").html( ((b.church) ? "<a href=\"/church/"+b.church + "\">" +b.church + "</a>" : "<i> church? </i>") );
+        $("#brassEditChurch").editable( 'option', 'value', ((b.church) ?  b.church : "unknown") );
         $("#brassEditLocation").editable('option', 'value', ((b.location) ? b.location : "<i> location? </i>") );
         $("#brassEditYear").editable('option', 'value', ( (b.year) ? b.year : "<i> year? </i>") );
         $("#brassEditMainNote").editable('option', 'value', ((b.mainNote) ? b.mainNote : "note?") );
@@ -93,6 +96,7 @@ block pagescript
           $(groupNameClass).colorbox( { rel:groupName, transition:"fade" } );
         });
         //alert("edit year: " + b.yearUrl);
+        $('#brassEditChurch').editable('option','url', b.churchUrl);
         $('#brassEditYear').editable('option','url', b.yearUrl);
         $('#brassEditLocation').editable('option','url', b.locationUrl);
         $("#brassEditMainNote").editable('option', 'url', b.mainNoteUrl);
