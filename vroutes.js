@@ -98,6 +98,13 @@ exports.restPostPic = function(req,res) {
         res.send("");
     });
 };
+exports.restPostBrass = function(req,res) {
+    var bn = req.param('bn');
+    console.log("brass post new:"+bn);
+    DbMgr.brassStore( bn, function(d){
+        res.send("");
+    });
+};
 
 exports.restGetChurch = function(req,res) {
     DbMgr.churchAll( function(pa){
@@ -158,6 +165,26 @@ exports.restGetRubbing = function(req,res) {
 exports.restGetPicsByRubbing = function(req,res) {
     DbMgr.picsByRubbing( req.params.vlcn, function(pa){
        res.send(pa); 
+    });
+};
+
+exports.restXeditSelectChurch = function(req,res) {
+    DbMgr.churchAll( function(ca){
+        var selArray = [];
+        ca.forEach( function(c) {
+            selArray.push( { value: c.name, text: c.name} );
+        });
+       res.send(selArray); 
+    });
+};
+
+exports.restXeditSelectBrass = function(req,res) {
+    DbMgr.brassAll( function(ba){
+        var selArray = [];
+        ba.forEach( function(b) {
+            selArray.push( { value: b.name, text: b.name} );
+        });
+       res.send(selArray); 
     });
 };
 

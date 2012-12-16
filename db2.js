@@ -190,6 +190,19 @@ exports.picStore = function(pn, pc, pt, pf, doIt) {
     } );
     console.log("db2 store pic done");
 };
+exports.brassStore = function(bn, doIt) {
+    var newBrass = { name: bn };
+    console.log("db2 store brass: ",bn);
+    brassColl.insert( newBrass, function(err,docData){
+        if (err) {
+            console.error("error updating 'brass': " + err);
+        }
+        doIt();
+    } );
+    console.log("db2 store brass done");
+};
+
+
 
 /// these are not developed yet. trying to get a class set up
 exports.xxxpic = {
