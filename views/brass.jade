@@ -14,7 +14,7 @@ block pagecontent
         button#bSortShire.btn.sorter(type="button") Church
         button#bSortYear.btn.sorter(type="button") Year
     div.span4
-      form.form-inline(method="post")
+      form.form-inline(method="post", action="/rest/Brass")
         input.input-small(type="text",name="bn",placeholder="Brass Name")
         button.btn(type="submit"): i.icon-plus-sign
 
