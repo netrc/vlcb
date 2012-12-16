@@ -4,7 +4,7 @@ var Md = require('markdown').markdown;
 
 var mdbConnStr;
 var mdb;
-var noteColl, brassColl, rubbingColl, churchColl, picColl;
+var noteColl, brassColl, rubbingColl, churchColl, picColl, logColl;
 
 exports.initConn = function (mdbUser, mdbPwd, mdbHost, mdbPort, mdbDbName) {
 		mdbConnStr = "mongo://" + mdbUser + ":" + mdbPwd + "@" + mdbHost + ":" + mdbPort + "/" + mdbDbName;
@@ -24,7 +24,19 @@ exports.initConn = function (mdbUser, mdbPwd, mdbHost, mdbPort, mdbDbName) {
         churchColl = mdb.collection("Church");
         picColl = mdb.collection("Pic");
         rubbingColl = mdb.collection("Rubbing");
-        brassColl = mdb.collection("Brass");        
+        brassColl = mdb.collection("Brass");
+        logColl = mdb.collection("Log");
+};
+
+// not exported
+var log = function(actionStr, detailStr) {
+    var n = new Date();
+    var newLog = {secs: n.getTime(), date: n.toLocaleString(), action: actionStr, detail: detailStr };
+    logColl.insert( newLog,  function(err,docData){
+        if (err) {
+            console.error("error logging: " + err);
+        }
+    });  
 };
 
 // 'about' is one specific note
@@ -51,6 +63,7 @@ exports.aboutStore = function(newText, doIt) {
         if (err) {
             console.error("error updating 'about' note: " + err);
         }
+        log("about note update","");
         doIt();
     } );
 };
@@ -91,6 +104,7 @@ exports.postGenericField = function ( cat, name, field, val, doIt ) {
             console.error("error updating: " + cat + " name:" + name + " (field: " + field + ")"); 
         } 
         // not much else goes on with Post
+        log( "post: "+cat+"/"+name+"/"+field+"="+val);
         doIt();
     });
 };
@@ -122,6 +136,7 @@ exports.noteStore = function(c, t, newText, doIt) {
         if (err) {
             console.error("error updating 'about' note: " + err);
         }
+        log("note store for "+c+"/"+t,"");
         doIt();
     } );
 };
@@ -186,6 +201,7 @@ exports.picStore = function(pn, pc, pt, pf, doIt) {
         if (err) {
             console.error("error updating 'pict': " + err);
         }
+        log("new "+pc+" pic",pn);
         doIt();
     } );
     console.log("db2 store pic done");
@@ -197,6 +213,7 @@ exports.brassStore = function(bn, doIt) {
         if (err) {
             console.error("error updating 'brass': " + err);
         }
+        log("new brass",bn);
         doIt();
     } );
     console.log("db2 store brass done");
