@@ -8,14 +8,45 @@ var express = require('express');
 require('jade');
 var DbMgr = require('./db2');
 var vroutes = require('./vroutes');
+var passport = require('passport');
+var GoogleStrategy = require('passport-google').Strategy;
+
+// ????
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+passport.use(new GoogleStrategy({
+    returnURL: 'http://vlcb.netrc.c9.io/auth/google/return',
+    realm: 'http://vlcb.netrc.c9.io/'
+  },  function(identifier, profile, done) {
+//    User.findOrCreate({ openId: identifier }, function(err, user) {
+//      done(err, user);
+//    });
+        console.log("google has returned:");
+        console.log("ident: "+identifier);
+        console.log("profile: dn:" + profile.displayName+" email:"+ profile.emails[0].value);
+        // maybe this is where I figure out the authorization role? reader / editor
+      //profile.identifier = identifier;
+      profile.role = "vlcbEditor";
+      return done(null, profile);        
+  }
+));
+
 
 
 var app = express();
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.cookieParser('foobar'));
-app.use(express.session());
 app.use(express.bodyParser());
+app.use(express.session({ secret: 'vlcb!083c4n#M.vAs' }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(app.router);
 app.use(express.static('views'));   // will check this dir for undefined pages...
 
@@ -31,6 +62,9 @@ app.get('/rubbing', vroutes.rubbing);
 app.get('/pic', vroutes.pic);
 app.get('/software', vroutes.software);
 app.get('/dobatch', vroutes.doBatch);
+// Authorization / Passport
+app.get('/auth/google', passport.authenticate('google'));
+app.get('/auth/google/return',  passport.authenticate('google', { successRedirect: '/', failureRedirect: '/auth/login' } ));
 // rest interfaces
 app.get('/rest/dumpData',vroutes.restDumpData);
 app.get('/rest/Note/about', vroutes.restGetAboutMD);

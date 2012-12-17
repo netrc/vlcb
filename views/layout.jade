@@ -57,7 +57,8 @@ html
         h3#myModalLabel Login
       div.modal-body
         span Editor's Password: &nbsp
-        form(method="get", action="/login")
+        a(href="/auth/google") Sign In with Google
+        form(method="get", action="/auth/login")
           input(type="password", name="pwd")
 
 

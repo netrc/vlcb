@@ -9,7 +9,9 @@
     "mongolian": "0.1.x",
     "markdown": "0.4.x",
     "coffee-script": "1.4.x",
-    "jade": "0.27.x"
+    "jade": "0.27.x",
+    "passport": "0.x",
+    "passport-google": "0.x"
   },
   "engines": {
     "node": "0.6.x",
