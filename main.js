@@ -38,6 +38,19 @@ passport.use(new GoogleStrategy({
 ));
 
 
+var vlcbAuthorization = function( req, res, next ) {
+    if (req.method != "POST") {
+        return next();   // not a POST, go ahead
+    }
+    if ( (req.user) && (req.user.role == "vlcbEditor")) {
+        return next();   // POST and an editor, go ahead
+    }
+    // POST but not an editor !!
+    //console.log("vlcba:", req.method, ":not permitted");
+    // set a res.flashUnauthPost
+    res.redirect('back');
+};
+
 
 var app = express();
 app.use(express.favicon());
@@ -47,6 +60,7 @@ app.use(express.bodyParser());
 app.use(express.session({ secret: 'vlcb!083c4n#M.vAs' }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(vlcbAuthorization);
 app.use(app.router);
 app.use(express.static('views'));   // will check this dir for undefined pages...
 
