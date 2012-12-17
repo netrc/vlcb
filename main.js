@@ -20,9 +20,17 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
+var AppBaseUrl = 'http://vlcb.netrc.c9.io/';
+if (process.env.NODE_ENV === "production") {
+    // set: heroku config:add NODE_ENV=production --app vlcb
+    AppBaseUrl = 'http://vlcb.netrc.heroku.com/';
+}
+var PassportReturnUrl = AppBaseUrl + 'auth/google/return';
+var PassportRealm = AppBaseUrl;
+
 passport.use(new GoogleStrategy({
-    returnURL: 'http://vlcb.netrc.c9.io/auth/google/return',
-    realm: 'http://vlcb.netrc.c9.io/'
+    returnURL: PassportReturnUrl,
+    realm: PassportRealm
   },  function(identifier, profile, done) {
 //    User.findOrCreate({ openId: identifier }, function(err, user) {
 //      done(err, user);
