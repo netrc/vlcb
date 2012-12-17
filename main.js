@@ -23,7 +23,8 @@ passport.deserializeUser(function(obj, done) {
 var AppBaseUrl = 'http://vlcb.netrc.c9.io/';
 if (process.env.NODE_ENV === "production") {
     // set: heroku config:add NODE_ENV=production --app vlcb
-    AppBaseUrl = 'http://vlcb.netrc.heroku.com/';
+    // set: heroku config:add VLCB_HEROKU_URL=http://vlcb.herokuapp.com --app vlcb
+    AppBaseUrl = process.env.VLCB_HEROKU_URL;
 }
 var PassportReturnUrl = AppBaseUrl + 'auth/google/return';
 var PassportRealm = AppBaseUrl;
