@@ -37,6 +37,10 @@ block pagecontent
 
 block pagescript
   script
+    function isVlcbReadonly() {
+        var thisRole = $.cookie('vlcbRole');
+        return (thisRole != 'vlcbEditor');
+    }
     $(document).ready(function() {
       $.get("/rest/Rubbing/","",function(d,tstatus,jxhr) {
         //alert("got rubbing "+d.length);
@@ -54,18 +58,15 @@ block pagescript
             rubbingShow( d[0] );
         };
       } );
-      $('#rubbingEditBrass').editable({ type: 'select', disabled: true, onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter brass', source:"/rest/xeditSelect/Brass" });
-      $('#rubbingEditDate').editable({ type: 'text', disabled: true, onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
-      $('#rubbingEditMainNote').editable({ type: 'textarea', disabled: true, onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
+      $('#rubbingEditBrass').editable({ type: 'select', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter brass', source:"/rest/xeditSelect/Brass" });
+      $('#rubbingEditDate').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
+      $('#rubbingEditMainNote').editable({ type: 'textarea', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
         display: function( val, sd ) {
             var tmpHtml = markdown.toHTML(val);
             $(this).html(tmpHtml);
         }
         });
     });
-    if ($.cookie("vlcbRole") == "vlcbEditor") {
-       $('.rubbingXedit').editable('option', 'disabled', false);
-    };
 
     var rubbingShow = function ( r ) {
         //alert("now show: "+r.vlcn + " name: "  + r.name);

@@ -36,6 +36,10 @@ block pagecontent
 
 block pagescript
   script
+    function isVlcbReadonly() {
+        var thisRole = $.cookie('vlcbRole');
+        return (thisRole != 'vlcbEditor');
+    }
     $(document).ready(function() {
       $.get("/rest/Brass/","",function(d,tstatus,jxhr) {
         //alert("got brasses "+d.length);
@@ -54,19 +58,17 @@ block pagescript
             brassShow( d[0] );
         };
       } );
-      $('#brassEditChurch').editable({ type: 'select', disabled: true, onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter brass', source:"/rest/xeditSelect/Church" });
-      $('#brassEditLocation').editable({ type: 'text', disabled: true, onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter location' });
-      $('#brassEditYear').editable({ type: 'text', disabled: true, onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter year' });
-      $('#brassEditMainNote').editable({ type: 'textarea', disabled: true, onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
+      $('#brassEditChurch').editable({ type: 'select', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter brass', source:"/rest/xeditSelect/Church" });
+      $('#brassEditLocation').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter location' });
+      $('#brassEditYear').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter year' });
+      $('#brassEditMainNote').editable({ type: 'textarea', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
         display: function( val, sd ) {
             var tmpHtml = markdown.toHTML(val);
             $(this).html(tmpHtml);
         }
         });
     });
-    if ($.cookie("vlcbRole") == "vlcbEditor") {
-       $('.brassXedit').editable('option', 'disabled', false);
-    };
+
 
     function brassUrl( x, s ) {
         return("/rest/Brass/" + x.name + "/" + s);

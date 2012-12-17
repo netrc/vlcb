@@ -38,6 +38,10 @@ block pagecontent
 
 block pagescript
   script
+    function isVlcbReadonly() {
+        var thisRole = $.cookie('vlcbRole');
+        return (thisRole != 'vlcbEditor');
+    }
     $(document).ready(function() {
       $.get("/rest/Church/","",function(d,tstatus,jxhr) {
         //alert("c2b: got churches: "+d.length);
@@ -56,18 +60,15 @@ block pagescript
             churchShow( d[0] );
         };
       } );
-      $('#churchEditYear').editable({ type: 'text', disabled: true, onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
-      $('#churchEditLatlon').editable({ type: 'text', disabled: true, onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
-      $('#churchEditMainNote').editable({ type: 'textarea', disabled: true, onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
+      $('#churchEditYear').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
+      $('#churchEditLatlon').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
+      $('#churchEditMainNote').editable({ type: 'textarea', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
         display: function( val, sd ) {
             var tmpHtml = markdown.toHTML(val);
             $(this).html(tmpHtml);
         }
         });
     });
-    if ($.cookie("vlcbRole") == "vlcbEditor") {
-       $('.churchXedit').editable('option', 'disabled', false);
-    };
 
     var churchUrl = function ( c, s ) {
         return("/rest/Church/" + c.name + "/" + s);
