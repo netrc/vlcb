@@ -28,11 +28,11 @@ block pagecontent
         div#rubbingShowPics
         div#rubbingShowDesc
         div#rubbingShowLocation
-        div#rubbingEditBrass
+        div#rubbingEditBrass.rubbingXedit
         div#rubbingShowInfo
           i Date:
-          span#rubbingEditDate
-        div#rubbingEditMainNote.well
+          span#rubbingEditDate.rubbingXedit
+        div#rubbingEditMainNote.rubbingXedit.well
 
 
 block pagescript
@@ -54,15 +54,19 @@ block pagescript
             rubbingShow( d[0] );
         };
       } );
-      $('#rubbingEditBrass').editable({ type: 'select', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter brass', source:"/rest/xeditSelect/Brass" });
-      $('#rubbingEditDate').editable({ type: 'text', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
-      $('#rubbingEditMainNote').editable({ type: 'textarea', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
+      $('#rubbingEditBrass').editable({ type: 'select', disabled: true, onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter brass', source:"/rest/xeditSelect/Brass" });
+      $('#rubbingEditDate').editable({ type: 'text', disabled: true, onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
+      $('#rubbingEditMainNote').editable({ type: 'textarea', disabled: true, onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
         display: function( val, sd ) {
             var tmpHtml = markdown.toHTML(val);
             $(this).html(tmpHtml);
         }
         });
     });
+    if ($.cookie("vlcbRole") == "vlcbEditor") {
+       $('.rubbingXedit').editable('option', 'disabled', false);
+    };
+
     var rubbingShow = function ( r ) {
         //alert("now show: "+r.vlcn + " name: "  + r.name);
         $("#rubbingShowTitle").html("<b> " + r.vlcn + " - " + r.name + "</b>");

@@ -31,10 +31,10 @@ block pagecontent
         div#churchShowBrasses
         div#churchShowInfo
           <i> year: </i>
-          span#churchEditYear
+          span#churchEditYear.churchXedit
           <i> latlon: </i>
-          span#churchEditLatlon
-        div#churchEditMainNote.well
+          span#churchEditLatlon.churchXedit
+        div#churchEditMainNote.churchXedit.well
 
 block pagescript
   script
@@ -56,15 +56,18 @@ block pagescript
             churchShow( d[0] );
         };
       } );
-      $('#churchEditYear').editable({ type: 'text', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
-      $('#churchEditLatlon').editable({ type: 'text', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
-      $('#churchEditMainNote').editable({ type: 'textarea', onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
+      $('#churchEditYear').editable({ type: 'text', disabled: true, onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
+      $('#churchEditLatlon').editable({ type: 'text', disabled: true, onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
+      $('#churchEditMainNote').editable({ type: 'textarea', disabled: true, onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
         display: function( val, sd ) {
             var tmpHtml = markdown.toHTML(val);
             $(this).html(tmpHtml);
         }
         });
     });
+    if ($.cookie("vlcbRole") == "vlcbEditor") {
+       $('.churchXedit').editable('option', 'disabled', false);
+    };
 
     var churchUrl = function ( c, s ) {
         return("/rest/Church/" + c.name + "/" + s);

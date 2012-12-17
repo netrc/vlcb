@@ -48,6 +48,9 @@ passport.use(new GoogleStrategy({
 
 
 var vlcbAuthorization = function( req, res, next ) {
+    // every page gets our role cookie
+    res.cookie('vlcbRole', ((req.user) && (req.user.role == "vlcbEditor")) ? 'vlcbEditor' : 'readonly');
+
     if (req.method != "POST") {
         return next();   // not a POST, go ahead
     }
