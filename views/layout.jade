@@ -48,18 +48,7 @@ html
                   li
                     a(href="/notes") Notes
                   li
-                    button#login(type="button",data-toggle="modal",data-target="#loginPopup") Login
-
-
-    div#loginPopup.modal.hide.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
-      div.modal-header
-        button.close(type="button", data-dismiss="modal", aria-hidden="true")×
-        h3#myModalLabel Login
-      div.modal-body
-        span Editor's Password: &nbsp
-        a(href="/auth/google") Sign In with Google
-        form(method="get", action="/auth/login")
-          input(type="password", name="pwd")
+                    a(href="/auth/google") Login via Google
 
 
     block pagecontent
