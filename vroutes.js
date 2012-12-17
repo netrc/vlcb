@@ -102,7 +102,7 @@ exports.restPostBrass = function(req,res) {
     var bn = req.param('bn');
     console.log("brass post new:"+bn);
     DbMgr.brassStore( bn, function(d){
-        res.send("");
+        res.redirect("/brass");
     });
 };
 
