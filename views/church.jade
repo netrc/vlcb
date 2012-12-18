@@ -28,11 +28,13 @@ block pagecontent
           span#churchShowName
           span#churchShowAddress
         div#churchShowPics
-        div#churchShowBrasses
+        div
+          i.smalllabel brasses: &nbsp;
+          span#churchShowBrasses
         div#churchShowInfo
-          <i> year: </i>
+          i.smalllabel year: &nbsp;
           span#churchEditYear.churchXedit
-          <i> latlon: </i>
+          i.smalllabel &nbsp; &nbsp; latlon: &nbsp;
           span#churchEditLatlon.churchXedit
         div#churchEditMainNote.churchXedit.well
 
@@ -78,9 +80,9 @@ block pagescript
         $("#churchShowAddress").html("<i> - " + c.address + "</i>");
         $("#churchShowPics").html("<i> no pics yet </i> <p>");
         $("#churchShowBrasses").html("<i> no brasses found </i> <p>");
-        $("#churchEditYear").editable('option', 'value', (c.year) ? c.year : "year?" );
-        $("#churchEditLatlon").editable('option', 'value', (c.latlon) ? c.latlon : "latlon?");
-        $("#churchEditMainNote").editable('option', 'value', (c.mainNote) ? c.mainNote : "note??" );
+        $("#churchEditYear").editable('option', 'value', (c.year) ? c.year : "year..." );
+        $("#churchEditLatlon").editable('option', 'value', (c.latlon) ? c.latlon : "latlon...");
+        $("#churchEditMainNote").editable('option', 'value', (c.mainNote) ? c.mainNote : "note..." );
 
         $.get(churchUrl(c,"Pic"),"",function(d,tstatus,jxhr) {
             if (d.length==0) {
