@@ -92,22 +92,29 @@ app.get('/dobatch', vroutes.doBatch);
 app.get('/auth/google', passport.authenticate('google'));
 app.get('/auth/google/return',  passport.authenticate('google', { successRedirect: '/', failureRedirect: '/auth/login' } ));
 // rest interfaces
-app.get('/rest/dumpData',vroutes.restDumpData);
+//     ... get all of category
+app.get('/rest/Church',vroutes.restGetChurch);
+app.get('/rest/Pic',vroutes.restGetPic);
+app.get('/rest/Brass',vroutes.restGetBrass);
+app.get('/rest/Rubbing',vroutes.restGetRubbing);
+//     ... post one new item
+app.post('/rest/Brass',vroutes.restPostBrass);
+app.post('/rest/Pic', vroutes.restPostPic);
+//     ...
 app.get('/rest/Note/about', vroutes.restGetAboutMD);
 app.post('/rest/Note/about', vroutes.restPostAboutMD);
-app.get('/rest/Pic',vroutes.restGetPic);
-app.post('/rest/Pic', vroutes.restPostPic);
-app.get('/rest/Church',vroutes.restGetChurch);
 app.get('/rest/Church/:cname',vroutes.restGetChurchShow);  // TODO no more Church show
 app.get('/rest/Church/:cname/Brass',vroutes.restGetBrassByChurch);
-app.get('/rest/Brass',vroutes.restGetBrass);
-app.post('/rest/Brass',vroutes.restPostBrass);
-app.get('/rest/Rubbing',vroutes.restGetRubbing);
+//     ... generic get Pics
 app.get('/rest/:cat/:name/Pics', vroutes.restGetPicsByCategory);
 app.get('/rest/:cat/:name/:field', vroutes.restGetGenericField);
 app.post('/rest/:cat/:name/:field', vroutes.restPostGenericField);
+//     ... other helpers
+app.get('/rest/dumpData',vroutes.restDumpData);
+//     ... special data collections for x-edit selection buttons
 app.get('/rest/xeditSelect/Church',vroutes.restXeditSelectChurch);
 app.get('/rest/xeditSelect/Brass', vroutes.restXeditSelectBrass);
+
 
 DbMgr.initConn( "vlc", "vlcmdb!", "ds033307.mongolab.com", "33307", "vlcbtest");
 console.log('initConn - done');
