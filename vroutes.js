@@ -39,29 +39,21 @@ exports.restGetGenericField = function(req,res) {
     });
 };
 
-// needs to return just the raw markdown text
-exports.restGetAboutMD = function(req,res) {
-    console.log("rgam: tf:", req.query.tFormat);
-    var currFormat = (req.query.tFormat === "HTML") ? "HTML" : "markdown";
-    console.log("rgam: cf:", currFormat);
-    DbMgr.about( currFormat, function(data){
-        res.send((currFormat==="HTML") ? data.htmltext : data.mdtext);
-    });
-};
-// store the raw markdown *and* return html
-exports.restPostAboutMD = function(req,res) {
-    var newText = req.body.value;
-    //console.log("put new text:"+newText);
-    DbMgr.aboutStore( newText, function(){
-        res.send(Md.toHTML(newText));
-    });
-};
-
 exports.restGetNoteMD = function(req,res) {
-    DbMgr.note(req.params.category, req.params.title, function(data){
+    console.log("restGetNoteMD cat:" + req.params.cat + " t: "+req.params.title);
+    DbMgr.note(req.params.cat, req.params.title, function(data){
         res.send(data.mdtext);
     });
 };
+
+exports.restPostNoteMD = function(req,res) {
+    var newText = req.body.value;
+    console.log("rest post note: put new text:"+newText);
+    DbMgr.noteStore( req.params.cat, req.params.title, newText, function(){
+        res.send(newText);
+    });
+};
+
 
 exports.restGetPic = function(req,res) {
     DbMgr.picAll( function(pa){

@@ -39,46 +39,6 @@ var log = function(actionStr, detailStr) {
     });  
 };
 
-// 'about' is one specific note
-exports.about = function( tformat, doIt) {
-    noteColl.findOne( {category:'aboutNote'}, function(err,docData){
-        if (err) {
-            docData = { mdtext: "error finding 'about' note: " + err };
-        }
-        delete(docData._id);    // this val is very long and involved, so I clear it  
-        console.log("db get about cf: ", tformat);
-        //console.log("db get about: "+docData.mdtext);
-        if (tformat === "HTML") {
-            docData.htmltext = Md.toHTML(docData.mdtext);
-        }
-        doIt(docData);
-    } );
-};
-
-exports.aboutStore = function(newText, doIt) {
-    // mongodb  db.people.update( { name:"Joe" }, { $inc: { n : 1 } } );
-    //noteColl.findOne( {category:'aboutNote'}, function(err,docData){
-    var newAboutNote = { category: 'aboutNote', date: 'foo', mdtext: newText };
-    noteColl.update( {category:'aboutNote'}, newAboutNote, function(err,docData){
-        if (err) {
-            console.error("error updating 'about' note: " + err);
-        }
-        log("about note update","");
-        doIt();
-    } );
-};
-
-exports.postChurch_latlon = function( cn, val, doIt ) {
-    console.log("pcll: "+cn + " - " + val);
-    churchColl.update( {name:cn}, { $set: { latlon: val } }, function(err,docData){
-        if (err) {
-            console.error("error updating latlon: " + err);
-        }
-        doIt();
-    } );
-    
-};
-
 exports.getGenericField = function ( cat, name, field, doIt ) {
     var thisColl = mdb.collection(cat);
     thisColl.findOne( {name: name}, function(err, docData) {
@@ -111,8 +71,8 @@ exports.postGenericField = function ( cat, name, field, val, doIt ) {
 
 
 // expecting just one specific note, e.g. for Church, Brass
-exports.note = function(c, t, f, doIt) {
-    console.log("db note: c:"+c+" t:"+t+" f:"+f);
+exports.note = function(c, t, doIt) {
+    console.log("db note: c:"+c+" t:"+t);
     var sObj = { category: c, title: t };
     // need to check if t is blank
     noteColl.findOne( sObj, function(err,docData){
@@ -124,19 +84,17 @@ exports.note = function(c, t, f, doIt) {
         }
         delete(docData._id);    // this val is very long and involved, so I clear it  
         //console.log("about: "+docData.mdtext);
-        if (f === "HTML") {
-            docData.htmltext = Md.toHTML(docData.mdtext);
-        }
         doIt(docData);
     } );
 };
 exports.noteStore = function(c, t, newText, doIt) {
-    var newNote = { category: c, title: t, date: 'foo', mdtext: newText };
+    var n = new Date();
+    var newNote = { category: c, title: t, date: n.toLocaleString(), mdtext: newText };
     noteColl.update( {category:c, title: t}, newNote, function(err,docData){
         if (err) {
             console.error("error updating 'about' note: " + err);
         }
-        log("note store for "+c+"/"+t,"");
+        log("note store for "+c+"/"+t);
         doIt();
     } );
 };

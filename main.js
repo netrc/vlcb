@@ -101,8 +101,8 @@ app.get('/rest/Rubbing',vroutes.restGetRubbing);
 app.post('/rest/Brass',vroutes.restPostBrass);
 app.post('/rest/Pic', vroutes.restPostPic);
 //     ...
-app.get('/rest/Note/about', vroutes.restGetAboutMD);
-app.post('/rest/Note/about', vroutes.restPostAboutMD);
+app.get('/rest/Note/:cat/:title', vroutes.restGetNoteMD);
+app.post('/rest/Note/:cat/:title', vroutes.restPostNoteMD);
 app.get('/rest/Church/:cname',vroutes.restGetChurchShow);  // TODO no more Church show
 app.get('/rest/Church/:cname/Brass',vroutes.restGetBrassByChurch);
 //     ... generic get Pics
