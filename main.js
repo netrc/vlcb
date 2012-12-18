@@ -100,14 +100,9 @@ app.post('/rest/Pic', vroutes.restPostPic);
 app.get('/rest/Church',vroutes.restGetChurch);
 app.get('/rest/Church/:cname',vroutes.restGetChurchShow);  // TODO no more Church show
 app.get('/rest/Church/:cname/Brass',vroutes.restGetBrassByChurch);
-app.get('/rest/Church/:cname/Pic',vroutes.restGetPicByChurch);
-//app.post('/rest/Church/:cname/latlon',vroutes.restPostChurch_latlon);
-//app.get('/rest/Church/:cname/mainNote',vroutes.restGetChurch_mainNote);
-//app.post('/rest/Church/:cname/mainNote',vroutes.restPostChurch_mainNote);
 app.get('/rest/Brass',vroutes.restGetBrass);
 app.post('/rest/Brass',vroutes.restPostBrass);
 app.get('/rest/Rubbing',vroutes.restGetRubbing);
-app.get('/rest/Rubbing/:vlcn/Pics',vroutes.restGetPicsByRubbing);
 app.get('/rest/:cat/:name/Pics', vroutes.restGetPicsByCategory);
 app.get('/rest/:cat/:name/:field', vroutes.restGetGenericField);
 app.post('/rest/:cat/:name/:field', vroutes.restPostGenericField);

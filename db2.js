@@ -173,18 +173,9 @@ exports.brassAll = function(doIt) {
 exports.brassByChurch = function(n,doIt) {
     dbFindAll(brassColl, {church:n}, doIt);
 };
-exports.picByChurch = function(n,doIt) {
-    //console.log("db2 get pic by curch: ",n);
-    dbFindAll(picColl, {category:"Church", name:n}, doIt);
-};
 
 exports.rubbingAll = function(doIt) {
     dbFindAll(rubbingColl, {}, doIt);
-};
-
-exports.picsByRubbing = function(vlcn,doIt) {
-    //console.log("db2 get pic by curch: ",n);
-    dbFindAll(picColl, {category:"Rubbing", name:vlcn}, doIt);
 };
 
 exports.picsByCategoryIndex = function( c, x, doIt ) {

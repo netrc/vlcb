@@ -84,7 +84,7 @@ block pagescript
         $("#churchEditLatlon").editable('option', 'value', (c.latlon) ? c.latlon : "latlon...");
         $("#churchEditMainNote").editable('option', 'value', (c.mainNote) ? c.mainNote : "note..." );
 
-        $.get(churchUrl(c,"Pic"),"",function(d,tstatus,jxhr) {
+        $.get(churchUrl(c,"Pics"),"",function(d,tstatus,jxhr) {
             if (d.length==0) {
                 return;
             };

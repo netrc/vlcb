@@ -9,11 +9,6 @@ exports.vindex = function(req, res) {
 };
 
 exports.about = function(req, res) {
-//    DbMgr.about(function(data){
-//        console.log('about route, md:'+Md.toHTML(data.mdtext));
-//        res.render('about.jade', { thisAction: 'About', mdtext: Md.toHTML(data.mdtext)});
-//    });
-    console.log('about route2');
     res.render('about.jade', { thisAction: 'About'});
 };
 
@@ -62,21 +57,6 @@ exports.restPostAboutMD = function(req,res) {
     });
 };
 
-exports.restGetChurch_mainNote = function(req, res) {
-    console.log("get cmn: tf:", req.query.tFormat);
-    var currFormat = (req.query.tFormat === "HTML") ? "HTML" : "markdown";
-    console.log("get cmn: cf:", currFormat);
-    DbMgr.note( "Church", req.params.cname, currFormat, function(data){
-        res.send((currFormat==="HTML") ? data.htmltext : data.mdtext);
-    });    
-};
-exports.restPostChurch_mainNote = function( req, res ) {
-    var newText = req.body.value;
-    //console.log("put new text:"+newText);
-    DbMgr.noteStore( "Church", req.params.cname, newText, function(){
-        res.send(Md.toHTML(newText));
-    });    
-};
 exports.restGetNoteMD = function(req,res) {
     DbMgr.note(req.params.category, req.params.title, function(data){
         res.send(data.mdtext);
@@ -95,7 +75,7 @@ exports.restPostPic = function(req,res) {
     var pf = req.param('pf');
     console.log("vr post new text:"+pn);
     DbMgr.picStore( pn, pc, pt, pf, function(d){
-        res.send("");
+        res.redirect("/pic");
     });
 };
 exports.restPostBrass = function(req,res) {
@@ -128,23 +108,13 @@ exports.restGetBrassByChurch = function(req,res) {
        res.send(pa); 
     });
 };
-exports.restGetPicByChurch = function(req,res) {
-    DbMgr.picByChurch( req.params.cname, function(pa){
-       res.send(pa); 
-    });
-};
+
 exports.restGetPicsByCategory = function(req,res) {
     DbMgr.picsByCategoryIndex( req.params.cat, req.params.name, function(pa){
        res.send(pa); 
     });
 };
-exports.restPostChurch_latlon = function(req,res) {
-    var newVal = req.body.value;
-    console.log("vr postcl:" + newVal);
-    DbMgr.postChurch_latlon( req.params.cname, newVal, function() {
-        res.send(newVal);
-    });
-};
+
 //  and note that this returns the new value -- assumed to be used for jeditable simple fields that want that val back
 exports.restPostGenericField = function(req,res) {
     var cat = req.params.cat;
@@ -159,11 +129,6 @@ exports.restPostGenericField = function(req,res) {
 
 exports.restGetRubbing = function(req,res) {
     DbMgr.rubbingAll( function(pa){
-       res.send(pa); 
-    });
-};
-exports.restGetPicsByRubbing = function(req,res) {
-    DbMgr.picsByRubbing( req.params.vlcn, function(pa){
        res.send(pa); 
     });
 };
@@ -189,12 +154,6 @@ exports.restXeditSelectBrass = function(req,res) {
        res.send(selArray); 
     });
 };
-
-//
-// OR.... about.html could have the html template, and then read() calls the restGet AJAX/REST to put in the html'd data
-//  but that just simplifies exports.about by 1 line (in other words, gets rid of DbMgr in .about; DbMgr calls then just in two rest functions)
-//
-// This restXXXGet called from javascript in the html page may be the paradigm for other pages....
 
 exports.software = function(req, res) {
     res.render('software.jade');
