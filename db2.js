@@ -1,6 +1,5 @@
 
 var Mongolian = require("mongolian");
-var Md = require('markdown').markdown;
 
 var mdbConnStr;
 var mdb;
