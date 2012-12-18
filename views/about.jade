@@ -14,14 +14,15 @@ block pagescript
         return (thisRole != 'vlcbEditor');
     }
     $(document).ready(function() {
+      var aboutURL = "/rest/Note/aboutNote/about";
       $('#about').editable({ type: 'textarea', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
         display: function( val, sd ) {
             var tmpHtml = markdown.toHTML(val);
             $(this).html(tmpHtml);
         },
-        url: "/rest/Note/about"
+        url: aboutURL
         });
-      $.get("/rest/Note/about",{},function(d,tstatus,jxhr) {
+      $.get(aboutURL,{},function(d,tstatus,jxhr) {
         $("#about").editable('option', 'value', ((d) ? d : "about?") );
         } );
     });
