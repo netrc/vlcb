@@ -13,7 +13,7 @@ block pagecontent
         button#rSortVLCN.btn.sorter(type="button") VLCN
         button#rSortAlpha.btn.sorter(type="button") A-Z
         button#rSortDate.btn.sorter(type="button") Date
-    div.span4
+    div#newPost.span4
       form.form-inline(method="post")
         input.input-small(type="text",name="vn",placeholder="VLC#")
         input.input-large(type="text",name="rn",placeholder="Rubbing Name")
@@ -37,11 +37,8 @@ block pagecontent
 
 block pagescript
   script
-    function isVlcbReadonly() {
-        var thisRole = $.cookie('vlcbRole');
-        return (thisRole != 'vlcbEditor');
-    }
     $(document).ready(function() {
+      hideNewPosts();
       $.get("/rest/Rubbing/","",function(d,tstatus,jxhr) {
         //alert("got rubbing "+d.length);
         for (var i=0;i<d.length;i++) { 

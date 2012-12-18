@@ -66,4 +66,14 @@ html
     script(src="bootstrap-editable-inline.min.js")
     script(src="jquery.colorbox.js")
     script(src="markdown.js")
+    script
+      function isVlcbReadonly() {
+          var thisRole = $.cookie('vlcbRole');
+          return (thisRole != 'vlcbEditor');
+      }
+      function hideNewPosts() {
+        if (isVlcbReadonly()) {
+          $("#newPost").css('display', 'none');
+        }
+      }
     block pagescript

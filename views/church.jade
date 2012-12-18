@@ -13,7 +13,7 @@ block pagecontent
         button#cSortAlpha.btn.sorter(type="button") A-Z
         button#cSortShire.btn.sorter(type="button") Shire
         button#cSortYear.btn.sorter(type="button") Year
-    div.span4
+    div#newPost.span4
       form.form-inline(method="post")
         input.input-small(type="text",name="cn",placeholder="Church Name")
         input.input-small(type="text",name="ca",placeholder="Address")
@@ -38,11 +38,8 @@ block pagecontent
 
 block pagescript
   script
-    function isVlcbReadonly() {
-        var thisRole = $.cookie('vlcbRole');
-        return (thisRole != 'vlcbEditor');
-    }
     $(document).ready(function() {
+      hideNewPosts();
       $.get("/rest/Church/","",function(d,tstatus,jxhr) {
         //alert("c2b: got churches: "+d.length);
         for (var i=0;i<d.length;i++) { 

@@ -13,7 +13,7 @@ block pagecontent
         button#bSortAlpha.btn.sorter(type="button") A-Z
         button#bSortShire.btn.sorter(type="button") Church
         button#bSortYear.btn.sorter(type="button") Year
-    div.span4
+    div#newPost.span4
       form.form-inline(method="post", action="/rest/Brass")
         input.input-small(type="text",name="bn",placeholder="Brass Name")
         button.btn(type="submit"): i.icon-plus-sign
@@ -36,11 +36,8 @@ block pagecontent
 
 block pagescript
   script
-    function isVlcbReadonly() {
-        var thisRole = $.cookie('vlcbRole');
-        return (thisRole != 'vlcbEditor');
-    }
     $(document).ready(function() {
+      hideNewPosts();
       $.get("/rest/Brass/","",function(d,tstatus,jxhr) {
         //alert("got brasses "+d.length);
         for (var i=0;i<d.length;i++) { 
