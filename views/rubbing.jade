@@ -26,12 +26,17 @@ block pagecontent
       div#rubbingShow.well.fixMe
         div#rubbingShowTitle ...select a rubbing
         div#rubbingShowPics
-        div#rubbingShowDesc
-        div#rubbingShowLocation
-        div#rubbingEditBrass.rubbingXedit
+        div
+          i.smalllabel brass: &nbsp;
+          span#rubbingEditBrass.rubbingXedit
+        div
+          i.smalllabel description: &nbsp;
+          span#rubbingEditDesc
         div#rubbingShowInfo
-          i Date:
+          i.smalllabel date: &nbsp;
           span#rubbingEditDate.rubbingXedit
+          i.smalllabel &nbsp; &nbsp; location: &nbsp;
+          span#rubbingShowLocation
         div#rubbingEditMainNote.rubbingXedit.well
 
 
@@ -45,9 +50,10 @@ block pagescript
             r = d[i];
             rButtId = "rButtId"+i;
             rButtIdRef = "#"+rButtId;
+            d[i].brassUrl = "/rest/Rubbing/"+r.vlcn+"/brass";
+            d[i].descUrl = "/rest/Rubbing/"+r.vlcn+"/desc";
             d[i].dateUrl = "/rest/Rubbing/"+r.vlcn+"/date";
             d[i].mainNoteUrl = "/rest/Rubbing/"+r.vlcn+"/mainNote";
-            d[i].brassUrl = "/rest/Rubbing/"+r.vlcn+"/brass";
             $("#rubbingList").append("<li> <button id=\"" + rButtId + "\"> " + r.vlcn + " - " + r.name + "</button> </li>");
             $(rButtIdRef).on('click',(function(zr) { return function(){rubbingShow( zr ); } })(d[i]) );
         };
@@ -56,6 +62,7 @@ block pagescript
         };
       } );
       $('#rubbingEditBrass').editable({ type: 'select', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter brass', source:"/rest/xeditSelect/Brass" });
+      $('#rubbingEditDesc').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter desc' });
       $('#rubbingEditDate').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
       $('#rubbingEditMainNote').editable({ type: 'textarea', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
         display: function( val, sd ) {
@@ -69,10 +76,11 @@ block pagescript
         //alert("now show: "+r.vlcn + " name: "  + r.name);
         $("#rubbingShowTitle").html("<b> " + r.vlcn + " - " + r.name + "</b>");
         $("#rubbingShowPics").html( "<i> no pics yet </i>" );
-        $("#rubbingShowDesc").html( ((r.desc) ? r.desc : "<i> no description </i>") );
-        $("#rubbingShowLocation").html( ((r.location) ? r.location : "<i> no location </i>") );
         //$("#rubbingEditBrass").html( ((r.brass) ? "<a href=\"/brass/" + r.brass + "\">" + r.brass + "</a>" : "<i> unknown </i>") );
         $("#rubbingEditBrass").editable( 'option', 'value', ((r.brass) ?  r.brass : "unknown") );
+        $("#rubbingEditDesc").editable( 'option', 'value', ((r.desc) ? r.desc : "no description...") );
+        $("#rubbingEditDate").html( ((r.date) ? r.date : "no date...") );
+        $("#rubbingShowLocation").html( ((r.location) ? r.location : "no location...") );
         $("#rubbingEditMainNote").editable('option', 'value', ((r.mainNote) ? r.mainNote : "note?") );
 
 
@@ -88,11 +96,12 @@ block pagescript
             p = d[i];
             pStr = pStr + "<a class=\""+groupName+"\" href=\""+p.full+"\" title=\""+r.name+"\">  <img src=\""+p.thumb+"\">  </a>";
           };
-          $(rubbingShowPics).html( pStr );
+          $("#rubbingShowPics").html( pStr );
           $(groupNameClass).colorbox( { rel:groupName, transition:"fade" } );
         });
         //alert("resetting data-url to: " + r.dataUrl);
         $('#rubbingEditBrass').editable('option','url', r.brassUrl);
+        $('#rubbingEditDesc').editable('option','url', r.descUrl);
         $('#rubbingEditDate').editable('option','url', r.dateUrl);
         $("#rubbingEditMainNote").editable('option', 'url', r.mainNoteUrl);
     };

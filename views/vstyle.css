@@ -15,6 +15,9 @@ body {
     }
 * html .fixMe {position:absolute;}
 
+.smalllabel {
+    font-size: 8pt;
+}
 .cd table {
     margin-left: auto;
     margin-right: auto;
