@@ -1,5 +1,4 @@
 
-var Md = require('markdown').markdown;
 var DbMgr = require('./db2');
 
 // Main/simple routes
