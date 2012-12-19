@@ -80,11 +80,12 @@ app.set('views', __dirname + '/views');  // sets render dir
 
 // html views
 app.get('/', vroutes.vindex);
+app.get('/rubbing', vroutes.rubbing);
 app.get('/about', vroutes.about);
+app.get('/brass', vroutes.brass);
+app.get('/map', vroutes.map);
 app.get('/church', vroutes.church);
 app.get('/church/:cname', vroutes.churchShow);  // TODO no more church show, this is a 'search'
-app.get('/brass', vroutes.brass);
-app.get('/rubbing', vroutes.rubbing);
 app.get('/pic', vroutes.pic);
 app.get('/software', vroutes.software);
 app.get('/dobatch', vroutes.doBatch);

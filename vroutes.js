@@ -7,8 +7,12 @@ exports.vindex = function(req, res) {
     res.render('index.jade', { thisAction: 'Main'});
 };
 
-exports.about = function(req, res) {
-    res.render('about.jade', { thisAction: 'About'});
+exports.rubbing = function(req, res) {
+    res.render('rubbing.jade', { thisAction: 'Rubbing'});
+};
+
+exports.brass = function(req, res) {
+    res.render('brass.jade', { thisAction: 'Brass'});
 };
 
 exports.church = function(req, res) {
@@ -19,12 +23,12 @@ exports.churchShow = function(req, res) {
     res.render('churchShow.jade', { thisAction: 'Church', cname: req.params.cname});
 };
 
-exports.brass = function(req, res) {
-    res.render('brass.jade', { thisAction: 'Brass'});
+exports.map = function(req, res) {
+    res.render('map.jade', { thisAction: 'map'});
 };
 
-exports.rubbing = function(req, res) {
-    res.render('rubbing.jade', { thisAction: 'Rubbing'});
+exports.about = function(req, res) {
+    res.render('about.jade', { thisAction: 'About'});
 };
 
 exports.pic = function(req, res) {

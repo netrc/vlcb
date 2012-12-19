@@ -1,0 +1,61 @@
+extends layout
+
+block pageheadextras
+  style(type="text/css")
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { height: 100% }
+  script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOWj2h0deGsKaKmZumakJ7k9qllj8eqPo&sensor=false")
+
+block pagecontent
+  div#map_canvas(style="width:100%; height:100%")
+
+block pagescript
+  script
+    $(document).ready(function(){
+
+        var homeLatLng = new google.maps.LatLng(52.430475,-1.701331);
+
+        var mapOptions = { center: homeLatLng, zoom: 8, mapTypeId: google.maps.MapTypeId.ROADMAP };
+        var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+        var image = 'images/house.png';
+        var homeMarker = new google.maps.Marker({ position: homeLatLng, map: map, icon: image, title: 'Home' });
+
+
+        $.get("/rest/Church/","",function(d,tstatus,jxhr) {
+            //alert("c2b: got churches: "+d.length);
+            for (var i=0;i<d.length;i++) { 
+                var c = d[i];
+                if ( (! c.latlon) || (c.latlon == "") ) { 
+                    continue;
+                }
+                //alert("c: " +c.name+ " ll: " +c.latlon);
+                var thisImage = 'images/cross.png';
+                if (c.name.indexOf("Court")>0) {
+                    thisImage = "images/manor.png";
+                }
+                if (c.name.indexOf("Pub")>0) {
+                    thisImage = "images/bar.png";
+                }
+                var coords = c.latlon.split(",");
+                var thisLatLng = new google.maps.LatLng(parseFloat(coords[0]),parseFloat(coords[1]));
+                var thisMarker = new google.maps.Marker({ position: thisLatLng, map: map, icon: thisImage, title: c.name });
+
+               // more stuff could be in the content; '<div id="siteNotice"> sitenotice? </div>'
+               var contentString = '<div id="content"> <h1 id="firstHeading" class="firstHeading">' + c.name + '</h1>'+
+                    '<div id="bodyContent">'+
+                        '<p> Church Info </p> <p>Go to <a href="/church/"> church info </a> '+
+                    '</div>'+
+                '</div>';
+                // see view-source:https://google-developers.appspot.com/maps/documentation/javascript/examples/infowindow-simple
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+                google.maps.event.addListener(thisMarker, 'click', function() {
+                  infowindow.open(map,thisMarker);
+                });
+            };
+        });
+    });
+
