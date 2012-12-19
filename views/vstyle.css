@@ -1,5 +1,12 @@
+
+html {
+    height: 100%;
+    overflow: hidden;
+}
 body {
-    background-color: #CCC;
+    background-image: url(images/denim.png);
+    height: 100%;
+    overflow: hidden;
 }
 
 .vlc {
@@ -12,12 +19,16 @@ body {
     border-width: 4px;
     border-style: solid;
     border-color: #666;
+    height: 80%;
+    overflow-y: scroll;
     }
 * html .fixMe {position:absolute;}
 
 .smalllabel {
     font-size: 8pt;
 }
+
+
 .cd table {
     margin-left: auto;
     margin-right: auto;
