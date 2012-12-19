@@ -57,7 +57,12 @@ block pagescript
             brassShow( d[0] );
         };
       } );
-      $('#brassEditChurch').editable({ type: 'select', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter brass', source:"/rest/xeditSelect/Church" });
+      $('#brassEditChurch').editable({ type: 'select', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter church',
+        source:"/rest/xeditSelect/Church", display: function( val, sd ) {
+            var tmpHtml = '<a href="/church/'+val+'"> '+val+'</a>';
+            $(this).html(tmpHtml);
+        }
+        });
       $('#brassEditLocation').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter location' });
       $('#brassEditYear').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter year' });
       $('#brassEditMainNote').editable({ type: 'textarea', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
