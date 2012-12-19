@@ -16,11 +16,12 @@ exports.brass = function(req, res) {
 };
 
 exports.church = function(req, res) {
-    res.render('church.jade', { thisAction: 'Church'});
+    res.render('church.jade', { thisAction: 'Church', cname: ""});
 };
 
 exports.churchShow = function(req, res) {
-    res.render('churchShow.jade', { thisAction: 'Church', cname: req.params.cname});
+    console.log("yep, got to cs. cs:" + ((req.params.cname) ? req.params.cname : "no cname"));
+    res.render('church.jade', { thisAction: 'Church', cname: req.params.cname});
 };
 
 exports.map = function(req, res) {

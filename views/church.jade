@@ -44,10 +44,13 @@ block pagescript
       hideNewPosts();
       $.get("/rest/Church/","",function(d,tstatus,jxhr) {
         //alert("c2b: got churches: "+d.length);
+        var cn = {};
+        cn["cn"] = 0;  // a blank church name means show the first (0th) church
         for (var i=0;i<d.length;i++) { 
             c = d[i];
             cButtId = "cButtId"+i;
             cButtIdRef = "#"+cButtId;
+            cn["cn"+c.name] = i;
             newLi  = "<li> <button id=\""+cButtId+"\"> "+c.name+"<i> - "+c.address+"</i></button></li>\n";
             $("#churchList").append(newLi);
             d[i].yearUrl = "/rest/Church/"+c.name+"/year";
@@ -55,8 +58,9 @@ block pagescript
             d[i].mainNoteUrl = "/rest/Church/"+c.name+"/mainNote";
             $(cButtIdRef).on( 'click', (function(zc) { return function(){churchShow(zc); } })(c) );
         };
+        //alert("cj: cn: "+ "#{cname}" );
         if (d.length>0) {
-            churchShow( d[0] );
+            churchShow( d[ cn["cn"+"#{cname}"] ] );
         };
       } );
       $('#churchEditYear').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
