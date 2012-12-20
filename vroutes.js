@@ -1,5 +1,6 @@
 
 var DbMgr = require('./db2');
+var Software = require('./software');
 
 // Main/simple routes
 
@@ -30,6 +31,10 @@ exports.map = function(req, res) {
 
 exports.about = function(req, res) {
     res.render('about.jade', { thisAction: 'About'});
+};
+
+exports.software = function(req, res) {
+    res.render('software.jade');
 };
 
 exports.pic = function(req, res) {
@@ -151,16 +156,6 @@ exports.restXeditSelectBrass = function(req,res) {
     });
 };
 
-exports.software = function(req, res) {
-    res.render('software.jade');
-};
-
-//////////////////
-exports.doBatch = function(req,res) {
-    DbMgr.doBatch( function() {
-        res.send("OK");
-    } );
-};
 exports.restDumpData = function(req, res) {
     DbMgr.dumpData( function(data) {
         var now = new Date();
@@ -170,4 +165,16 @@ exports.restDumpData = function(req, res) {
         res.setHeader('Content-disposition', 'attachment; filename='+fname);
         res.send(data);
     });
+};
+
+exports.restQAtest = function(req,res) {
+        var tn = req.params.testname;
+        //console.log("vr: "+tn)
+        Software.doTest(tn, req, res);
+};
+
+exports.doBatch = function(req,res) {
+    DbMgr.doBatch( function() {
+        res.send("OK");
+    } );
 };

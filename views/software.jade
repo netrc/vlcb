@@ -43,6 +43,10 @@ block pagecontent
     div.span4
       div.progress.progress-info.progress-striped.active
         div#krpct.bar(style="width: 45.666666%;")
+  div.row
+    div.span2
+    div#rnotok.span10
+
   hr
   form(method="get", action="/rest/dumpData")
     input(type="submit", value="Dump data...")
@@ -53,18 +57,15 @@ block pagecontent
 block pagescript
     script
       $(document).ready(function() {
-        // The set of automatic tests....
-        // ... rubbings with no brass, e.g. unknown
-        $.get("/rest/Rubbing/","",function(d,tstatus,jxhr) {
-        var l = d.length;
-        var k = 0.0;
-          for (var i=0;i<d.length;i++) {
-            var r = d[i];
-            if (r.brass && (r.brass !== "") && (r.brass !== "unknown")) {
-              k = k + 1.0;
-            };
+        $.get("/rest/qa/rubbingOK","",function(d,tstatus,jxhr) {
+            var k = d[0];
+            var l = d[1];
             $("#krpct").css("width",(k/l*100)+"%");
-          };
-        $("#krtext").html("("+k + "/" + l+")");
-        } );
+            $("#krtext").html("("+k + "/" + l+")");
+            var s = "";
+            d[2].forEach( function(r) {
+                s = s + '<a href="/church/' + r[0] + '"> ' + r[1] + '</a> &nbsp; ';
+            });
+            $("#rnotok").html(s);
+        });
       });

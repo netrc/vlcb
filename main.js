@@ -111,6 +111,7 @@ app.get('/rest/:cat/:name/Pics', vroutes.restGetPicsByCategory);
 app.get('/rest/:cat/:name/:field', vroutes.restGetGenericField);
 app.post('/rest/:cat/:name/:field', vroutes.restPostGenericField);
 //     ... other helpers
+app.get('/rest/qa/:testname', vroutes.restQAtest);
 app.get('/rest/dumpData',vroutes.restDumpData);
 //     ... special data collections for x-edit selection buttons
 app.get('/rest/xeditSelect/Church',vroutes.restXeditSelectChurch);
