@@ -2,6 +2,7 @@ extends layout
 
 block pagecontent
   div.row
+    div.span1
     div.span2
       b.pageHead Brasses
     div.span3
@@ -13,13 +14,14 @@ block pagecontent
         button#bSortAlpha.btn.sorter(type="button") A-Z
         button#bSortShire.btn.sorter(type="button") Church
         button#bSortYear.btn.sorter(type="button") Year
-    div#newPost.span4
+    div#newPost.span3
       form.form-inline(method="post", action="/rest/Brass")
         input.input-small(type="text",name="bn",placeholder="Brass Name")
         button.btn(type="submit"): i.icon-plus-sign
 
   div.row
-    div.span5
+    div.span1
+    div.span4
       div.showContainer
         ul#brassList.nav.nav-pills.nav-stacked
     div.span7
@@ -51,7 +53,7 @@ block pagescript
             d[i].locationUrl = "/rest/Brass/" + br.name + "/location";
             d[i].mainNoteUrl = "/rest/Brass/"+br.name+"/mainNote";
             d[i].churchUrl = "/rest/Brass/" + br.name + "/church";
-            $("#brassList").append("<li> <button id=\"" + bButtId + "\"> " + br.name + " - " + br.church + "</button> </li>");
+            $("#brassList").append("<li> <button class=\"btn-block\" id=\"" + bButtId + "\"> " + br.name + " - " + br.church + "</button> </li>");
             $(bButtIdRef).on('click',(function(zb) { return function(){ brassShow( zb ); } })(d[i]) );
         }
         if (d.length>0) {

@@ -23,7 +23,7 @@ block pagecontent
   div.row
     div.span1
     div.span4
-      div.showContainer
+      div.showContainer(dir="rtl")
         ul#rubbingList.nav.nav-pills.nav-stacked
     div.span7
       div#rubbingShow.well
@@ -57,7 +57,7 @@ block pagescript
             d[i].descUrl = "/rest/Rubbing/"+r.vlcn+"/desc";
             d[i].dateUrl = "/rest/Rubbing/"+r.vlcn+"/date";
             d[i].mainNoteUrl = "/rest/Rubbing/"+r.vlcn+"/mainNote";
-            $("#rubbingList").append("<li> <button id=\"" + rButtId + "\"> " + r.vlcn + " - " + r.name + "</button> </li>");
+            $("#rubbingList").append("<li> <button class=\"btn-block\" id=\"" + rButtId + "\"> " + r.vlcn + " - " + r.name + "</button> </li>");
             $(rButtIdRef).on('click',(function(zr) { return function(){rubbingShow( zr ); } })(d[i]) );
         };
         if (d.length>0) {

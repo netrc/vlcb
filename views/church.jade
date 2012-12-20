@@ -2,6 +2,7 @@ extends layout
 
 block pagecontent
   div.row
+    div.span1
     div.span2
       b.pageHead Churches
     div.span3
@@ -13,14 +14,15 @@ block pagecontent
         button#cSortAlpha.btn.sorter(type="button") A-Z
         button#cSortShire.btn.sorter(type="button") Shire
         button#cSortYear.btn.sorter(type="button") Year
-    div#newPost.span4
+    div#newPost.span3
       form.form-inline(method="post")
         input.input-small(type="text",name="cn",placeholder="Church Name")
         input.input-small(type="text",name="ca",placeholder="Address")
         button.btn(type="submit"): i.icon-plus-sign
 
   div.row
-    div.span6
+    div.span1
+    div.span5
       div.showContainer
         ul#churchList.nav.nav-pills.nav-stacked
     div.span6
@@ -52,7 +54,7 @@ block pagescript
             cButtId = "cButtId"+i;
             cButtIdRef = "#"+cButtId;
             cn["cn"+c.name] = i;
-            newLi  = "<li> <button id=\""+cButtId+"\"> "+c.name+"<i> - "+c.address+"</i></button></li>\n";
+            newLi  = "<li> <button class=\"btn-block\" id=\""+cButtId+"\"> "+c.name+"<i> - "+c.address+"</i></button></li>\n";
             $("#churchList").append(newLi);
             d[i].yearUrl = "/rest/Church/"+c.name+"/year";
             d[i].latlonUrl = "/rest/Church/"+c.name+"/latlon";
