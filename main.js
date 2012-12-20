@@ -40,8 +40,14 @@ passport.use(new GoogleStrategy({
         console.log("ident: "+identifier);
         console.log("profile: dn:" + profile.displayName+" email:"+ profile.emails[0].value);
         // maybe this is where I figure out the authorization role? reader / editor
-      //profile.identifier = identifier;
-      profile.role = "vlcbEditor";
+        //profile.identifier = identifier;
+        
+        // everyone is readonly, except for me
+        profile.role = "readonly";
+        if (profile.emails[0].value == "gnetrc@gmail.com") {
+            profile.role = "vlcbEditor";
+        }
+        console.log("profile role: " + profile.role);
       return done(null, profile);        
   }
 ));
@@ -61,6 +67,11 @@ var vlcbAuthorization = function( req, res, next ) {
     //console.log("vlcba:", req.method, ":not permitted");
     // set a res.flashUnauthPost
     res.redirect('back');
+};
+
+var vlcbLogout = function(req, res){
+  req.logout();
+  res.redirect('back');
 };
 
 
@@ -92,6 +103,7 @@ app.get('/dobatch', vroutes.doBatch);
 // Authorization / Passport
 app.get('/auth/google', passport.authenticate('google'));
 app.get('/auth/google/return',  passport.authenticate('google', { successRedirect: '/', failureRedirect: '/auth/login' } ));
+app.get('/auth/logout', vlcbLogout);
 // rest interfaces
 //     ... get all of category
 app.get('/rest/Church',vroutes.restGetChurch);

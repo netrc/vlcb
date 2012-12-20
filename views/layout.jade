@@ -77,10 +77,18 @@ html
       function isVlcbReadonly() {
           var thisRole = $.cookie('vlcbRole');
           return (thisRole != 'vlcbEditor');
-      }
+      };
       function hideNewPosts() {
         if (isVlcbReadonly()) {
           $("#newPost").css('display', 'none');
         }
-      }
+      };
+      // every page gets this check....
+      $(document).ready(function() {
+        if (isVlcbReadonly()) {
+          $("#loginState").html('<a href="/auth/google"> Login via Google </a>');
+        } else {
+          $("#loginState").html('<a href="/auth/logout"> Logout </a>');
+        }
+      });
     block pagescript
