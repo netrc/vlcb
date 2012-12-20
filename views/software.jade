@@ -1,5 +1,11 @@
 extends layout
 
+block pageheadextras
+  style
+    body {
+      background-image: url(images/sand.png);
+    }
+
 block pagecontent
   h2 Powered by...
   table.cd
@@ -22,8 +28,8 @@ block pagecontent
       td.cd
         a(href="//www.mongodb.org/") MongoDB
       td.cd
-        a(href="//github.com/netrc")
-          img(src="https://raw.github.com/github/media/master/logos/github_logo_social_coding_outlined.png")
+        a(href="//github.com/netrc") github
+          //img(src="https://raw.github.com/github/media/master/logos/github_logo_social_coding_outlined.png")
     tr
       td.cd
         a(href="//jsfiddle.net")
@@ -33,7 +39,14 @@ block pagecontent
       td.cd
         a(href="//myhosting.com/virtual-private-server/") myhosting VPS
       td.cd
-        a(href="//vim.org") vim
+        a(href="http://vim.org") vim
+    tr
+      td.cd
+        a(href="http://passportjs.org/") PassportJS
+      td.cd
+        a(href="https://github.com/jaredhanson/passport-google") passport-google
+      td.cd
+        a(href="http://trello.com/") Trello
   hr
   h3 Data Check
   div.row
@@ -45,6 +58,7 @@ block pagecontent
         div#krpct.bar(style="width: 45.666666%;")
   div.row
     div.span2
+    div.span1 Unknowns...
     div#rnotok.span10
 
   hr
