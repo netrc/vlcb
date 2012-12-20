@@ -45,10 +45,13 @@ block pagescript
       hideNewPosts();
       $.get("/rest/Brass/","",function(d,tstatus,jxhr) {
         //alert("got brasses "+d.length);
+        var bn = {};
+        bn["bn"] = 0;  // a blank church name means show the first (0th) brass
         for (var i=0;i<d.length;i++) { 
             var br = d[i];
             bButtId = "bButtId"+i;
             bButtIdRef = "#"+bButtId;
+            bn["bn"+br.name] = i;
             d[i].yearUrl = "/rest/Brass/" + br.name + "/year";
             d[i].locationUrl = "/rest/Brass/" + br.name + "/location";
             d[i].mainNoteUrl = "/rest/Brass/"+br.name+"/mainNote";
@@ -56,13 +59,13 @@ block pagescript
             $("#brassList").append("<li> <button class=\"btn-block\" id=\"" + bButtId + "\"> " + br.name + " - " + br.church + "</button> </li>");
             $(bButtIdRef).on('click',(function(zb) { return function(){ brassShow( zb ); } })(d[i]) );
         }
-        if (d.length>0) {
-            brassShow( d[0] );
+        if (d.length>0 && ("#{bname}"!="unknown")) {
+            brassShow( d[ bn["bn"+"#{bname}"] ] );
         };
       } );
       $('#brassEditChurch').editable({ type: 'select', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter church',
         source:"/rest/xeditSelect/Church", display: function( val, sd ) {
-            var tmpHtml = '<a href="/church/'+val+'"> '+val+'</a>';
+            var tmpHtml = isVlcbReadonly() ? '<a href="/church/'+val+'"> '+val+'</a>' : val;
             $(this).html(tmpHtml);
         }
         });

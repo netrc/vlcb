@@ -13,7 +13,12 @@ exports.rubbing = function(req, res) {
 };
 
 exports.brass = function(req, res) {
-    res.render('brass.jade', { thisAction: 'Brass'});
+    res.render('brass.jade', { thisAction: 'Brass', bname: ""});
+};
+
+exports.brassShow = function(req, res) {
+    console.log("bs. bn:" + ((req.params.bname) ? req.params.bname : "no bname"));
+    res.render('brass.jade', { thisAction: 'Brass', bname: req.params.bname});
 };
 
 exports.church = function(req, res) {

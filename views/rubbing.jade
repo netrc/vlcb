@@ -64,7 +64,11 @@ block pagescript
             rubbingShow( d[0] );
         };
       } );
-      $('#rubbingEditBrass').editable({ type: 'select', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter brass', source:"/rest/xeditSelect/Brass" });
+      $('#rubbingEditBrass').editable({ type: 'select', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter brass',
+        source:"/rest/xeditSelect/Brass", display: function( val, sd ) {
+            var tmpHtml = isVlcbReadonly() ? '<a href="/brass/'+val+'"> '+val+'</a>' : val;
+            $(this).html(tmpHtml);
+        } });
       $('#rubbingEditDesc').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter desc' });
       $('#rubbingEditDate').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
       $('#rubbingEditMainNote').editable({ type: 'textarea', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',

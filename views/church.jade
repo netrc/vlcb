@@ -110,7 +110,7 @@ block pagescript
             bStr = "";
             for (var i=0;i<d.length;i++) { 
                 b = d[i];
-                bStr = bStr + " <a href=\"//brass/\">" + b.name + "</a>" + (((i+1)<d.length) ? ", " : "");
+                bStr = bStr + ' <a href="/brass/'+b.name+'">' + b.name + '</a>' + (((i+1)<d.length) ? ', ' : '');
             };
             $("#churchShowBrasses").html( bStr );
         } );
