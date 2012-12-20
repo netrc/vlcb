@@ -31,7 +31,7 @@ html
               li
                 a(href='/map') Map
               li.dropdown
-                a.dropdown-toggle(href="#", data-toggle="dropdown") About
+                a.dropdown-toggle(href="#", data-toggle="dropdown") Info
                   b.caret
                 ul.dropdown-menu
                   li
@@ -44,7 +44,10 @@ html
                     a(href="/updates") Updates
                   li
                     a(href="/book") Purchase Book...
-                  li.divider
+              li.dropdown
+                a.dropdown-toggle(href="#", data-toggle="dropdown") About
+                  b.caret
+                ul.dropdown-menu
                   li
                     a(href="/software") Software
                   li
@@ -52,7 +55,7 @@ html
                   li
                     a(href="/notes") Notes
                   li
-                    a(href="/auth/google") Login via Google
+                    a#loginState(href="/auth/google") Login via Google
 
 
     block pagecontent

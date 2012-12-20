@@ -2,6 +2,7 @@ extends layout
 
 block pagecontent
   div.row
+    div.span1
     div.span2
       b.pageHead Rubbings
     div.span3
@@ -13,17 +14,19 @@ block pagecontent
         button#rSortVLCN.btn.sorter(type="button") VLCN
         button#rSortAlpha.btn.sorter(type="button") A-Z
         button#rSortDate.btn.sorter(type="button") Date
-    div#newPost.span4
+    div#newPost.span3
       form.form-inline(method="post")
         input.input-small(type="text",name="vn",placeholder="VLC#")
         input.input-large(type="text",name="rn",placeholder="Rubbing Name")
         button.btn(type="submit"): i.icon-plus-sign
 
   div.row
-    div.span5
-      ul#rubbingList.nav.nav-pills.nav-stacked
+    div.span1
+    div.span4
+      div.showContainer
+        ul#rubbingList.nav.nav-pills.nav-stacked
     div.span7
-      div#rubbingShow.well.fixMe
+      div#rubbingShow.well
         div#rubbingShowTitle ...select a rubbing
         div#rubbingShowPics
         div
