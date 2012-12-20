@@ -41,12 +41,13 @@ block pagescript
                 }
                 var coords = c.latlon.split(",");
                 var thisLatLng = new google.maps.LatLng(parseFloat(coords[0]),parseFloat(coords[1]));
-                var thisMarker = new google.maps.Marker({ position: thisLatLng, map: map, icon: thisImage, title: c.name });
+                var thisMarker = new google.maps.Marker({ position: thisLatLng, map: map, icon: thisImage, title: c.name+' - '+c.address });
 
                // more stuff could be in the content; '<div id="siteNotice"> sitenotice? </div>'
                var contentString = '<div id="content"> <h1 id="firstHeading" class="firstHeading">' + c.name + '</h1>'+
                     '<div id="bodyContent">'+
-                        '<p> Church Info </p> <p>Go to <a href="/church/' + c.name + '"> ' + c.name + '</a> '+
+                        '<p> ' + c.address + ' </p>' +
+                        '<p>Go to <a href="/church/' + c.name + '"> ' + c.name + '</a> '+
                     '</div>'+
                 '</div>';
                 // see view-source:https://google-developers.appspot.com/maps/documentation/javascript/examples/infowindow-simple
