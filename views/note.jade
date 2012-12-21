@@ -1,0 +1,24 @@
+extends layout
+
+block pagecontent
+  div.container
+    div.row
+      div.span1
+      div.span8
+        div#note.well
+
+block pagescript
+  script
+    $(document).ready(function() {
+      var noteURL = "#{noteURL}";
+      $('#note').editable({ type: 'textarea', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
+        display: function( val, sd ) {
+            var tmpHtml = markdown.toHTML(val);
+            $(this).html(tmpHtml);
+        },
+        url: noteURL
+        });
+      $.get(noteURL,{},function(d,tstatus,jxhr) {
+        $("#note").editable('option', 'value', ((d) ? d : "...?") );
+      } );
+    });
