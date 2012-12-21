@@ -31,6 +31,9 @@ block pagecontent
         div
           i.smalllabel church: &nbsp;
           span#brassEditChurch.brassXedit
+        div
+          i.smalllabel rubbings: &nbsp;
+          span#brassShowRubbings
         div#brassShowInfo
           i.smalllabel year: &nbsp;
           span#brassEditYear.brassXedit
@@ -100,17 +103,28 @@ block pagescript
           if (d.length==0) {
             return;
           };
-          pStr="";
+          var pStr="";
           groupName = "group" + b.name;
           groupNameClass = "." + groupName;
           for (var i=0;i<d.length;i++) { 
             p = d[i];
             pStr = pStr + "<a class=\""+groupName+"\" href=\""+p.full+"\" title=\""+b.name+"\">  <img src=\""+p.thumb+"\">  </a>";
           };
-          $(brassShowPics).html( pStr );
+          $("#brassShowPics").html( pStr );
           $(groupNameClass).colorbox( { rel:groupName, transition:"fade" } );
         });
-        //alert("edit year: " + b.yearUrl);
+        $.get(brassUrl(b,"Rubbing"),"",function(d,tstatus,jxhr) {
+          if (d.length==0) {
+            return;
+          };
+          var pStr="";
+          for (var i=0;i<d.length;i++) { 
+            r = d[i];
+            pStr = pStr + '<a  href="/rubbing/'+r.vlcn+'"> ' + r.name +' </a>';
+            if ((i+1)<d.length) { pStr += ", "; };
+          };
+          $("#brassShowRubbings").html( pStr );
+        });
         $('#brassEditChurch').editable('option','url', b.churchUrl);
         $('#brassEditYear').editable('option','url', b.yearUrl);
         $('#brassEditLocation').editable('option','url', b.locationUrl);

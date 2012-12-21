@@ -127,8 +127,13 @@ exports.churchFind = function(n, doIt) {
 exports.brassAll = function(doIt) {
     dbFindAll(brassColl, {}, doIt);
 };
+
 exports.brassByChurch = function(n,doIt) {
     dbFindAll(brassColl, {church:n}, doIt);
+};
+
+exports.rubbingByBrass = function(n,doIt) {
+    dbFindAll(rubbingColl, {brass:n}, doIt);
 };
 
 exports.rubbingAll = function(doIt) {
