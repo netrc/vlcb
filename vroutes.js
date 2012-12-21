@@ -43,6 +43,11 @@ exports.about = function(req, res) {
     res.render('about.jade', { thisAction: 'About'});
 };
 
+exports.note = function(req, res) {
+    var noteURL = "/rest/Note/" + req.params.nname + "/";  //n.b. empty title
+    res.render('note.jade', { thisAction: 'Note', noteURL: noteURL });
+};
+
 exports.software = function(req, res) {
     res.render('software.jade');
 };

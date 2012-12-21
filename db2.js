@@ -71,6 +71,7 @@ exports.postGenericField = function ( cat, name, field, val, doIt ) {
 
 // expecting just one specific note, e.g. for Church, Brass
 exports.note = function(c, t, doIt) {
+    if (!t) { t = ""; };
     console.log("db note: c:"+c+" t:"+t);
     var sObj = { category: c, title: t };
     // need to check if t is blank
@@ -87,6 +88,7 @@ exports.note = function(c, t, doIt) {
     } );
 };
 exports.noteStore = function(c, t, newText, doIt) {
+    if (!t) { t = ""; };
     var n = new Date();
     var newNote = { category: c, title: t, date: n.toLocaleString(), mdtext: newText };
     noteColl.update( {category:c, title: t}, newNote, function(err,docData){

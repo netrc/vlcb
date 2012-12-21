@@ -99,6 +99,7 @@ app.get('/church', vroutes.church);
 app.get('/church/:cname', vroutes.churchShow);
 app.get('/map', vroutes.map);
 app.get('/about', vroutes.about);
+app.get('/note/:nname', vroutes.note);
 app.get('/pic', vroutes.pic);
 app.get('/software', vroutes.software);
 app.get('/dobatch', vroutes.doBatch);
@@ -117,8 +118,8 @@ app.get('/rest/Rubbing',vroutes.restGetRubbing);
 app.post('/rest/Brass',vroutes.restPostBrass);
 app.post('/rest/Pic', vroutes.restPostPic);
 //     ...
-app.get('/rest/Note/:cat/:title', vroutes.restGetNoteMD);
-app.post('/rest/Note/:cat/:title', vroutes.restPostNoteMD);
+app.get('/rest/Note/:cat/:title?', vroutes.restGetNoteMD);
+app.post('/rest/Note/:cat/:title?', vroutes.restPostNoteMD);
 app.get('/rest/Church/:cname',vroutes.restGetChurchShow);  // TODO no more Church show
 app.get('/rest/Church/:cname/Brass',vroutes.restGetBrassByChurch);
 app.get('/rest/Brass/:bname/Rubbing',vroutes.restGetRubbingByBrass);
