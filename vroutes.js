@@ -9,30 +9,21 @@ exports.vindex = function(req, res) {
 };
 
 exports.rubbing = function(req, res) {
-    res.render('rubbing.jade', { thisAction: 'Rubbing', rname: ""});
-};
-
-exports.rubbingShow = function(req, res) {
-    //console.log("rs. rn:" + ((req.params.rname) ? req.params.rname : "no rname"));
-    res.render('rubbing.jade', { thisAction: 'Rubbing', rname: req.params.rname});
+    //console.log("r: rname: "+req.params.rname);
+    var rname = (req.params.rname) ? req.params.rname : "";
+    res.render('rubbing.jade', { thisAction: 'Rubbing', rname: rname});
 };
 
 exports.brass = function(req, res) {
-    res.render('brass.jade', { thisAction: 'Brass', bname: ""});
-};
-
-exports.brassShow = function(req, res) {
     //console.log("bs. bn:" + ((req.params.bname) ? req.params.bname : "no bname"));
-    res.render('brass.jade', { thisAction: 'Brass', bname: req.params.bname});
+    var bname = (req.params.bname) ? req.params.bname : "";
+    res.render('brass.jade', { thisAction: 'Brass', bname: bname});
 };
 
 exports.church = function(req, res) {
-    res.render('church.jade', { thisAction: 'Church', cname: ""});
-};
-
-exports.churchShow = function(req, res) {
     //console.log("yep, got to cs. cs:" + ((req.params.cname) ? req.params.cname : "no cname"));
-    res.render('church.jade', { thisAction: 'Church', cname: req.params.cname});
+    var cname = (req.params.cname) ? req.params.cname : "";
+    res.render('church.jade', { thisAction: 'Church', cname: cname});
 };
 
 exports.map = function(req, res) {

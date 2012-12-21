@@ -91,12 +91,9 @@ app.set('views', __dirname + '/views');  // sets render dir
 
 // html views
 app.get('/', vroutes.vindex);
-app.get('/rubbing', vroutes.rubbing);
-app.get('/rubbing/:rname', vroutes.rubbingShow);
-app.get('/brass', vroutes.brass);
-app.get('/brass/:bname', vroutes.brassShow);
-app.get('/church', vroutes.church);
-app.get('/church/:cname', vroutes.churchShow);
+app.get('/rubbing/:rname?', vroutes.rubbing);
+app.get('/brass/:bname?', vroutes.brass);
+app.get('/church/:cname?', vroutes.church);
 app.get('/map', vroutes.map);
 app.get('/about', vroutes.about);
 app.get('/note/:nname', vroutes.note);
