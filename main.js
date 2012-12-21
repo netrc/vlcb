@@ -92,15 +92,17 @@ app.set('views', __dirname + '/views');  // sets render dir
 // html views
 app.get('/', vroutes.vindex);
 app.get('/rubbing', vroutes.rubbing);
-app.get('/about', vroutes.about);
-app.get('/map', vroutes.map);
+app.get('/rubbing/:rname', vroutes.rubbingShow);
 app.get('/brass', vroutes.brass);
 app.get('/brass/:bname', vroutes.brassShow);
 app.get('/church', vroutes.church);
 app.get('/church/:cname', vroutes.churchShow);
+app.get('/map', vroutes.map);
+app.get('/about', vroutes.about);
 app.get('/pic', vroutes.pic);
 app.get('/software', vroutes.software);
 app.get('/dobatch', vroutes.doBatch);
+
 // Authorization / Passport
 app.get('/auth/google', passport.authenticate('google'));
 app.get('/auth/google/return',  passport.authenticate('google', { successRedirect: '/', failureRedirect: '/auth/login' } ));
@@ -119,6 +121,7 @@ app.get('/rest/Note/:cat/:title', vroutes.restGetNoteMD);
 app.post('/rest/Note/:cat/:title', vroutes.restPostNoteMD);
 app.get('/rest/Church/:cname',vroutes.restGetChurchShow);  // TODO no more Church show
 app.get('/rest/Church/:cname/Brass',vroutes.restGetBrassByChurch);
+app.get('/rest/Brass/:bname/Rubbing',vroutes.restGetRubbingByBrass);
 //     ... generic get Pics
 app.get('/rest/:cat/:name/Pics', vroutes.restGetPicsByCategory);
 app.get('/rest/:cat/:name/:field', vroutes.restGetGenericField);

@@ -9,7 +9,12 @@ exports.vindex = function(req, res) {
 };
 
 exports.rubbing = function(req, res) {
-    res.render('rubbing.jade', { thisAction: 'Rubbing'});
+    res.render('rubbing.jade', { thisAction: 'Rubbing', rname: ""});
+};
+
+exports.rubbingShow = function(req, res) {
+    //console.log("rs. rn:" + ((req.params.rname) ? req.params.rname : "no rname"));
+    res.render('rubbing.jade', { thisAction: 'Rubbing', rname: req.params.rname});
 };
 
 exports.brass = function(req, res) {
@@ -17,7 +22,7 @@ exports.brass = function(req, res) {
 };
 
 exports.brassShow = function(req, res) {
-    console.log("bs. bn:" + ((req.params.bname) ? req.params.bname : "no bname"));
+    //console.log("bs. bn:" + ((req.params.bname) ? req.params.bname : "no bname"));
     res.render('brass.jade', { thisAction: 'Brass', bname: req.params.bname});
 };
 
@@ -26,7 +31,7 @@ exports.church = function(req, res) {
 };
 
 exports.churchShow = function(req, res) {
-    console.log("yep, got to cs. cs:" + ((req.params.cname) ? req.params.cname : "no cname"));
+    //console.log("yep, got to cs. cs:" + ((req.params.cname) ? req.params.cname : "no cname"));
     res.render('church.jade', { thisAction: 'Church', cname: req.params.cname});
 };
 
@@ -109,8 +114,15 @@ exports.restGetBrass = function(req,res) {
        res.send(pa); 
     });
 };
+
 exports.restGetBrassByChurch = function(req,res) {
     DbMgr.brassByChurch( req.params.cname, function(pa){
+       res.send(pa); 
+    });
+};
+
+exports.restGetRubbingByBrass = function(req,res) {
+    DbMgr.rubbingByBrass( req.params.bname, function(pa){
        res.send(pa); 
     });
 };

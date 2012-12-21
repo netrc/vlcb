@@ -49,10 +49,13 @@ block pagescript
       hideNewPosts();
       $.get("/rest/Rubbing/","",function(d,tstatus,jxhr) {
         //alert("got rubbing "+d.length);
+        var rn = {};
+        rn["rn"] = 0;  // a blank rubbing vlcn means show the first (0th) rubbing
         for (var i=0;i<d.length;i++) { 
             r = d[i];
             rButtId = "rButtId"+i;
             rButtIdRef = "#"+rButtId;
+            rn["rn"+r.vlcn] = i;
             d[i].brassUrl = "/rest/Rubbing/"+r.vlcn+"/brass";
             d[i].descUrl = "/rest/Rubbing/"+r.vlcn+"/desc";
             d[i].dateUrl = "/rest/Rubbing/"+r.vlcn+"/date";
@@ -61,7 +64,7 @@ block pagescript
             $(rButtIdRef).on('click',(function(zr) { return function(){rubbingShow( zr ); } })(d[i]) );
         };
         if (d.length>0) {
-            rubbingShow( d[0] );
+            rubbingShow( d[ rn["rn"+"#{rname}"] ] );
         };
       } );
       $('#rubbingEditBrass').editable({ type: 'select', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter brass',
