@@ -60,7 +60,11 @@ block pagescript
             d[i].descUrl = "/rest/Rubbing/"+r.vlcn+"/desc";
             d[i].dateUrl = "/rest/Rubbing/"+r.vlcn+"/date";
             d[i].mainNoteUrl = "/rest/Rubbing/"+r.vlcn+"/mainNote";
-            $("#rubbingList").append('<li> <button class="btn-block" id="' + rButtId + '"> ' + r.name + ' (' + r.vlcn + ') </button> </li>');
+            var knownIcon = '<i class="icon-question-sign"> </i>';
+            if ( (r.brass) && (r.brass != "") && (r.brass != "unknown") ) {
+                knownIcon = "";
+            }
+            $("#rubbingList").append('<li> <button class="btn-block" id="' + rButtId + '"> ' + r.name + ' (' + r.vlcn + ') &nbsp; ' + knownIcon + ' </button> </li>');
             $(rButtIdRef).on('click',(function(zr) { return function(){rubbingShow( zr ); } })(d[i]) );
         };
         if (d.length>0) {
