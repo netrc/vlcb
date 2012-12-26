@@ -11,9 +11,9 @@ block pagecontent
         button.btn(type="submit") Search
     div.span3
       div.btn-group(data-toggle="buttons-radio")
-        button#rSortVLCN.btn.sorter(type="button") VLCN
-        button#rSortAlpha.btn.sorter(type="button") A-Z
-        button#rSortDate.btn.sorter(type="button") Date
+        button#rSortAlpha.btn.sorter(type="button", value="sortAlpha") A-Z
+        button#rSortVLCN.btn.sorter(type="button", value="sortVLCN") VLCN
+        button#rSortDate.btn.sorter(type="button", value="sortDate") Date
     div#newPost.span3
       form.form-inline(method="post")
         input.input-small(type="text",name="vn",placeholder="VLC#")
@@ -45,9 +45,43 @@ block pagecontent
 
 block pagescript
   script
+    var globalSort = 0;
     $(document).ready(function() {
       hideNewPosts();
+      getAndShow();
+
+    $('div.btn-group .btn').click(function(){
+        if ($(this).index() != $('div.btn-group .btn.active').index()){
+            //alert($(this).index());
+            globalSort = $(this).index();
+            getAndShow();
+        }
+    });
+    
+      $('#rubbingEditBrass').editable({ type: 'select', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter brass',
+        source:"/rest/xeditSelect/Brass", display: function( val, sd ) {
+            var tmpHtml = isVlcbReadonly() ? '<a href="/brass/'+val+'"> '+val+'</a>' : val;
+            $(this).html(tmpHtml);
+        } });
+      $('#rubbingEditDesc').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter desc' });
+      $('#rubbingEditDate').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
+      $('#rubbingEditMainNote').editable({ type: 'textarea', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
+        display: function( val, sd ) {
+            var tmpHtml = markdown.toHTML(val);
+            $(this).html(tmpHtml);
+        }
+        });
+    });
+
+    // should only get called on first page show and when sort button changes
+    var getAndShow = function () {
+      //alert("gs: " + globalSort);
+      $("#rubbingList").empty();
       $.get("/rest/Rubbing/","",function(d,tstatus,jxhr) {
+        if (globalSort == 1) {
+            //alert("gs again, 1");
+            d.sort(function(a,b){return (parseInt(a.vlcn)-parseInt(b.vlcn))});
+        }
         //alert("got rubbing "+d.length);
         var rn = {};
         rn["rn"] = 0;  // a blank rubbing vlcn means show the first (0th) rubbing
@@ -71,20 +105,7 @@ block pagescript
             rubbingShow( d[ rn["rn"+"#{rname}"] ] );
         };
       } );
-      $('#rubbingEditBrass').editable({ type: 'select', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter brass',
-        source:"/rest/xeditSelect/Brass", display: function( val, sd ) {
-            var tmpHtml = isVlcbReadonly() ? '<a href="/brass/'+val+'"> '+val+'</a>' : val;
-            $(this).html(tmpHtml);
-        } });
-      $('#rubbingEditDesc').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter desc' });
-      $('#rubbingEditDate').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
-      $('#rubbingEditMainNote').editable({ type: 'textarea', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
-        display: function( val, sd ) {
-            var tmpHtml = markdown.toHTML(val);
-            $(this).html(tmpHtml);
-        }
-        });
-    });
+    }
 
     var rubbingShow = function ( r ) {
         //alert("now show: "+r.vlcn + " name: "  + r.name);
