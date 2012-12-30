@@ -143,8 +143,14 @@ exports.rubbingAll = function(doIt) {
     dbFindAll(rubbingColl, {}, doIt);
 };
 
+var bsort = function(a, b) {
+    return (b.secs - a.secs);
+};
 exports.blogAll = function(doIt) {
-    dbFindAll(noteColl, {category:"blog"}, doIt);
+    dbFindAll(noteColl, {category:"blog"}, function(ba) {
+        ba.sort(bsort);
+        doIt(ba);
+        } );
 };
 
 exports.picsByCategoryIndex = function( c, x, doIt ) {
@@ -183,7 +189,7 @@ exports.brassStore = function(bn, doIt) {
 exports.blogStore = function(bn, doIt) {
     var n = new Date();
     var newBlog = { category: "blog", title: bn, secs: n.getTime(), date: n.toLocaleString() };
-    console.log("db2 store blog: ",bn);
+    console.log("db2 store blog: ",bn, "  secs:",n.getTime(), "  date:",n.toLocaleDateString());
     noteColl.insert( newBlog, function(err,docData){
         if (err) {
             console.error("error updating 'blog': " + err);
