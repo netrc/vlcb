@@ -95,6 +95,8 @@ app.get('/rubbing/:rname?', vroutes.rubbing);
 app.get('/brass/:bname?', vroutes.brass);
 app.get('/church/:cname?', vroutes.church);
 app.get('/map', vroutes.map);
+app.get('/blog', vroutes.blog);
+app.get('/rss', vroutes.rss);
 app.get('/about', vroutes.about);
 app.get('/note/:nname', vroutes.note);
 app.get('/pic', vroutes.pic);
@@ -111,9 +113,11 @@ app.get('/rest/Church',vroutes.restGetChurch);
 app.get('/rest/Pic',vroutes.restGetPic);
 app.get('/rest/Brass',vroutes.restGetBrass);
 app.get('/rest/Rubbing',vroutes.restGetRubbing);
+app.get('/rest/Blog',vroutes.restGetBlog);
 //     ... post one new item
 app.post('/rest/Brass',vroutes.restPostBrass);
 app.post('/rest/Pic', vroutes.restPostPic);
+app.post('/rest/Blog', vroutes.restPostBlog);
 //     ...
 app.get('/rest/Note/:cat/:title?', vroutes.restGetNoteMD);
 app.post('/rest/Note/:cat/:title?', vroutes.restPostNoteMD);

@@ -89,8 +89,9 @@ exports.note = function(c, t, doIt) {
 };
 exports.noteStore = function(c, t, newText, doIt) {
     if (!t) { t = ""; };
-    var n = new Date();
-    var newNote = { category: c, title: t, date: n.toLocaleString(), mdtext: newText };
+//    var n = new Date();
+//    var newNote = { category: c, title: t, date: n.toLocaleString(), mdtext: newText };
+      var newNote = { category: c, title: t, mdtext: newText };
     noteColl.update( {category:c, title: t}, newNote, function(err,docData){
         if (err) {
             console.error("error updating 'about' note: " + err);
@@ -142,6 +143,10 @@ exports.rubbingAll = function(doIt) {
     dbFindAll(rubbingColl, {}, doIt);
 };
 
+exports.blogAll = function(doIt) {
+    dbFindAll(noteColl, {category:"blog"}, doIt);
+};
+
 exports.picsByCategoryIndex = function( c, x, doIt ) {
     dbFindAll( picColl,  { category: c, name: x }, doIt );
 };
@@ -161,6 +166,7 @@ exports.picStore = function(pn, pc, pt, pf, doIt) {
     } );
     console.log("db2 store pic done");
 };
+
 exports.brassStore = function(bn, doIt) {
     var newBrass = { name: bn };
     console.log("db2 store brass: ",bn);
@@ -172,6 +178,20 @@ exports.brassStore = function(bn, doIt) {
         doIt();
     } );
     console.log("db2 store brass done");
+};
+
+exports.blogStore = function(bn, doIt) {
+    var n = new Date();
+    var newBlog = { category: "blog", title: bn, secs: n.getTime(), date: n.toLocaleString() };
+    console.log("db2 store blog: ",bn);
+    noteColl.insert( newBlog, function(err,docData){
+        if (err) {
+            console.error("error updating 'blog': " + err);
+        }
+        log("new blog",bn);
+        doIt();
+    } );
+    console.log("db2 store blog done");
 };
 
 

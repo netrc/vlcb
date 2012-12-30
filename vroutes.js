@@ -30,10 +30,17 @@ exports.map = function(req, res) {
     res.render('map.jade', { thisAction: 'map'});
 };
 
+exports.blog = function(req, res) {
+    res.render('blog.jade', { thisAction: 'blog'});
+};
+
 exports.about = function(req, res) {
     res.render('about.jade', { thisAction: 'About'});
 };
 
+exports.rss = function(req, res) {
+    res.send('"<?xml version="1.0" encoding="UTF-8" ?><rss version="2.0"><channel><title>VLCB Blog</title><description>The Blog for the website of Virginia Lee Campbell\'s Brass Rubbings</description><link>http://vlcb.herokuapp.com/</link></channel></rss>');  
+};
 exports.note = function(req, res) {
     var noteURL = "/rest/Note/" + req.params.nname + "/";  //n.b. empty title
     res.render('note.jade', { thisAction: 'Note', noteURL: noteURL });
@@ -90,6 +97,14 @@ exports.restPostBrass = function(req,res) {
     console.log("brass post new:"+bn);
     DbMgr.brassStore( bn, function(d){
         res.redirect("/brass");
+    });
+};
+
+exports.restPostBlog = function(req,res) {
+    var bn = req.param('bn');
+    console.log("blog post new:"+bn);
+    DbMgr.blogStore( bn, function(d){
+        res.redirect("/blog");
     });
 };
 
@@ -166,6 +181,12 @@ exports.restXeditSelectBrass = function(req,res) {
         });
         selArray.push( { value: "unknown", text: "unknown" });
        res.send(selArray); 
+    });
+};
+
+exports.restGetBlog = function(req,res) {
+    DbMgr.blogAll( function(pa){
+       res.send(pa); 
     });
 };
 

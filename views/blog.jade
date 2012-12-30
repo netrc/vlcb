@@ -1,0 +1,69 @@
+extends layout
+
+block pagecontent
+  div.row
+    div.span1
+    div.span2
+      b.pageHead Blog
+    div.span3
+      form.form-inline(method="post")
+        input.input-small(type="text",name="rn",placeholder="search")
+        button.btn(type="submit") Search
+    div.span3
+    div#newPost.span3
+      form.form-inline(method="post",action="/rest/Blog")
+        input.input-large(type="text",name="bn",placeholder="...post title")
+        button.btn(type="submit"): i.icon-plus-sign
+
+  div.row
+    div.span1
+    div.span4
+      div.showContainer(dir="rtl")
+        a(href="/rss") RSS
+        ul#blogList.nav.nav-pills.nav-stacked(dir="ltr")
+    div.span7
+      div#blogShow.well
+        div#blogShowTitle ...select a blog posting
+        div
+          i.smalllabel
+            span#blogShowDate
+        div#blogEditNote.rubbingXedit.well
+
+block pagescript
+  script
+    $(document).ready(function() {
+      hideNewPosts();
+      getAndShow();
+    
+      $('#blogEditNote').editable({ type: 'textarea', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
+        display: function( val, sd ) {
+            var tmpHtml = markdown.toHTML(val);
+            $(this).html(tmpHtml);
+        }
+        });
+    });
+
+    var getAndShow = function () {
+      $.get("/rest/Blog/","",function(d,tstatus,jxhr) {
+        //alert("got blogs: "+d.length);
+        for (var i=0;i<d.length;i++) { 
+            b = d[i];
+            bButtId = "bButtId"+i;
+            bButtIdRef = "#"+bButtId;
+            d[i].noteUrl = "/rest/Note/blog/"+b.title;
+            $("#blogList").append('<li> <button class="btn-block" id="' + bButtId + '"> ' + b.title +  ' </button> </li>');
+            $(bButtIdRef).on('click',(function(zr) { return function(){blogShow( zr ); } })(d[i]) );
+        };
+        if (d.length>0) {
+            blogShow( d[ 0 ] );
+        };
+      } );
+    }
+
+    var blogShow = function ( b ) {
+        //alert("now show: "+b.title );
+        $("#blogShowTitle").html("<b> " + b.title + "</b>");
+        $("#blogShowDate").html( b.date );
+        $("#blogEditNote").editable('option', 'value', ((b.mdtext) ? b.mdtext : "note?") );
+        $("#blogEditNote").editable('option', 'url', b.noteUrl);
+    };
