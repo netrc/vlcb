@@ -153,6 +153,22 @@ exports.blogAll = function(doIt) {
         } );
 };
 
+exports.rssCreate = function(doIt) {
+    dbFindAll(noteColl, {category:"blog"}, function(ba) {
+        ba.sort(bsort);
+        var rssString = '"<?xml version="1.0" encoding="UTF-8" ?><rss version="2.0"><channel>';
+        rssString += '<title>VLCB Blog</title><description>The Blog for the website of Virginia Lee Campbell\'s Brass Rubbings</description>';
+        rssString += '<link>http://vlcb.herokuapp.com/</link>';
+        for (var i=0; i<(ba.length);i++) {
+            var b = ba[i];
+            rssString += '<item><title>' + b.title + '</title><link>http://vlcb.herokuapp.com</link><pubDate>' + b.date + '</pubDate></item>';
+        }
+        rssString += '</channel></rss>';
+        doIt(rssString);
+        } );
+        };
+
+
 exports.picsByCategoryIndex = function( c, x, doIt ) {
     dbFindAll( picColl,  { category: c, name: x }, doIt );
 };

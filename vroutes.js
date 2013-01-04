@@ -39,8 +39,11 @@ exports.about = function(req, res) {
 };
 
 exports.rss = function(req, res) {
-    res.send('"<?xml version="1.0" encoding="UTF-8" ?><rss version="2.0"><channel><title>VLCB Blog</title><description>The Blog for the website of Virginia Lee Campbell\'s Brass Rubbings</description><link>http://vlcb.herokuapp.com/</link></channel></rss>');  
+    DbMgr.rssCreate( function( rssString ) {
+        res.send( rssString );
+    } );
 };
+
 exports.note = function(req, res) {
     var noteURL = "/rest/Note/" + req.params.nname + "/";  //n.b. empty title
     res.render('note.jade', { thisAction: 'Note', noteURL: noteURL });
