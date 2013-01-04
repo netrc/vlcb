@@ -161,7 +161,12 @@ exports.rssCreate = function(doIt) {
         rssString += '<link>http://vlcb.herokuapp.com/</link>';
         for (var i=0; i<(ba.length);i++) {
             var b = ba[i];
-            rssString += '<item><title>' + b.title + '</title><link>http://vlcb.herokuapp.com</link><pubDate>' + b.date + '</pubDate></item>';
+            rssString += '<item>';
+            rssString += '<title>' + b.title + '</title>';
+            rssString += '<link>http://vlcb.herokuapp.com/rest/Note/blog/' + b.title + '</link>';
+            rssString += '<pubDate>' + b.date.substring(0,25) + '-0500</pubDate>';
+            rssString += '<guid>' + b.secs + '</guid>';
+            rssString += '</item>';
         }
         rssString += '</channel></rss>';
         doIt(rssString);

@@ -40,6 +40,7 @@ exports.about = function(req, res) {
 
 exports.rss = function(req, res) {
     DbMgr.rssCreate( function( rssString ) {
+        res.set({  'Content-Type': 'application/rss+xml' });
         res.send( rssString );
     } );
 };
