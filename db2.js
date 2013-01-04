@@ -88,11 +88,12 @@ exports.note = function(c, t, doIt) {
     } );
 };
 exports.noteStore = function(c, t, newText, doIt) {
-    if (!t) { t = ""; };
+    if (!t) { t = ""; };   // just for single category notes, e.g. about, bibliography...
 //    var n = new Date();
 //    var newNote = { category: c, title: t, date: n.toLocaleString(), mdtext: newText };
-      var newNote = { category: c, title: t, mdtext: newText };
-    noteColl.update( {category:c, title: t}, newNote, function(err,docData){
+//    var newNote = { category: c, title: t, mdtext: newText };
+//    ... now using $set notation to just update the mdtext field
+    noteColl.update( {category:c, title: t}, { $set : { mdtext: newText } }, function(err,docData){
         if (err) {
             console.error("error updating 'about' note: " + err);
         }
@@ -163,9 +164,10 @@ exports.rssCreate = function(doIt) {
             var b = ba[i];
             rssString += '<item>';
             rssString += '<title>' + b.title + '</title>';
-            rssString += '<link>http://vlcb.herokuapp.com/rest/Note/blog/' + b.title + '</link>';
+            rssString += '<link>http://vlcb.herokuapp.com/blog/</link>';
             rssString += '<pubDate>' + b.date.substring(0,25) + '-0500</pubDate>';
             rssString += '<guid>' + b.secs + '</guid>';
+            rssString += '<description>' + b.mdtext + '</description>';
             rssString += '</item>';
         }
         rssString += '</channel></rss>';

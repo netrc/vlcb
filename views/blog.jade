@@ -4,7 +4,9 @@ block pagecontent
   div.row
     div.span1
     div.span2
-      b.pageHead Blog
+      a(href="/rss")
+        img(src="/images/feed-icon.png")
+      b.pageHead &nbsp; Blog
     div.span3
       form.form-inline(method="post")
         input.input-small(type="text",name="rn",placeholder="search")
@@ -19,7 +21,6 @@ block pagecontent
     div.span1
     div.span4
       div.showContainer(dir="rtl")
-        a(href="/rss") RSS
         ul#blogList.nav.nav-pills.nav-stacked(dir="ltr")
     div.span7
       div#blogShow.well
