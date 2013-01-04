@@ -30,7 +30,7 @@ exports.initConn = function (mdbUser, mdbPwd, mdbHost, mdbPort, mdbDbName) {
 // not exported
 var log = function(actionStr, detailStr) {
     var n = new Date();
-    var newLog = {secs: n.getTime(), date: n.toLocaleString(), action: actionStr, detail: detailStr };
+    var newLog = {secs: n.getTime(), date: n.toLocaleString(), action: actionStr, detail: detailStr.substring(100) };
     logColl.insert( newLog,  function(err,docData){
         if (err) {
             console.error("error logging: " + err);
@@ -154,6 +154,7 @@ exports.blogAll = function(doIt) {
         } );
 };
 
+// check out http://feedvalidator.org/
 exports.rssCreate = function(doIt) {
     dbFindAll(noteColl, {category:"blog"}, function(ba) {
         ba.sort(bsort);
