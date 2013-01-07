@@ -94,7 +94,7 @@ app.get('/', vroutes.vindex);
 app.get('/rubbing/:rname?', vroutes.rubbing);
 app.get('/brass/:bname?', vroutes.brass);
 app.get('/church/:cname?', vroutes.church);
-app.get('/map', vroutes.map);
+app.get('/map/:cname?', vroutes.map);
 app.get('/blog', vroutes.blog);
 app.get('/rss', vroutes.rss);
 app.get('/about', vroutes.about);

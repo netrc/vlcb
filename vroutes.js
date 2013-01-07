@@ -27,7 +27,8 @@ exports.church = function(req, res) {
 };
 
 exports.map = function(req, res) {
-    res.render('map.jade', { thisAction: 'map'});
+    var cname = (req.params.cname) ? req.params.cname : "";
+    res.render('map.jade', { thisAction: 'map', cname: cname});
 };
 
 exports.blog = function(req, res) {

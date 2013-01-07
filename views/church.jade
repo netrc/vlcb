@@ -39,6 +39,8 @@ block pagecontent
           span#churchEditYear.churchXedit
           i.smalllabel &nbsp; &nbsp; latlon: &nbsp;
           span#churchEditLatlon.churchXedit
+          a#churchMapIt
+            i.icon-globe
         div#churchEditMainNote.churchXedit.well
 
 block pagescript
@@ -116,6 +118,7 @@ block pagescript
         } );
 
         $("#churchEditLatlon").editable('option', 'url', c.latlonUrl );
+        $("#churchMapIt").attr("href", "/map/"+c.name)
         $("#churchEditYear").editable('option', 'url', c.yearUrl );
         $("#churchEditMainNote").editable('option', 'url', c.mainNoteUrl);
     }
