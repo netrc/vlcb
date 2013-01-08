@@ -7,7 +7,7 @@ block pagecontent
       b.pageHead Rubbings
     div.span3
       input#rSearchText.input-small(type="text",placeholder="search")
-      button#rSearch.btn(type="button") Search
+      button#rSearchButton.btn(type="button") Search
     div.span3
       div.btn-group(data-toggle="buttons-radio")
         button#rSortAlpha.btn.sorter(type="button", value="sortAlpha") A-Z
@@ -56,8 +56,13 @@ block pagescript
             getAndShow();
         }
       });
-      $("#rSearch").click( function() {
+      $("#rSearchButton").click( function() {
             getAndShow();
+      });
+      $("#rSearchText").bind('keydown', function(e) {
+            if (e.which === 13) {
+                getAndShow();
+            }
       });
     
       $('#rubbingEditBrass').editable({ type: 'select', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter brass',
