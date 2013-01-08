@@ -6,9 +6,8 @@ block pagecontent
     div.span2
       b.pageHead Rubbings
     div.span3
-      form.form-inline(method="post")
-        input.input-small(type="text",name="rn",placeholder="search")
-        button.btn(type="submit") Search
+      input#rSearchText.input-small(type="text",placeholder="search")
+      button#rSearch.btn(type="button") Search
     div.span3
       div.btn-group(data-toggle="buttons-radio")
         button#rSortAlpha.btn.sorter(type="button", value="sortAlpha") A-Z
@@ -50,13 +49,16 @@ block pagescript
       hideNewPosts();
       getAndShow();
 
-    $('div.btn-group .btn').click(function(){
+      $('div.btn-group .btn').click(function(){
         if ($(this).index() != $('div.btn-group .btn.active').index()){
             //alert($(this).index());
             globalSort = $(this).index();
             getAndShow();
         }
-    });
+      });
+      $("#rSearch").click( function() {
+            getAndShow();
+      });
     
       $('#rubbingEditBrass').editable({ type: 'select', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter brass',
         source:"/rest/xeditSelect/Brass", display: function( val, sd ) {
@@ -77,7 +79,9 @@ block pagescript
     var getAndShow = function () {
       //alert("gs: " + globalSort);
       $("#rubbingList").empty();
-      $.get("/rest/Rubbing/","",function(d,tstatus,jxhr) {
+      var rsText = $("#rSearchText").val();
+      //alert("rsearch: " + rsText);
+      $.get('/rest/Rubbing/', { search: rsText, sort: globalSort }, function(d,tstatus,jxhr) {
         if (globalSort == 1) {
             //alert("gs again, 1");
             d.sort(function(a,b){return (parseInt(a.vlcn)-parseInt(b.vlcn))});

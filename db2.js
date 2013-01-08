@@ -140,8 +140,12 @@ exports.rubbingByBrass = function(n,doIt) {
     dbFindAll(rubbingColl, {brass:n}, doIt);
 };
 
-exports.rubbingAll = function(doIt) {
-    dbFindAll(rubbingColl, {}, doIt);
+exports.rubbingAll = function( searchText, sortType, doIt) {
+    var searchArg = {};
+    if (searchText !== "") {
+        searchArg = { mainNote : { $regex: searchText, $options:'ix' } };
+    }
+    dbFindAll(rubbingColl, searchArg, doIt);
 };
 
 var bsort = function(a, b) {

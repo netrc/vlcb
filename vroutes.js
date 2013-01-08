@@ -162,7 +162,8 @@ exports.restPostGenericField = function(req,res) {
 };
 
 exports.restGetRubbing = function(req,res) {
-    DbMgr.rubbingAll( function(pa){
+    //console.log('rGR: query:"' + req.query.search + '" sort:"' + req.query.sort+'"');
+    DbMgr.rubbingAll( req.query.search, req.query.sort, function(pa){
        res.send(pa); 
     });
 };
