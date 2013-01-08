@@ -19,7 +19,7 @@ block pagescript
         var mapOptions = { center: homeLatLng, zoom: 8, mapTypeId: google.maps.MapTypeId.ROADMAP };
         var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
-        var image = 'images/house.png';
+        var image = '/images/house.png';
         var homeMarker = new google.maps.Marker({ position: homeLatLng, map: map, icon: image, title: 'Home' });
 
 
@@ -42,7 +42,9 @@ block pagescript
                 var coords = c.latlon.split(",");
                 var thisLatLng = new google.maps.LatLng(parseFloat(coords[0]),parseFloat(coords[1]));
                 var thisMarker = new google.maps.Marker({ position: thisLatLng, map: map, icon: thisImage, title: c.name+' - '+c.address });
-
+                if ( "#{cname}" == c.name ) {
+                    thisMarker.setAnimation(google.maps.Animation.BOUNCE);
+                }
                // more stuff could be in the content; '<div id="siteNotice"> sitenotice? </div>'
                var contentString = '<div id="content"> <h1 id="firstHeading" class="firstHeading">' + c.name + '</h1>'+
                     '<div id="bodyContent">'+
@@ -55,21 +57,7 @@ block pagescript
                     content: contentString
                 });
                 //google.maps.event.addListener(thisMarker, 'click', function() { infowindow.open(map,thisMarker); });
-                google.maps.event.addListener(thisMarker, 'click',  (function(iw, m, tm) { return function(){ iw.open(m,tm); } })(infowindow, map, thisMarker));
-                if ( "#{cname}" == c.name ) {
-                    //alert("and add circle around #{cname}");
-                    var currCircleOptions = {
-                        strokeColor: '#FF0000',
-                        strokeOpacity: 0.8,
-                        strokeWeight: 2,
-                        fillColor: '#FF0000',
-                        fillOpacity: 0.35,
-                        map: map,
-                        center: thisLatLng,
-                        radius: 4000
-                    };
-                    var currCircle = new google.maps.Circle(currCircleOptions);
-                };
+                google.maps.event.addListener(thisMarker, 'click',  (function(iw, m, tm) { return function(){ iw.open(m,tm); tm.setAnimation(null); } })(infowindow, map, thisMarker));
             };
         });
     });
