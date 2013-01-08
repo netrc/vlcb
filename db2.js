@@ -30,6 +30,7 @@ exports.initConn = function (mdbUser, mdbPwd, mdbHost, mdbPort, mdbDbName) {
 // not exported
 var log = function(actionStr, detailStr) {
     var n = new Date();
+    detailStr = (detailStr) ? detailStr.substring(100) : "";
     var newLog = {secs: n.getTime(), date: n.toLocaleString(), action: actionStr, detail: detailStr.substring(100) };
     logColl.insert( newLog,  function(err,docData){
         if (err) {
@@ -63,7 +64,7 @@ exports.postGenericField = function ( cat, name, field, val, doIt ) {
             console.error("error updating: " + cat + " name:" + name + " (field: " + field + ")"); 
         } 
         // not much else goes on with Post
-        log( "post: "+cat+"/"+name+"/"+field+"="+val);
+        log( "post: "+cat+"/"+name+"/"+field,val);
         doIt();
     });
 };
@@ -97,7 +98,7 @@ exports.noteStore = function(c, t, newText, doIt) {
         if (err) {
             console.error("error updating 'about' note: " + err);
         }
-        log("note store for "+c+"/"+t);
+        log("note store for "+c+"/"+t, newText);
         doIt();
     } );
 };
