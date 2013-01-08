@@ -20,7 +20,7 @@ exports.doTest = function ( tn, req, res ) {
 //      - array of names of not ok
 var testRubbingOK = function(req, res) {
     
-    return ( DbMgr.rubbingAll( function(ra) {
+    return ( DbMgr.rubbingAll( "", {}, function(ra) {
         var total = ra.length;
         var numOK = 0;
         var notOKarray = [];

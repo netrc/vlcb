@@ -6,9 +6,8 @@ block pagecontent
     div.span2
       b.pageHead Churches
     div.span3
-      form.form-inline(method="post")
-        input.input-small(type="text",name="rn",placeholder="search")
-        button.btn(type="submit") Search
+      input#cSearchText.input-small(type="text",placeholder="search")
+      button#cSearchButton.btn(type="submit") Search
     div.span3
       div.btn-group(data-toggle="buttons-radio")
         button#cSortAlpha.btn.sorter(type="button") A-Z
@@ -45,9 +44,41 @@ block pagecontent
 
 block pagescript
   script
+    var globalSort = 0;
     $(document).ready(function() {
       hideNewPosts();
-      $.get("/rest/Church/","",function(d,tstatus,jxhr) {
+      getAndShow();
+
+      $('div.btn-group .btn').click(function(){
+        if ($(this).index() != $('div.btn-group .btn.active').index()){
+            //alert($(this).index());
+            globalSort = $(this).index();
+            getAndShow();
+        }
+      });
+      $("#cSearchButton").click( function() {
+            getAndShow();
+      });
+      $("#cSearchText").bind('keydown', function(e) {
+            if (e.which === 13) {
+                getAndShow();
+            }
+      });
+
+      $('#churchEditYear').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
+      $('#churchEditLatlon').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
+      $('#churchEditMainNote').editable({ type: 'textarea', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
+        display: function( val, sd ) {
+            var tmpHtml = markdown.toHTML(val);
+            $(this).html(tmpHtml);
+        }
+      });
+    });
+
+    var getAndShow = function() {
+      $("#churchList").empty();
+      var csText = $("#cSearchText").val();
+      $.get("/rest/Church/",{ search: csText, sort: globalSort },function(d,tstatus,jxhr) {
         //alert("c2b: got churches: "+d.length);
         var cn = {};
         cn["cn"] = 0;  // a blank church name means show the first (0th) church
@@ -68,15 +99,7 @@ block pagescript
             churchShow( d[ cn["cn"+"#{cname}"] ] );
         };
       } );
-      $('#churchEditYear').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
-      $('#churchEditLatlon').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter date' });
-      $('#churchEditMainNote').editable({ type: 'textarea', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
-        display: function( val, sd ) {
-            var tmpHtml = markdown.toHTML(val);
-            $(this).html(tmpHtml);
-        }
-        });
-    });
+    };
 
     var churchUrl = function ( c, s ) {
         return("/rest/Church/" + c.name + "/" + s);

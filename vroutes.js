@@ -114,7 +114,8 @@ exports.restPostBlog = function(req,res) {
 };
 
 exports.restGetChurch = function(req,res) {
-    DbMgr.churchAll( function(pa){
+    //console.log('rGC: query:"' + req.query.search + '" sort:"' + req.query.sort+'"');
+    DbMgr.churchAll( req.query.search, req.query.sort, function(pa){
        res.send(pa); 
     });
 };
@@ -126,7 +127,8 @@ exports.restGetChurchShow = function(req,res) {
 };
 
 exports.restGetBrass = function(req,res) {
-    DbMgr.brassAll( function(pa){
+    //console.log('rGB: query:"' + req.query.search + '" sort:"' + req.query.sort+'"');
+    DbMgr.brassAll( req.query.search, req.query.sort, function(pa){
        res.send(pa); 
     });
 };
@@ -169,7 +171,7 @@ exports.restGetRubbing = function(req,res) {
 };
 
 exports.restXeditSelectChurch = function(req,res) {
-    DbMgr.churchAll( function(ca){
+    DbMgr.churchAll( "", {}, function(ca){
         var selArray = [];
         ca.forEach( function(c) {
             selArray.push( { value: c.name, text: c.name} );
@@ -180,7 +182,7 @@ exports.restXeditSelectChurch = function(req,res) {
 };
 
 exports.restXeditSelectBrass = function(req,res) {
-    DbMgr.brassAll( function(ba){
+    DbMgr.brassAll( "", {}, function(ba){
         var selArray = [];
         ba.forEach( function(b) {
             selArray.push( { value: b.name, text: b.name} );

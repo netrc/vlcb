@@ -113,9 +113,14 @@ var dbFindAll = function( mColl, sObj, doIt) {
     });    
 };
 
-exports.churchAll = function(doIt) {
-    dbFindAll(churchColl, {}, doIt);
+exports.churchAll = function( searchText, sortType, doIt) {
+    var searchArg = {};
+    if (searchText !== "") {
+        searchArg = { mainNote : { $regex: searchText, $options:'ix' } };
+    }
+    dbFindAll(churchColl, searchArg, doIt);
 };
+
 exports.churchFind = function(n, doIt) {
     churchColl.findOne( {name: n}, function(err, d) {
         if (err) {
@@ -128,8 +133,12 @@ exports.churchFind = function(n, doIt) {
         } );
 };
 
-exports.brassAll = function(doIt) {
-    dbFindAll(brassColl, {}, doIt);
+exports.brassAll = function( searchText, sortType, doIt) {
+    var searchArg = {};
+    if (searchText !== "") {
+        searchArg = { mainNote : { $regex: searchText, $options:'ix' } };
+    }
+    dbFindAll(brassColl, searchArg, doIt);
 };
 
 exports.brassByChurch = function(n,doIt) {
@@ -139,6 +148,7 @@ exports.brassByChurch = function(n,doIt) {
 exports.rubbingByBrass = function(n,doIt) {
     dbFindAll(rubbingColl, {brass:n}, doIt);
 };
+
 
 exports.rubbingAll = function( searchText, sortType, doIt) {
     var searchArg = {};
@@ -190,7 +200,7 @@ exports.picAll = function(doIt) {
 };
 exports.picStore = function(pn, pc, pt, pf, doIt) {
     var newPic = { category: pc, name: pn, thumb: pt, full: pf };
-    console.log("db2 store pic: ",pn);
+    //console.log("db2 store pic: ",pn);
     picColl.insert( newPic, function(err,docData){
         if (err) {
             console.error("error updating 'pict': " + err);

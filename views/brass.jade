@@ -6,9 +6,8 @@ block pagecontent
     div.span2
       b.pageHead Brasses
     div.span3
-      form.form-inline(method="post")
-        input.input-small(type="text",name="rn",placeholder="search")
-        button.btn(type="submit") Search
+      input#bSearchText.input-small(type="text",placeholder="search")
+      button#bSearchButton.btn(type="submit") Search
     div.span3
       div.btn-group(data-toggle="buttons-radio")
         button#bSortAlpha.btn.sorter(type="button") A-Z
@@ -44,9 +43,48 @@ block pagecontent
 
 block pagescript
   script
+    var globalSort = 0;
     $(document).ready(function() {
       hideNewPosts();
-      $.get("/rest/Brass/","",function(d,tstatus,jxhr) {
+      getAndShow();
+
+      $('div.btn-group .btn').click(function(){
+        if ($(this).index() != $('div.btn-group .btn.active').index()){
+            //alert($(this).index());
+            globalSort = $(this).index();
+            getAndShow();
+        }
+      });
+      $("#bSearchButton").click( function() {
+            getAndShow();
+      });
+      $("#bSearchText").bind('keydown', function(e) {
+            if (e.which === 13) {
+                getAndShow();
+            }
+      });
+    
+
+      $('#brassEditChurch').editable({ type: 'select', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter church',
+        source:"/rest/xeditSelect/Church", display: function( val, sd ) {
+            var tmpHtml = isVlcbReadonly() ? '<a href="/church/'+val+'"> '+val+'</a>' : val;
+            $(this).html(tmpHtml);
+        }
+      });
+      $('#brassEditLocation').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter location' });
+      $('#brassEditYear').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter year' });
+      $('#brassEditMainNote').editable({ type: 'textarea', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
+        display: function( val, sd ) {
+            var tmpHtml = markdown.toHTML(val);
+            $(this).html(tmpHtml);
+        }
+      });
+    });
+
+    var getAndShow = function() {
+      $("#brassList").empty();
+      var bsText = $("#bSearchText").val();
+      $.get("/rest/Brass/",{ search: bsText, sort: globalSort },function(d,tstatus,jxhr) {
         //alert("got brasses "+d.length);
         var bn = {};
         bn["bn"] = 0;  // a blank church name means show the first (0th) brass
@@ -66,22 +104,7 @@ block pagescript
             brassShow( d[ bn["bn"+"#{bname}"] ] );
         };
       } );
-      $('#brassEditChurch').editable({ type: 'select', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter church',
-        source:"/rest/xeditSelect/Church", display: function( val, sd ) {
-            var tmpHtml = isVlcbReadonly() ? '<a href="/church/'+val+'"> '+val+'</a>' : val;
-            $(this).html(tmpHtml);
-        }
-        });
-      $('#brassEditLocation').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter location' });
-      $('#brassEditYear').editable({ type: 'text', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter year' });
-      $('#brassEditMainNote').editable({ type: 'textarea', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
-        display: function( val, sd ) {
-            var tmpHtml = markdown.toHTML(val);
-            $(this).html(tmpHtml);
-        }
-        });
-    });
-
+    };
 
     function brassUrl( x, s ) {
         return("/rest/Brass/" + x.name + "/" + s);
