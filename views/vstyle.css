@@ -12,6 +12,9 @@ body {
     font-family: 'Monsieur La Doulaise', cursive;
     }
 
+.clight {
+    color: #777;
+}
 .fixMe {
     position:fixed;
     border-width: 4px;
