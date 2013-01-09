@@ -5,38 +5,34 @@ var Software = require('./software');
 // Main/simple routes
 
 exports.vindex = function(req, res) {
-    res.render('index.jade', { thisAction: 'Main'});
+    res.render('index.jade', { title: 'VLCB'});
 };
 
 exports.rubbing = function(req, res) {
     //console.log("r: rname: "+req.params.rname);
     var rname = (req.params.rname) ? req.params.rname : "";
-    res.render('rubbing.jade', { thisAction: 'Rubbing', rname: rname});
+    res.render('rubbing.jade', { title: 'VLCB/rubbing', rname: rname});
 };
 
 exports.brass = function(req, res) {
     //console.log("bs. bn:" + ((req.params.bname) ? req.params.bname : "no bname"));
     var bname = (req.params.bname) ? req.params.bname : "";
-    res.render('brass.jade', { thisAction: 'Brass', bname: bname});
+    res.render('brass.jade', { title: 'VLCB/brass', bname: bname});
 };
 
 exports.church = function(req, res) {
     //console.log("yep, got to cs. cs:" + ((req.params.cname) ? req.params.cname : "no cname"));
     var cname = (req.params.cname) ? req.params.cname : "";
-    res.render('church.jade', { thisAction: 'Church', cname: cname});
+    res.render('church.jade', { title: 'VLCB/church', cname: cname});
 };
 
 exports.map = function(req, res) {
     var cname = (req.params.cname) ? req.params.cname : "";
-    res.render('map.jade', { thisAction: 'map', cname: cname});
+    res.render('map.jade', { title: 'VLCB/map', cname: cname});
 };
 
 exports.blog = function(req, res) {
-    res.render('blog.jade', { thisAction: 'blog'});
-};
-
-exports.about = function(req, res) {
-    res.render('about.jade', { thisAction: 'About'});
+    res.render('blog.jade', { title: 'VLCB/blog'});
 };
 
 exports.rss = function(req, res) {
@@ -48,15 +44,15 @@ exports.rss = function(req, res) {
 
 exports.note = function(req, res) {
     var noteURL = "/rest/Note/" + req.params.nname + "/";  //n.b. empty title
-    res.render('note.jade', { thisAction: 'Note', noteURL: noteURL });
+    res.render('note.jade', { title: 'VLCB/note/'+req.params.nname, noteURL: noteURL });
 };
 
 exports.software = function(req, res) {
-    res.render('software.jade');
+    res.render('software.jade', { title: 'VLCB/software' } );
 };
 
 exports.pic = function(req, res) {
-    res.render('pic.jade', { thisAction: 'Pic'});
+    res.render('pic.jade', { title: 'VLCB/pic'});
 };
 
 exports.restGetGenericField = function(req,res) {

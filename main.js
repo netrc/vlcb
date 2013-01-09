@@ -97,7 +97,6 @@ app.get('/church/:cname?', vroutes.church);
 app.get('/map/:cname?', vroutes.map);
 app.get('/blog', vroutes.blog);
 app.get('/rss', vroutes.rss);
-app.get('/about', vroutes.about);
 app.get('/note/:nname', vroutes.note);
 app.get('/pic', vroutes.pic);
 app.get('/software', vroutes.software);
