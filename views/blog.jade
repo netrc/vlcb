@@ -47,13 +47,14 @@ block pagescript
     var getAndShow = function () {
       $.get("/rest/Blog/","",function(d,tstatus,jxhr) {
         //alert("got blogs: "+d.length);
+        var b, bButtId, bButtIdRef;
         for (var i=0;i<d.length;i++) { 
             b = d[i];
             bButtId = "bButtId"+i;
             bButtIdRef = "#"+bButtId;
-            d[i].noteUrl = "/rest/Note/blog/"+b.title;
-            $("#blogList").append('<li> <button class="btn-block" id="' + bButtId + '"> ' + b.title +  ' </button> </li>');
-            $(bButtIdRef).on('click',(function(zr) { return function(){blogShow( zr ); } })(d[i]) );
+            b.noteUrl = "/rest/Note/blog/"+b.title;
+            VLCB.ulButtonAppend( "#blogList", bButtId, b.title );
+            $(bButtIdRef).on('click', VLCB.enclosure( blogShow, b ));
         };
         if (d.length>0) {
             blogShow( d[ 0 ] );

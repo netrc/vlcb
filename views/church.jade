@@ -80,6 +80,7 @@ block pagescript
       var csText = $("#cSearchText").val();
       $.get("/rest/Church/",{ search: csText, sort: globalSort },function(d,tstatus,jxhr) {
         //alert("c2b: got churches: "+d.length);
+        var c, cButtId, cButtIdRef;
         var cn = {};
         cn["cn"] = 0;  // a blank church name means show the first (0th) church
         for (var i=0;i<d.length;i++) { 
@@ -87,12 +88,11 @@ block pagescript
             cButtId = "cButtId"+i;
             cButtIdRef = "#"+cButtId;
             cn["cn"+c.name] = i;
-            newLi  = "<li> <button class=\"btn-block\" id=\""+cButtId+"\"> "+c.name+"<i> - "+c.address+"</i></button></li>\n";
-            $("#churchList").append(newLi);
-            d[i].yearUrl = "/rest/Church/"+c.name+"/year";
-            d[i].latlonUrl = "/rest/Church/"+c.name+"/latlon";
-            d[i].mainNoteUrl = "/rest/Church/"+c.name+"/mainNote";
-            $(cButtIdRef).on( 'click', (function(zc) { return function(){churchShow(zc); } })(c) );
+            c.yearUrl = "/rest/Church/"+c.name+"/year";
+            c.latlonUrl = "/rest/Church/"+c.name+"/latlon";
+            c.mainNoteUrl = "/rest/Church/"+c.name+"/mainNote";
+            VLCB.ulButtonAppend( "#churchList", cButtId, c.name + ' - ' + c.address );
+            $(cButtIdRef).on( 'click', VLCB.enclosure( churchShow, c) );
         };
         //alert("cj: cn: "+ "#{cname}" );
         if (d.length>0) {

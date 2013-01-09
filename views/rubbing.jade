@@ -87,11 +87,12 @@ block pagescript
       var rsText = $("#rSearchText").val();
       //alert("rsearch: " + rsText);
       $.get('/rest/Rubbing/', { search: rsText, sort: globalSort }, function(d,tstatus,jxhr) {
+        //alert("got rubbing "+d.length);
+        var r, rButtId, rButtIdRef;
         if (globalSort == 1) {
             //alert("gs again, 1");
             d.sort(function(a,b){return (parseInt(a.vlcn)-parseInt(b.vlcn))});
         }
-        //alert("got rubbing "+d.length);
         var rn = {};
         rn["rn"] = 0;  // a blank rubbing vlcn means show the first (0th) rubbing
         for (var i=0;i<d.length;i++) { 
@@ -99,16 +100,16 @@ block pagescript
             rButtId = "rButtId"+i;
             rButtIdRef = "#"+rButtId;
             rn["rn"+r.vlcn] = i;
-            d[i].brassUrl = "/rest/Rubbing/"+r.vlcn+"/brass";
-            d[i].descUrl = "/rest/Rubbing/"+r.vlcn+"/desc";
-            d[i].dateUrl = "/rest/Rubbing/"+r.vlcn+"/date";
-            d[i].mainNoteUrl = "/rest/Rubbing/"+r.vlcn+"/mainNote";
-            var knownIcon = '<i class="icon-question-sign"> </i>';
+            r.brassUrl = "/rest/Rubbing/"+r.vlcn+"/brass";
+            r.descUrl = "/rest/Rubbing/"+r.vlcn+"/desc";
+            r.dateUrl = "/rest/Rubbing/"+r.vlcn+"/date";
+            r.mainNoteUrl = "/rest/Rubbing/"+r.vlcn+"/mainNote";
+            var knownIcon = '&nbsp; <i class="icon-question-sign"> </i>';
             if ( (r.brass) && (r.brass != "") && (r.brass != "unknown") ) {
                 knownIcon = "";
             }
-            $("#rubbingList").append('<li> <button class="btn-block" id="' + rButtId + '"> ' + r.name + ' (' + r.vlcn + ') &nbsp; ' + knownIcon + ' </button> </li>');
-            $(rButtIdRef).on('click',(function(zr) { return function(){rubbingShow( zr ); } })(d[i]) );
+            VLCB.ulButtonAppend( "#rubbingList", rButtId, r.name + ' (' + r.vlcn + ') ' + knownIcon );
+            $(rButtIdRef).on('click', VLCB.enclosure( rubbingShow, r ) );
         };
         if (d.length>0) {
             rubbingShow( d[ rn["rn"+"#{rname}"] ] );

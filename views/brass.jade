@@ -86,19 +86,20 @@ block pagescript
       var bsText = $("#bSearchText").val();
       $.get("/rest/Brass/",{ search: bsText, sort: globalSort },function(d,tstatus,jxhr) {
         //alert("got brasses "+d.length);
+        var br, bButtId, bButtIdRef;
         var bn = {};
         bn["bn"] = 0;  // a blank church name means show the first (0th) brass
         for (var i=0;i<d.length;i++) { 
-            var br = d[i];
+            br = d[i];
             bButtId = "bButtId"+i;
             bButtIdRef = "#"+bButtId;
             bn["bn"+br.name] = i;
-            d[i].yearUrl = "/rest/Brass/" + br.name + "/year";
-            d[i].locationUrl = "/rest/Brass/" + br.name + "/location";
-            d[i].mainNoteUrl = "/rest/Brass/"+br.name+"/mainNote";
-            d[i].churchUrl = "/rest/Brass/" + br.name + "/church";
-            $("#brassList").append("<li> <button class=\"btn-block\" id=\"" + bButtId + "\"> " + br.name + " - " + br.church + "</button> </li>");
-            $(bButtIdRef).on('click',(function(zb) { return function(){ brassShow( zb ); } })(d[i]) );
+            br.yearUrl = "/rest/Brass/" + br.name + "/year";
+            br.locationUrl = "/rest/Brass/" + br.name + "/location";
+            br.mainNoteUrl = "/rest/Brass/"+br.name+"/mainNote";
+            br.churchUrl = "/rest/Brass/" + br.name + "/church";
+            VLCB.ulButtonAppend( "#brassList", bButtId, br.name + ' - ' + br.church );
+            $(bButtIdRef).on('click', VLCB.enclosure( brassShow, br ));
         }
         if (d.length>0 && ("#{bname}"!="unknown")) {
             brassShow( d[ bn["bn"+"#{bname}"] ] );
