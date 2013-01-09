@@ -87,12 +87,12 @@ html
           var thisRole = $.cookie('vlcbRole');
           return (thisRole != 'vlcbEditor');
       };
-      function hideNewPosts() {
+      var VLCB = {};
+      VLCB.hideNewPosts = function() {
         if (isVlcbReadonly()) {
           $("#newPost").css('display', 'none');
         }
       };
-      var VLCB = {};
       VLCB.ulButtonAppend = function( ulRef, buttonId, buttonText ) {
         $( ulRef ).append('<li> <button class="btn-block" id="' + buttonId + '"> ' + buttonText +  ' </button> </li>');
       };

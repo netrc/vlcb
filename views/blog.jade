@@ -33,7 +33,7 @@ block pagecontent
 block pagescript
   script
     $(document).ready(function() {
-      hideNewPosts();
+      VLCB.hideNewPosts();
       getAndShow();
     
       $('#blogEditNote').editable({ type: 'textarea', disabled: isVlcbReadonly(), onblur: 'ignore', send: 'always', toggle: 'dblclick', title: 'Enter note',
