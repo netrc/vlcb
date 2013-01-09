@@ -1,8 +1,9 @@
 doctype 5
 html
   head
-    title #{title}
+    title VLCB#{title}
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='canonical', href='http://vlcb.netrc.com#{title}')
     link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Monsieur+La+Doulaise', type='text/css')
     link(rel='stylesheet', href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css')
     link(rel='stylesheet', href='/colorbox.css', type='text/css')
@@ -63,14 +64,14 @@ html
     footer
       br
       br
-      div.span6
+      g:plusone(size="medium")
+      br
+      div.span12
         a(rel="license", href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US")
           img(alt="Creative Commons License", style="border-width:0", src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png")
         span.clight(xmlns:dct="http://purl.org/dc/terms/", property="dct:title") &nbsp; "Virginia Lee Campbell's Brass Rubbings" &nbsp;
         span.clight by Richard Campbell is licensed under a &nbsp;
         a(rel="license", href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US") Creative Commons Attribution-ShareAlike 3.0 Unported License.
-      div.pull-right
-        a(href='/') VLC
 
     script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js")
     script(src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js")
@@ -78,7 +79,9 @@ html
     script(src="//cachedcommons.org/cache/jquery-cookie/0.0.0/javascripts/jquery-cookie-min.js")
     script(src="/bootstrap-editable-inline.min.js")
     script(src="/jquery.colorbox.js")
+    script(src="//apis.google.com/js/plusone.js")
     script(src="/markdown.js")
+
     script
       function isVlcbReadonly() {
           var thisRole = $.cookie('vlcbRole');
@@ -104,7 +107,8 @@ html
       (function() {
         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
       })();
 
     block pagescript
