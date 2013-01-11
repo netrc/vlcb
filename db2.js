@@ -162,6 +162,14 @@ exports.rubbingAll = function( searchText, sortType, doIt) {
 var bsort = function(a, b) {
     return (b.secs - a.secs);
 };
+
+exports.logAll = function(doIt) {
+    dbFindAll(logColl, {}, function(la) {
+        la.sort(bsort);
+        doIt(la);
+        } );
+};
+
 exports.blogAll = function(doIt) {
     dbFindAll(noteColl, {category:"blog"}, function(ba) {
         ba.sort(bsort);

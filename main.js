@@ -100,6 +100,7 @@ app.get('/rss', vroutes.rss);
 app.get('/note/:nname', vroutes.note);
 app.get('/pic', vroutes.pic);
 app.get('/software', vroutes.software);
+app.get('/log', vroutes.log);
 app.get('/dobatch', vroutes.doBatch);
 
 // Authorization / Passport
@@ -113,6 +114,7 @@ app.get('/rest/Pic',vroutes.restGetPic);
 app.get('/rest/Brass',vroutes.restGetBrass);
 app.get('/rest/Rubbing',vroutes.restGetRubbing);
 app.get('/rest/Blog',vroutes.restGetBlog);
+app.get('/rest/Log',vroutes.restGetLog);
 //     ... post one new item
 app.post('/rest/Brass',vroutes.restPostBrass);
 app.post('/rest/Pic', vroutes.restPostPic);

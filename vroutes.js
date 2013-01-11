@@ -35,6 +35,10 @@ exports.blog = function(req, res) {
     res.render('blog.jade', { title: '/blog'});
 };
 
+exports.log = function(req, res) {
+    res.render('log.jade', { title: '/log'});
+};
+
 exports.note = function(req, res) {
     var noteURL = "/rest/Note/" + req.params.nname + "/";  //n.b. empty title
     res.render('note.jade', { title: '/note/'+req.params.nname, noteURL: noteURL });
@@ -190,6 +194,12 @@ exports.restXeditSelectBrass = function(req,res) {
 
 exports.restGetBlog = function(req,res) {
     DbMgr.blogAll( function(pa){
+       res.send(pa); 
+    });
+};
+
+exports.restGetLog = function(req,res) {
+    DbMgr.logAll( function(pa){
        res.send(pa); 
     });
 };
