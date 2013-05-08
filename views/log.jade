@@ -1,0 +1,37 @@
+extends layout
+
+block pagecontent
+  div.row
+    div.span1
+    div.span2
+      b.pageHead Change Log
+    div.span3
+      form.form-inline(method="post")
+        input.input-small(type="text",name="rn",placeholder="search")
+        button.btn(type="submit") Search
+
+  div.row
+    div.span1
+    div.span10.well
+      textarea#logText(rows=36)
+
+block pagescript
+  script
+    $(document).ready(function() {
+      getAndShow();
+    
+    });
+
+    var getAndShow = function () {
+      $.get("/rest/Log/","",function(d,tstatus,jxhr) {
+        //alert("got logs: "+d.length);
+        var l;
+        var ltext = "";
+        for (var i=0;i<d.length;i++) { 
+            l = d[i];
+            ltext += (new Date(l.date)).toLocaleString().substring(0,24) + "  " + l.action.substring(0,100);
+            ltext += ((l.action).length>100) ? "....\n" : "\n";
+        };
+        $("#logText").val(ltext);
+      } );
+    };
