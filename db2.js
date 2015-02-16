@@ -116,9 +116,9 @@ var dbFindAll = function( mColl, sObj, doIt) {
 
 exports.churchAll = function( searchText, sortType, doIt) {
     var searchArg = {};
-    if (searchText !== "") {
-        searchArg = { mainNote : { $regex: searchText, $options:'ix' } };
-    }
+    //if (searchText !== "") {
+     //  searchArg = { mainNote : { $regex: searchText, $options:'ix' } };
+    //
     dbFindAll(churchColl, searchArg, doIt);
 };
 
@@ -136,9 +136,9 @@ exports.churchFind = function(n, doIt) {
 
 exports.brassAll = function( searchText, sortType, doIt) {
     var searchArg = {};
-    if (searchText !== "") {
-        searchArg = { mainNote : { $regex: searchText, $options:'ix' } };
-    }
+    //if (searchText !== "") {
+    //    searchArg = { mainNote : { $regex: searchText, $options:'ix' } };
+    //}
     dbFindAll(brassColl, searchArg, doIt);
 };
 
@@ -153,9 +153,9 @@ exports.rubbingByBrass = function(n,doIt) {
 
 exports.rubbingAll = function( searchText, sortType, doIt) {
     var searchArg = {};
-    if (searchText !== "") {
-        searchArg = { mainNote : { $regex: searchText, $options:'ix' } };
-    }
+    //if (searchText !== "") {
+    //    searchArg = { mainNote : { $regex: searchText, $options:'ix' } };
+    //}
     dbFindAll(rubbingColl, searchArg, doIt);
 };
 

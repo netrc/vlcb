@@ -1,8 +1,9 @@
 {
  "name":"vlcb",
  "version": "0.0.1",
-  "scripts":{
-      "start":"node main.js"
+ "scripts":{
+      "start":"node main.js",
+      "test":"mocha"
   },
   "dependencies": {
     "express": "3.x",
