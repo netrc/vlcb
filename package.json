@@ -3,7 +3,7 @@
  "version": "0.0.1",
  "repository" : {
       "type" : "git",
-      "url" : "http://github.com/netrc/vl.git"
+      "url" : "http://github.com/netrc/vlcb.git"
   },
  "scripts":{
       "start":"node main.js",
@@ -19,6 +19,6 @@
   },
   "engines": {
     "node": "0.10.x",
-    "npm": "1.1.x"
+    "npm": "2.5."
   }
 }
