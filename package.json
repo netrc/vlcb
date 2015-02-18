@@ -1,6 +1,10 @@
 {
  "name":"vlcb",
  "version": "0.0.1",
+ "repository" : {
+      "type" : "git",
+      "url" : "http://github.com/netrc/vl.git"
+  },
  "scripts":{
       "start":"node main.js",
       "test":"mocha"
@@ -14,7 +18,7 @@
     "passport-google": "0.x"
   },
   "engines": {
-    "node": "0.6.x",
+    "node": "0.10.x",
     "npm": "1.1.x"
   }
 }
