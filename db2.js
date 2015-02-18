@@ -109,6 +109,7 @@ var dbFindAll = function( mColl, sObj, doIt) {
             console.error("dbFindAll error:" + err);
             valArray = [];
         }
+        //console.log("dbfa: va.l="+valArray.length);
         valArray.forEach(function(p){delete(p._id);});  // don't pass _id; big uninteresting string
         doIt(valArray);
     });    
