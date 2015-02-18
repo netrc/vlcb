@@ -5,7 +5,7 @@ html
     meta(name="google-site-verification", content="TW-sW3lVdD8vhX5tsKlClvznCpgTs-pDgWRsYSgIaP4")
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     link(rel='canonical', href='http://vlcb.netrc.com#{title}')
-    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Monsieur+La+Doulaise', type='text/css')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Monsieur+La+Doulaise', type='text/css')
     link(rel='stylesheet', href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css')
     link(rel='stylesheet', href='/colorbox.css', type='text/css')
     link(rel='stylesheet', href='/vstyle.css', type='text/css')
@@ -69,20 +69,23 @@ html
       br
       div.span12
         a(rel="license", href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US", title="'Virginia Lee Campbell's Brass Rubbings' by Richard Campbell is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License")
-          img(alt="Creative Commons License", style="border-width:0", src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png")
+          img(alt="Creative Commons License", style="border-width:0", src="https://i.creativecommons.org/l/by-sa/3.0/80x15.png")
           span by Richard Campbell, 2013
 
-    script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js")
+    //script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js")
+    script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
     script(src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js")
     //script(src="//cachedcommons.org/cache/jquery-jeditable/1.4.2/javascripts/jquery-jeditable-min.js")
     //script(src="//cachedcommons.org/cache/jquery-cookie/0.0.0/javascripts/jquery-cookie-min.js")
-    script(src="//cachedcommons.org/cache/jquery-cookie/0.0.0/javascripts/jquery-cookie.js")
+    //script(src="//cachedcommons.org/cache/jquery-cookie/0.0.0/javascripts/jquery-cookie.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js")
     script(src="/bootstrap-editable-inline.min.js")
     script(src="/jquery.colorbox.js")
     script(src="//apis.google.com/js/plusone.js")
     script(src="/markdown.js")
 
     script
+      
       function isVlcbReadonly() {
           var thisRole = $.cookie('vlcbRole');
           return (thisRole != 'vlcbEditor');
