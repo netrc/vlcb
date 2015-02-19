@@ -72,7 +72,7 @@ exports.postGenericField = function ( cat, name, field, val, doIt ) {
 
 // expecting just one specific note, e.g. for Church, Brass
 exports.note = function(c, t, doIt) {
-    if (!t) { t = ""; };
+    if (!t) { t = ""; }
     console.log("db note: c:"+c+" t:"+t);
     var sObj = { category: c, title: t };
     // need to check if t is blank
@@ -89,7 +89,7 @@ exports.note = function(c, t, doIt) {
     } );
 };
 exports.noteStore = function(c, t, newText, doIt) {
-    if (!t) { t = ""; };   // just for single category notes, e.g. about, bibliography...
+    if (!t) { t = ""; }   // just for single category notes, e.g. about, bibliography...
 //    var n = new Date();
 //    var newNote = { category: c, title: t, date: n.toLocaleString(), mdtext: newText };
 //    var newNote = { category: c, title: t, mdtext: newText };
