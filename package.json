@@ -15,10 +15,17 @@
     "coffee-script": "1.4.x",
     "jade": "0.27.x",
     "passport": "0.x",
-    "passport-google": "0.x"
+    "passport-google-oauth": "0.1.x"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0"
+  },
+  "jscsConfig": {
+    "preset": "google"
   },
   "engines": {
     "node": "0.10.x",
-    "npm": "2.5."
+    "npm": "2.5.x"
   }
 }

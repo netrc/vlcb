@@ -9,9 +9,20 @@ require('jade');
 var DbMgr = require('./db2');
 var vroutes = require('./vroutes');
 var passport = require('passport');
-var GoogleStrategy = require('passport-google').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-// ????
+var AppBaseUrl = 'http://vlcb.netrc.c9.io/';
+if (process.env.NODE_ENV === 'production') {
+  // set: heroku config:add NODE_ENV=production --app vlcb
+  // set: heroku config:add VLCB_HEROKU_URL=http://vlcb.herokuapp.com --app vlcb
+  AppBaseUrl = process.env.VLCB_HEROKU_URL;
+}
+
+// see example at https://github.com/jaredhanson/passport-google-oauth/blob/master/examples/oauth2/app.js
+// see https://code.google.com/apis/console
+var GOOGLE_CLIENT_ID = '813523971348-c4umm4e0vsqpqfs6m5m87h9h1ap24l4b.apps.googleusercontent.com';
+var GOOGLE_CLIENT_SECRET = 'Vj3T18kyITMIWUE6DBDtMhFH';
+
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -20,24 +31,18 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-var AppBaseUrl = 'http://vlcb.netrc.c9.io/';
-if (process.env.NODE_ENV === 'production') {
-  // set: heroku config:add NODE_ENV=production --app vlcb
-  // set: heroku config:add VLCB_HEROKU_URL=http://vlcb.herokuapp.com --app vlcb
-  AppBaseUrl = process.env.VLCB_HEROKU_URL;
-}
 var PassportReturnUrl = AppBaseUrl + 'auth/google/return';
-var PassportRealm = AppBaseUrl;
 
 passport.use(new GoogleStrategy({
-    returnURL: PassportReturnUrl,
-    realm: PassportRealm
-  },  function(identifier, profile, done) {
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: PassportReturnUrl
+  },  function(accessToken, refreshToken, profile, done) {
 //    User.findOrCreate({ openId: identifier }, function(err, user) {
 //      done(err, user);
 //    });
+        
         console.log("google has returned:");
-        console.log("ident: "+identifier);
         console.log("profile: dn:" + profile.displayName+" email:"+ profile.emails[0].value);
         // maybe this is where I figure out the authorization role? reader / editor
         //profile.identifier = identifier;
@@ -104,8 +109,14 @@ app.get('/log', vroutes.log);
 app.get('/dobatch', vroutes.doBatch);
 
 // Authorization / Passport
-app.get('/auth/google', passport.authenticate('google'));
-app.get('/auth/google/return',  passport.authenticate('google', { successRedirect: '/', failureRedirect: '/auth/login' } ));
+var Gapip = 'https://www.googleapis.com/auth/userinfo.profile';
+var Gapie = 'https://www.googleapis.com/auth/userinfo.email';
+app.get('/auth/google', passport.authenticate('google', { scope: [ Gapip, Gapie ] } ),
+    function(req,res) {
+    });
+app.get('/auth/google/return',  passport.authenticate('google', { successRedirect: '/', failureRedirect: '/auth/login' } ),
+    function(req,res) {
+    });
 app.get('/auth/logout', vlcbLogout);
 // rest interfaces
 //     ... get all of category
