@@ -127,6 +127,7 @@ app.get('/rest/Rubbing', vroutes.restGetRubbing);
 app.get('/rest/Blog', vroutes.restGetBlog);
 app.get('/rest/Log', vroutes.restGetLog);
 //     ... post one new item
+app.post('/rest/Rubbing', vroutes.restPostRubbing);
 app.post('/rest/Brass', vroutes.restPostBrass);
 app.post('/rest/Pic', vroutes.restPostPic);
 app.post('/rest/Blog', vroutes.restPostBlog);

@@ -221,6 +221,19 @@ exports.picStore = function(pn, pc, pt, pf, doIt) {
     console.log("db2 store pic done");
 };
 
+exports.rubbingStore = function(vn, rn, doIt) {
+    var newRubbing = { vlcn: vn, name: rn };
+    console.log("db2 store rubbing: ",vn, "  name: "+rn);
+    rubbingColl.insert( newRubbing, function(err,docData){
+        if (err) {
+            console.error("error updating 'rubbing': " + err);
+        }
+        log("new rubbing",vn);
+        doIt();
+    } );
+    console.log("db2 store rubbing done");
+};
+
 exports.brassStore = function(bn, doIt) {
     var newBrass = { name: bn };
     console.log("db2 store brass: ",bn);

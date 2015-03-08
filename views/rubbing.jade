@@ -14,7 +14,7 @@ block pagecontent
         button#rSortVLCN.btn.sorter(type="button", value="sortVLCN") VLCN
         button#rSortDate.btn.sorter(type="button", value="sortDate") Date
     div#newPost.span3
-      form.form-inline(method="post")
+      form.form-inline(method="post", action="/rest/Rubbing")
         input.input-small(type="text",name="vn",placeholder="VLC#")
         input.input-large(type="text",name="rn",placeholder="Rubbing Name")
         button.btn(type="submit"): i.icon-plus-sign

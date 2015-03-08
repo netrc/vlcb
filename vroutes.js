@@ -97,6 +97,16 @@ exports.restPostPic = function(req,res) {
         res.redirect("/pic");
     });
 };
+
+exports.restPostRubbing = function(req,res) {
+    var vn = req.param('vn');
+    var rn = req.param('rn');
+    console.log("rubbing post new:"+vn + " rn: "+rn);
+    DbMgr.rubbingStore( vn, rn, function(d){
+        res.redirect("/rubbing");
+    });
+};
+
 exports.restPostBrass = function(req,res) {
     var bn = req.param('bn');
     console.log("brass post new:"+bn);
