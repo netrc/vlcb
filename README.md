@@ -108,3 +108,9 @@ Tagging
 * put 'git show vNextNum' text in to version.js
 * git commit and git push origin
 * git push master heroku
+
+Security
+* see https://console.developers.google.com/project/general-test-1/apiui/credential
+* n.b. the google app name is 'generalTest'
+* upgraded to OAuth2 with passport and google auth march 2015
+* 
