@@ -2,6 +2,7 @@
 // module "Software
 
 var DbMgr = require("./db2");
+var Version = require("./version");
 
 exports.doTest = function ( tn, req, res ) {
     if ( tn == "rubbingOK") {
@@ -33,6 +34,6 @@ var testRubbingOK = function(req, res) {
            }
         });
         console.log("nok: "+numOK+" t:"+total);
-        res.send([ numOK, total, notOKarray ]);
+        res.send([ numOK, total, notOKarray, Version.VersionString() ]);
     }) ); 
 };

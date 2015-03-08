@@ -99,3 +99,12 @@ old notes on myhost
 * added git
     # rpm -Uvh http://repo.webtatic.com/yum/centos/5/latest.rpm
 	# yum install --enablerepo=webtatic git-all
+
+Tagging
+* get done with revision and tests
+* git commit and git push origin (to github)
+* git tag -a vNextNum    (creates tag with current commit SHA1)
+* git push tags  (to github)
+* put 'git show vNextNum' text in to version.js
+* git commit and git push origin
+* git push master heroku

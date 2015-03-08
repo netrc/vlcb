@@ -63,6 +63,11 @@ block pagecontent
     div.span2
     div.span1 Unknowns...
     div#rnotok.span10
+  hr
+  h4 Version
+  div.row
+    div.span10
+      pre#versionString
 
   hr
   form(method="get", action="/rest/dumpData")
@@ -84,5 +89,6 @@ block pagescript
                 s = s + '<a href="/rubbing/' + r[0] + '"> ' + r[1] + '</a> &nbsp; ';
             });
             $("#rnotok").html(s);
+            $("#versionString").html(d[3]);
         });
       });
