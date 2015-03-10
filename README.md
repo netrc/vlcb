@@ -113,4 +113,15 @@ Security
 * see https://console.developers.google.com/project/general-test-1/apiui/credential
 * n.b. the google app name is 'generalTest'
 * upgraded to OAuth2 with passport and google auth march 2015
-* 
+
+Locations
+* 1 - 7 : 7B on display
+* 8 - 33 : 7B box in workroom
+* 34 - 58 : 7B box in workroom
+* 59 - 76 : 7B upstairs closet (larger rubbings)
+* 77 - 83 : external - Jody
+* 84 - 92 : 7B box in workroom
+* 93 - 100 : 7B box in workroom
+* 101 - 106 : external - jody, ginny, jim
+* 107 - 111 : TBD 7B atop box in workroom
+* 112 - 120 : TBD sitting room foil
