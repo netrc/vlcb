@@ -2,10 +2,10 @@
 
 # "Through England On My Knees: A Brass Rubbing Odyssey", Betsey Lewis
 
-US: A.S. Barnes and Company
-Copyright 1977
-ISBN 0-498-01864-4
-Betsey Lewis 1924-
+- US: A.S. Barnes and Company
+- Copyright 1977
+- ISBN 0-498-01864-4
+- Betsey Lewis 1924-
 
 p13 - within the past 10 years brass rubbing has become a fad in England
 
